@@ -1,2 +1,3 @@
 [build]
 publish = "www"
+command = "npm run build"
