@@ -18,7 +18,7 @@ async function run() {
     partialsOutput += `${partialName}: \`${content.replace(/\`/g, '\\`')}\`,`;
   }
 
-  partialsOutput += `};`;
+  partialsOutput += `};\n\nexport type PartialName = keyof typeof partials;`;
   const formattedOutput = await prettier.format(partialsOutput, { parser: 'typescript' });
   fs.writeFileSync(OUTPUT_FILE, formattedOutput);
   console.log(`Generated partials data at ${OUTPUT_FILE}`);
