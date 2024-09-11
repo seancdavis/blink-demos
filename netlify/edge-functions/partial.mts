@@ -1,9 +1,6 @@
-import {
-  Element,
-  HTMLRewriter,
-} from "https://ghuc.cc/worker-tools/html-rewriter/index.ts";
-import { html } from "https://deno.land/x/html/mod.ts";
-import type { Config, Context } from "@netlify/edge-functions";
+import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts';
+import { html } from 'https://deno.land/x/html/mod.ts';
+import type { Config, Context } from '@netlify/edge-functions';
 
 // let buffer = "";
 
@@ -15,7 +12,7 @@ const header = html`<header>
   </nav>
 </header>`;
 
-type PartialName = "header";
+type PartialName = 'header';
 
 const partials: Record<PartialName, string> = {
   header,
@@ -23,7 +20,7 @@ const partials: Record<PartialName, string> = {
 
 class PartialHandler {
   async element(element: Element) {
-    const partialName = element.getAttribute("name");
+    const partialName = element.getAttribute('name');
     if (partialName && partialName in partials) {
       element.replace(partials[partialName as PartialName], { html: true });
     }
@@ -41,11 +38,9 @@ export default async function handler(req: Request, context: Context) {
   // console.log(response);
   // console.log("hello world");
 
-  return new HTMLRewriter()
-    .on("partial", new PartialHandler())
-    .transform(response);
+  return new HTMLRewriter().on('partial', new PartialHandler()).transform(response);
 }
 
 export const config: Config = {
-  path: "/*",
+  path: '/*',
 };

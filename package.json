@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "build": "npx tsx ./src/scripts/bundle-partials.ts"
+  },
   "dependencies": {
-    "@netlify/edge-functions": "^2.10.0"
+    "@netlify/edge-functions": "^2.10.0",
+    "@types/node": "^22.5.4",
+    "fast-glob": "^3.3.2",
+    "prettier": "^3.3.3"
   }
 }
