@@ -1,3 +1,7 @@
 [build]
 publish = "www"
 command = "npm run build"
+
+[[edge_functions]]
+path = "/*"
+function = "partial"
