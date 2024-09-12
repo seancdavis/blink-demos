@@ -4,4 +4,15 @@ command = "npm run build"
 
 [[edge_functions]]
 path = "/*"
+function = "feedback"
+excludedPath = "/api/*"
+
+[[edge_functions]]
+path = "/*"
 function = "partial"
+excludedPath = "/api/*"
+
+[[redirects]]
+from = "/api/auth/*"
+to = "/.netlify/functions/auth-:splat"
+status = 200

@@ -1,13 +1,13 @@
-import { HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts';
-import type { Config, Context } from '@netlify/edge-functions';
+import { HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+import type { Config, Context } from '@netlify/edge-functions'
 
 // let buffer = "";
 
 export default async function handler(req: Request, context: Context) {
-  const userSignedIn = false;
+  const userSignedIn = false
 
   if (!userSignedIn) {
-    return Response.redirect('/login', 303);
+    return Response.redirect('/login', 303)
   }
 
   // const response = await context.next();
@@ -32,5 +32,5 @@ export default async function handler(req: Request, context: Context) {
 
 export const config: Config = {
   path: '/*',
-  excludedPath: '/login',
-};
+  excludedPath: ['/login', '/api/auth/register', '/api/auth/login'],
+}

@@ -1,4 +1,8 @@
 export const partials = {
+  __undefined__: `<div>PARTIAL_NOT_FOUND</div>
+`,
+  feedback: `<div class="{{ className }}">{{ message }}</div>
+`,
   head: `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

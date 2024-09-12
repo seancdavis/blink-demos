@@ -3,7 +3,9 @@
     "build": "npx tsx ./src/scripts/bundle-partials.ts"
   },
   "dependencies": {
+    "@netlify/blobs": "^8.0.1",
     "@netlify/edge-functions": "^2.10.0",
+    "@netlify/functions": "^2.8.1",
     "@types/node": "^22.5.4",
     "fast-glob": "^3.3.2",
     "prettier": "^3.3.3"

@@ -3,8 +3,22 @@
   <partial name="head" title="Login"></partial>
   <body>
     <partial name="header"></partial>
+    <feedback></feedback>
+
     <h1>Sign in</h1>
-    <div>hi there</div>
-    <form action="...">Form goes here...</form>
+
+    <form action="/api/auth/register" method="post">
+      <div>
+        <label for="username">username</label>
+        <input type="username" name="username" id="username" required autofocus />
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" minlength="8" />
+      </div>
+
+      <button type="submit">Sign in</button>
+    </form>
   </body>
 </html>
