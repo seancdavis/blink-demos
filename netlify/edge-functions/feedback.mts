@@ -29,8 +29,6 @@ export class FeedbackHandler {
 }
 
 export default async function handler(req: Request, context: Context) {
-  console.log('FEEDBACK')
-
   const response = await context.next()
   const { cookies } = context
 
