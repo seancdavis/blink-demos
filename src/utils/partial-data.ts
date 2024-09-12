@@ -1,7 +1,7 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  feedback: `<div class="{{ className }}">{{ message }}</div>
+  feedback: `<div class="{{ classname }}">{{ message }}</div>
 `,
   head: `<head>
   <meta charset="UTF-8" />

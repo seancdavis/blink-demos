@@ -16,6 +16,8 @@ export class PartialHandler {
 }
 
 export default async function handler(req: Request, context: Context) {
+  console.log('<<< partial handler >>>')
+
   const response = await context.next()
   return new HTMLRewriter().on('partial', new PartialHandler()).transform(response)
 }

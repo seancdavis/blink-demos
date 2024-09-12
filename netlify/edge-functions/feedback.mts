@@ -18,17 +18,24 @@ export class FeedbackHandler {
     this.message = options.message
   }
 
-  element(element: Element) {
-    const feedbackPartial = renderPartial({
-      name: 'feedback',
-      data: { message: this.message, className: this.type },
-    })
+  // element(element: Element) {
+  //   const feedbackPartial = renderPartial({
+  //     name: 'feedback',
+  //     data: { message: this.message, className: this.type },
+  //   })
 
-    element.replace(feedbackPartial, { html: true })
+  //   element.replace(feedbackPartial, { html: true })
+  // }
+
+  element(element: Element) {
+    const html = `<partial name="feedback" message="${this.message}" classname="${this.type}"></partial>`
+    element.replace(html, { html: true })
   }
 }
 
 export default async function handler(req: Request, context: Context) {
+  console.log('<<< feedback handler >>>')
+
   const response = await context.next()
   const { cookies } = context
 
