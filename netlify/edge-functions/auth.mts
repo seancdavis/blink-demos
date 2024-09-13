@@ -1,9 +1,9 @@
-import { HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+// import { HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import type { Config, Context } from '@netlify/edge-functions'
 
 // let buffer = "";
 
-export default async function handler(req: Request, context: Context) {
+export default function handler(_req: Request, _ctx: Context) {
   const userSignedIn = false
 
   if (!userSignedIn) {

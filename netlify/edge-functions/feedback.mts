@@ -1,6 +1,6 @@
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import type { Context } from '@netlify/edge-functions'
-import { html } from 'https://deno.land/x/html/mod.ts'
+import { html } from 'https://deno.land/x/html@v1.2.0/mod.ts'
 import { feedbackData, type FeedbackType, FeedbackName } from '../../src/utils/feedback-data.ts'
 
 type FeedbackHandlerOptions = {
@@ -27,7 +27,7 @@ export class FeedbackHandler {
   }
 }
 
-export default async function handler(req: Request, context: Context) {
+export default async function handler(_: Request, context: Context) {
   const response = await context.next()
   const { cookies } = context
   // Check if the feedback cookie is present
