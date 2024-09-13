@@ -9,6 +9,10 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Passwords do not match.',
   },
+  pass_too_short: {
+    type: 'error',
+    message: 'Password must be at least 8 characters.',
+  },
 }
 
 export type FeedbackName = keyof typeof feedbackData

@@ -24,9 +24,9 @@ export default async (request: Request, context: Context) => {
   const url = new URL(request.url)
 
   const formData = await request.formData()
-  const username = formData.get('username')
-  const password = formData.get('password')
-  const pwdConfirmation = formData.get('password_confirmation')
+  const username = formData.get('username') as string | null
+  const password = formData.get('password') as string | null
+  const pwdConfirmation = formData.get('password_confirmation') as string | null
 
   if (!username || !password) {
     setFeedback('user_pass_req')
@@ -37,6 +37,15 @@ export default async (request: Request, context: Context) => {
     setFeedback('pass_no_match')
     return redirect()
   }
+
+  if (password.length < 8) {
+    setFeedback('pass_too_short')
+    return redirect()
+  }
+
+  // TODO: Register the user
+
+  // TODO: Sign user in and redirect to index
 
   return new Response('Hello, world!')
 }
