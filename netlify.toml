@@ -4,12 +4,12 @@ command = "npm run build"
 
 [[edge_functions]]
 path = "/*"
-function = "feedback"
+function = "partial"
 excludedPath = "/api/*"
 
 [[edge_functions]]
 path = "/*"
-function = "partial"
+function = "feedback"
 excludedPath = "/api/*"
 
 [[redirects]]
