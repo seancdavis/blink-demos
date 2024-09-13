@@ -38,6 +38,8 @@ export default async function handler(req: Request, context: Context) {
 
   if (!message || !type) return
 
+  cookies.delete({ name: 'u_feedback', path: '/' })
+
   return new HTMLRewriter()
     .on('feedback', new FeedbackHandler({ type, message }))
     .transform(response)
