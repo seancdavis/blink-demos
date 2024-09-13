@@ -32,5 +32,5 @@ export default function handler(_req: Request, _ctx: Context) {
 
 export const config: Config = {
   path: '/*',
-  excludedPath: ['/login', '/api/auth/register', '/api/auth/login'],
+  excludedPath: ['/login', '/register', '/api/auth/register', '/api/auth/login'],
 }

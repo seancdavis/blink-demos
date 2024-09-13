@@ -5,6 +5,10 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Username and password are required.',
   },
+  pass_no_match: {
+    type: 'error',
+    message: 'Passwords do not match.',
+  },
 }
 
 export type FeedbackName = keyof typeof feedbackData
