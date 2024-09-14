@@ -5,6 +5,7 @@ export const partials = {
   <!-- TODO: Add avatar image here -->
   <span>{{ username }}</span>
 </a>
+<a href="/settings">Edit profile</a>
 <form action="/api/auth/logout" method="post">
   <button type="submit">Sign out</button>
 </form>

@@ -1,32 +1,21 @@
-import type { Context } from '@netlify/functions'
 import { getStore } from '@netlify/blobs'
-import { FeedbackName } from '../../src/utils/feedback-data'
+import type { Context } from '@netlify/functions'
 import bycrypt from 'bcrypt'
+import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
 import type { User } from '../../src/types'
-import { SignJWT } from 'jose'
+import { redirectFn } from '../../src/utils/redirect'
+import { setFeedbackFn } from '../../src/utils/set-feedback'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const redirect = (path: string = 'register') => {
-    return new Response(null, {
-      status: 303,
-      headers: {
-        Location: `${url.origin}/${path}`,
-        'Cache-Control': 'no-cache',
-      },
-    })
-  }
-
-  const setFeedback = (value: FeedbackName) => {
-    cookies.set({ name: 'u_feedback', value, path: '/', httpOnly: true, sameSite: 'Strict' })
-  }
-
   const { cookies } = context
   const url = new URL(request.url)
+  const redirect = redirectFn({ url, defaultPath: 'register' })
+  const setFeedback = setFeedbackFn({ cookies })
 
   const formData = await request.formData()
   const username = formData.get('username') as string | null
