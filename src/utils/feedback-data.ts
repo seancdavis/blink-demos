@@ -1,13 +1,17 @@
-export type FeedbackType = 'success' | 'error'
+export type FeedbackType = 'info' | 'success' | 'error'
 
 export const feedbackData: Record<string, { type: FeedbackType; message: string }> = {
   already_logged_in: {
-    type: 'success',
+    type: 'info',
     message: 'You are already logged in.',
   },
   login_required: {
     type: 'error',
     message: 'You must be logged in to access this page.',
+  },
+  login_success: {
+    type: 'success',
+    message: 'You have been logged in.',
   },
   pass_no_match: {
     type: 'error',
@@ -24,6 +28,10 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
   user_exists: {
     type: 'error',
     message: 'Username is already taken.',
+  },
+  user_pass_error: {
+    type: 'error',
+    message: 'User or password is incorrect.',
   },
   user_pass_req: {
     type: 'error',
