@@ -1,9 +1,13 @@
 export type FeedbackType = 'success' | 'error'
 
 export const feedbackData: Record<string, { type: FeedbackType; message: string }> = {
-  user_pass_req: {
+  already_logged_in: {
+    type: 'success',
+    message: 'You are already logged in.',
+  },
+  login_required: {
     type: 'error',
-    message: 'Username and password are required.',
+    message: 'You must be logged in to access this page.',
   },
   pass_no_match: {
     type: 'error',
@@ -13,21 +17,17 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Password must be at least 8 characters.',
   },
-  user_exists: {
-    type: 'error',
-    message: 'Username is already taken.',
-  },
   user_created: {
     type: 'success',
     message: 'User created successfully.',
   },
-  login_required: {
+  user_exists: {
     type: 'error',
-    message: 'You must be logged in to access this page.',
+    message: 'Username is already taken.',
   },
-  already_logged_in: {
-    type: 'success',
-    message: 'You are already logged in.',
+  user_pass_req: {
+    type: 'error',
+    message: 'Username and password are required.',
   },
 }
 
