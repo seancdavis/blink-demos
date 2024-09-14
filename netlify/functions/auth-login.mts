@@ -3,18 +3,18 @@ import type { Context } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import type { User } from '../../src/types'
-import { redirectFn } from '../../src/utils/redirect'
-import { setFeedbackFn } from '../../src/utils/set-feedback'
+import { functionUtils } from '../../src/utils/function-utils'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { cookies } = context
-  const url = new URL(request.url)
-  const setFeedback = setFeedbackFn({ cookies })
-  const redirect = redirectFn({ url, defaultPath: 'login' })
+  const { redirect, setFeedback, cookies } = functionUtils({
+    request,
+    context,
+    defaultRedirectPath: 'login',
+  })
 
   const formData = await request.formData()
   const username = formData.get('username') as string | null

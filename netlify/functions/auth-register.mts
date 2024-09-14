@@ -4,18 +4,18 @@ import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
 import type { User } from '../../src/types'
-import { redirectFn } from '../../src/utils/redirect'
-import { setFeedbackFn } from '../../src/utils/set-feedback'
+import { functionUtils } from '../../src/utils/function-utils'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { cookies } = context
-  const url = new URL(request.url)
-  const redirect = redirectFn({ url, defaultPath: 'register' })
-  const setFeedback = setFeedbackFn({ cookies })
+  const { redirect, setFeedback, cookies } = functionUtils({
+    request,
+    context,
+    defaultRedirectPath: 'register',
+  })
 
   const formData = await request.formData()
   const username = formData.get('username') as string | null
