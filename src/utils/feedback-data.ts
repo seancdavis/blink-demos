@@ -13,6 +13,14 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Password must be at least 8 characters.',
   },
+  user_exists: {
+    type: 'error',
+    message: 'Username is already taken.',
+  },
+  user_created: {
+    type: 'success',
+    message: 'User created successfully.',
+  },
 }
 
 export type FeedbackName = keyof typeof feedbackData

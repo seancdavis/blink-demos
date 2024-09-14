@@ -1,5 +1,10 @@
 import type { Context } from '@netlify/functions'
+import { getStore } from '@netlify/blobs'
 import { FeedbackName } from '../../src/utils/feedback-data'
+import bycrypt from 'bcrypt'
+import { v4 as uuidv4 } from 'uuid'
+import type { User } from '../../src/types'
+import { SignJWT } from 'jose'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
@@ -43,9 +48,37 @@ export default async (request: Request, context: Context) => {
     return redirect()
   }
 
-  // TODO: Register the user
+  const userStore = getStore('User')
 
-  // TODO: Sign user in and redirect to index
+  const allUsers = await userStore.list()
+  const userExists = allUsers.blobs.some(async (blob) => {
+    const user: User = await userStore.get(blob.key, { type: 'json' })
+    return user.username === username
+  })
+  if (userExists) {
+    setFeedback('user_exists')
+    return redirect()
+  }
 
-  return new Response('Hello, world!')
+  const passwordHash = await bycrypt.hash(password, 10)
+  const uuid = uuidv4()
+  const user: User = { id: uuid, username, password: passwordHash }
+
+  await userStore.setJSON(uuid, user)
+
+  if (!process.env.COOKIE_JWT_SECRET) {
+    throw new Error('Missing COOKIE_JWT_SECRET environment variable')
+  }
+  const secret = new TextEncoder().encode(process.env.COOKIE_JWT_SECRET)
+
+  const jwt = await new SignJWT(user)
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('1w')
+    .sign(secret)
+
+  cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
+
+  setFeedback('user_created')
+  return redirect()
 }
