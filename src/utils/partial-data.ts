@@ -1,15 +1,15 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  'auth-links-signed-in': `<a href="/profile">
+  "auth-links-signed-in": `<a href="/profile">
   <!-- TODO: Add avatar image here -->
   <span>{{ username }}</span>
 </a>
-<form action="/api/auth/logout">
+<form action="/api/auth/logout" method="post">
   <button type="submit">Sign out</button>
 </form>
 `,
-  'auth-links-signed-out': `<a href="/login">Sign in</a>
+  "auth-links-signed-out": `<a href="/login">Sign in</a>
 `,
   feedback: `<div class="{{ classname }}">{{ message }}</div>
 `,
@@ -28,6 +28,6 @@ export const partials = {
   </nav>
 </header>
 `,
-}
+};
 
-export type PartialName = keyof typeof partials
+export type PartialName = keyof typeof partials;
