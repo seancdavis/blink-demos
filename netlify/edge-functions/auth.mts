@@ -1,9 +1,9 @@
-import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import * as jose from 'https://deno.land/x/jose@v5.9.2/index.ts'
-import { FeedbackName } from '../../src/utils/feedback-data.ts'
-import { getStore } from '@netlify/blobs'
+import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { User } from '../../src/types.d.ts'
+import { FeedbackName } from '../../src/utils/feedback-data.ts'
 import { renderPartial } from '../../src/utils/render-partial.ts'
 
 type AuthLinksHandlerOptions = {
@@ -59,7 +59,7 @@ export default async function handler(request: Request, context: Context) {
 
   try {
     decodedJwt = jose.decodeJwt(sessionCookie)
-  } catch (error) {
+  } catch (_err: unknown) {
     if (!isAuthPage) {
       cookies.delete({ name: 'u_session', path: '/' })
       setFeedback('login_required')
