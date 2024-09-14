@@ -21,6 +21,14 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'success',
     message: 'User created successfully.',
   },
+  login_required: {
+    type: 'error',
+    message: 'You must be logged in to access this page.',
+  },
+  already_logged_in: {
+    type: 'success',
+    message: 'You are already logged in.',
+  },
 }
 
 export type FeedbackName = keyof typeof feedbackData
