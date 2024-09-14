@@ -1,8 +1,33 @@
-import type { Config, Context } from '@netlify/edge-functions'
+import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+import type { Context } from '@netlify/edge-functions'
 import * as jose from 'https://deno.land/x/jose@v5.9.2/index.ts'
 import { FeedbackName } from '../../src/utils/feedback-data.ts'
 import { getStore } from '@netlify/blobs'
 import { User } from '../../src/types.d.ts'
+import { renderPartial } from '../../src/utils/render-partial.ts'
+
+type AuthLinksHandlerOptions = {
+  signedIn: boolean
+  username?: string
+}
+
+export class AuthLinksHandler {
+  signedIn: true | false
+  username?: string
+
+  constructor(options: AuthLinksHandlerOptions) {
+    this.signedIn = options.signedIn
+    this.username = options.username
+  }
+
+  element(element: Element) {
+    const partialContent = this.signedIn
+      ? renderPartial({ name: 'auth-links-signed-in', data: { username: this.username || '' } })
+      : renderPartial({ name: 'auth-links-signed-out' })
+
+    element.replace(partialContent, { html: true })
+  }
+}
 
 export default async function handler(request: Request, context: Context) {
   const { cookies } = context
@@ -14,6 +39,14 @@ export default async function handler(request: Request, context: Context) {
 
   const setFeedback = (value: FeedbackName) => {
     cookies.set({ name: 'u_feedback', value, path: '/', httpOnly: true, sameSite: 'Strict' })
+  }
+
+  const nextContextWithAuthLinks = async (options: AuthLinksHandlerOptions) => {
+    const { signedIn, username } = options
+    const response = await context.next()
+    return new HTMLRewriter()
+      .on('auth-links', new AuthLinksHandler({ signedIn, username }))
+      .transform(response)
   }
 
   const sessionCookie = cookies.get('u_session')
@@ -40,7 +73,7 @@ export default async function handler(request: Request, context: Context) {
   }
 
   if (!decodedJwt) {
-    return context.next()
+    return nextContextWithAuthLinks({ signedIn: false })
   }
 
   const userStore = getStore('User')
@@ -52,7 +85,7 @@ export default async function handler(request: Request, context: Context) {
   }
 
   if (!userBlob) {
-    return context.next()
+    return nextContextWithAuthLinks({ signedIn: false })
   }
 
   const userMatches =
@@ -71,9 +104,5 @@ export default async function handler(request: Request, context: Context) {
     return Response.redirect('/', 303)
   }
 
-  return context.next()
-}
-
-export const config: Config = {
-  path: '/*',
+  return nextContextWithAuthLinks({ signedIn: true, username: userBlob.username })
 }
