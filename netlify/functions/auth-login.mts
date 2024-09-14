@@ -54,9 +54,9 @@ export default async (request: Request, context: Context) => {
   }
 
   const userBlob: User = await userStore.get(userId, { type: 'json' })
-  const passwordHash = await bycrypt.hash(password, 10)
+  const passwordValid = await bycrypt.compare(password, userBlob.password)
 
-  if (passwordHash !== userBlob.password) {
+  if (!passwordValid) {
     setFeedback('user_pass_error')
     return redirect()
   }
@@ -75,5 +75,5 @@ export default async (request: Request, context: Context) => {
   cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
 
   setFeedback('login_success')
-  return redirect('/')
+  return redirect('')
 }
