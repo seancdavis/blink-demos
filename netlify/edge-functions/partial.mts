@@ -1,7 +1,7 @@
-import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import type { Context } from '@netlify/edge-functions'
-import { type PartialName } from '../../src/utils/partial-data.ts'
-import { renderPartial } from '../../src/utils/render-partial.ts'
+import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+import { type PartialName } from '../../src/utils/partial-data.mts'
+import { renderPartial } from '../../src/utils/render-partial.mts'
 
 export class PartialHandler {
   element(element: Element) {

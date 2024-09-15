@@ -4,7 +4,7 @@ import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
 import type { User } from '../../src/types'
-import { functionUtils } from '../../src/utils/functions/index.mts'
+import { functionUtils } from '../../src/utils/index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {

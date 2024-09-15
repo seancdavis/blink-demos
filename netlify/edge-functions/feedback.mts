@@ -1,7 +1,7 @@
-import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import type { Context } from '@netlify/edge-functions'
 import { html } from 'https://deno.land/x/html@v1.2.0/mod.ts'
-import { feedbackData, type FeedbackType, FeedbackName } from '../../src/utils/feedback-data.ts'
+import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+import { FeedbackName, feedbackData, type FeedbackType } from '../../src/utils/feedback-data.mts'
 
 type FeedbackHandlerOptions = {
   type: FeedbackType

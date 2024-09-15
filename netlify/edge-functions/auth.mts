@@ -3,8 +3,8 @@ import type { Context } from '@netlify/edge-functions'
 import * as jose from 'https://deno.land/x/jose@v5.9.2/index.ts'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { User } from '../../src/types.d.ts'
-import { functionUtils } from '../../src/utils/functions/index.mts'
-import { renderPartial } from '../../src/utils/render-partial.ts'
+import { functionUtils } from '../../src/utils/index.mts'
+import { renderPartial } from '../../src/utils/render-partial.mts'
 
 type AuthLinksHandlerOptions = {
   signedIn: boolean

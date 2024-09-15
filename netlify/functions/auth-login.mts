@@ -3,7 +3,7 @@ import type { Context } from '@netlify/edge-functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import type { User } from '../../src/types'
-import { functionUtils } from '../../src/utils/functions/index.mts'
+import { functionUtils } from '../../src/utils/index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {

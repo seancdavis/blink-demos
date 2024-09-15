@@ -1,5 +1,5 @@
 import { Context } from '@netlify/edge-functions'
-import { FeedbackName } from '../feedback-data.ts'
+import { FeedbackName } from './feedback-data.mts'
 
 type SetFeedbackFnOptions = {
   cookies: Context['cookies']

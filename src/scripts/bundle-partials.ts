@@ -1,6 +1,6 @@
+import glob from 'fast-glob'
 import fs from 'fs'
 import path from 'path'
-import glob from 'fast-glob'
 import prettier from 'prettier'
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
@@ -10,7 +10,7 @@ async function run() {
   const partialFiles = glob.sync('**/*.html', { cwd: partialsDir })
 
   let partialsOutput = `export const partials = {`
-  const OUTPUT_FILE = path.join(__dirname, '../utils/partial-data.ts')
+  const OUTPUT_FILE = path.join(__dirname, '../utils/partial-data.mts')
 
   for (const file of partialFiles) {
     const content = fs.readFileSync(path.join(partialsDir, file), 'utf8')

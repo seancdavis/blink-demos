@@ -1,4 +1,4 @@
-import { partials, type PartialName } from './partial-data.ts'
+import { partials, type PartialName } from './partial-data.mts'
 
 type RenderPartialOptions = {
   name: PartialName
