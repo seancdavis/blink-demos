@@ -23,7 +23,7 @@ export class AuthLinksHandler {
   element(element: Element) {
     const avatarSrc =
       this.signedIn && this.hasAvatar
-        ? `/uploads/avatar/${this.username}`
+        ? `/images/avatar/small/${this.username}`
         : '/images/default-avatar.jpg'
 
     const partialContent = this.signedIn

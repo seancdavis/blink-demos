@@ -33,6 +33,11 @@ to = "/.netlify/functions/user-avatar?username=:username"
 status = 200
 
 [[redirects]]
+from = "/images/avatar/small/:username"
+to = "/.netlify/images?url=/uploads/avatar/:username&width=256&height=256&fit=cover"
+status = 200
+
+[[redirects]]
 from = "/images/*"
 to = "/.netlify/images?url=/images/:splat"
 status = 200
