@@ -10,7 +10,7 @@ export function redirectFn(options: RedirectFnOptions) {
     return new Response(null, {
       status: 303,
       headers: {
-        Location: `${url.origin}/${path}`,
+        Location: `${url.origin}${path}`,
         'Cache-Control': 'no-cache',
       },
     })

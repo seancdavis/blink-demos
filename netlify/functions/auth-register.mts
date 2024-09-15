@@ -11,10 +11,10 @@ export default async (request: Request, context: Context) => {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { redirect, setFeedback, cookies } = functionUtils({
+  const { redirect, setFeedback, cookies } = await functionUtils({
     request,
     context,
-    defaultRedirectPath: 'register',
+    defaultRedirectPath: '/register',
   })
 
   const formData = await request.formData()

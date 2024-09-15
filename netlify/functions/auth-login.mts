@@ -10,10 +10,10 @@ export default async (request: Request, context: Context) => {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { redirect, setFeedback, cookies } = functionUtils({
+  const { redirect, setFeedback, cookies } = await functionUtils({
     request,
     context,
-    defaultRedirectPath: 'login',
+    defaultRedirectPath: '/login',
   })
 
   const formData = await request.formData()
@@ -64,5 +64,5 @@ export default async (request: Request, context: Context) => {
   cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
 
   setFeedback('login_success')
-  return redirect('')
+  return redirect('/')
 }

@@ -1,9 +1,6 @@
-import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
-import * as jose from 'https://deno.land/x/jose@v5.9.2/index.ts'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
-import { User } from '../../src/types.d.ts'
-import { functionUtils } from '../../src/utils/index.mts'
+import { edgeFunctionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 
 type AuthLinksHandlerOptions = {
@@ -33,8 +30,7 @@ export class AuthLinksHandler {
 }
 
 export default async function handler(request: Request, context: Context) {
-  const { cookies } = context
-  const { setFeedback, url } = functionUtils({ request, context })
+  const { setFeedback, url, cookies, user } = await edgeFunctionUtils({ request, context })
   const requestPath = url.pathname
   const isAuthPage = ['/login', '/register', '/api/auth/register', '/api/auth/login'].includes(
     requestPath,
@@ -48,60 +44,29 @@ export default async function handler(request: Request, context: Context) {
       .transform(response)
   }
 
-  const sessionCookie = cookies.get('u_session')
-  if (!sessionCookie && !isAuthPage) {
+  // If no user is found and the page is not an auth page, redirect to login
+  if (!user && !isAuthPage) {
+    cookies.delete({ name: 'u_session', path: '/' })
     setFeedback('login_required')
     return Response.redirect('/login', 303)
   }
 
-  let decodedJwt: User | null = null
-
-  try {
-    decodedJwt = jose.decodeJwt(sessionCookie)
-  } catch (_err: unknown) {
-    if (!isAuthPage) {
-      cookies.delete({ name: 'u_session', path: '/' })
-      setFeedback('login_required')
-      return Response.redirect('/login', 303)
-    }
-  }
-
-  if (!decodedJwt && !isAuthPage) {
-    setFeedback('login_required')
-    return Response.redirect('/login', 303)
-  }
-
-  if (!decodedJwt) {
+  // If no user is found and the page is an auth page, render the page with the
+  // unauthenticated auth links
+  if (!user && isAuthPage) {
     return nextContextWithAuthLinks({ signedIn: false })
   }
 
-  const userStore = getStore('User')
-  const userBlob: User | null = await userStore.get(decodedJwt.id, { type: 'json' })
-
-  if (!userBlob && !isAuthPage) {
-    setFeedback('login_required')
-    return Response.redirect('/login', 303)
-  }
-
-  if (!userBlob) {
-    return nextContextWithAuthLinks({ signedIn: false })
-  }
-
-  const userMatches =
-    userBlob &&
-    userBlob.username === decodedJwt.username &&
-    userBlob.id === decodedJwt.id &&
-    userBlob.password === decodedJwt.password
-
-  if (!userMatches && !isAuthPage) {
-    setFeedback('login_required')
-    return Response.redirect('/login', 303)
-  }
-
-  if (userMatches && isAuthPage) {
+  // If a user is found and the page is an auth page, redirect to the home page
+  if (user && isAuthPage) {
     setFeedback('already_logged_in')
     return Response.redirect('/', 303)
   }
 
-  return nextContextWithAuthLinks({ signedIn: true, username: userBlob.username })
+  // If a user is found and the page is not an auth page, render the page with
+  // the authenticated auth links.
+  //
+  // Note: The user does exist at this point based on the logic above, so we can
+  // safely assert that the user is not null.
+  return nextContextWithAuthLinks({ signedIn: true, username: user!.username })
 }

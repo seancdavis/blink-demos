@@ -6,10 +6,10 @@ export default async (request: Request, context: Context) => {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { redirect, cookies } = functionUtils({
+  const { redirect, cookies } = await functionUtils({
     request,
     context,
-    defaultRedirectPath: 'login',
+    defaultRedirectPath: '/login',
   })
 
   cookies.delete({ name: 'u_session', path: '/' })
