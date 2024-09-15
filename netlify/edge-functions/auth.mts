@@ -22,7 +22,10 @@ export class AuthLinksHandler {
 
   element(element: Element) {
     const partialContent = this.signedIn
-      ? renderPartial({ name: 'auth-links-signed-in', data: { username: this.username || '' } })
+      ? renderPartial({
+          name: 'auth-links-signed-in',
+          data: { username: this.username || '', avatarSrc: '/images/default-avatar.jpg' },
+        })
       : renderPartial({ name: 'auth-links-signed-out' })
 
     element.replace(partialContent, { html: true })

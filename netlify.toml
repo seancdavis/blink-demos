@@ -26,3 +26,8 @@ status = 200
 from = "/api/user/*"
 to = "/.netlify/functions/user-:splat"
 status = 200
+
+[[redirects]]
+from = "/images/*"
+to = "/.netlify/images?url=/images/:splat"
+status = 200

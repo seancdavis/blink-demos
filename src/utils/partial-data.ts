@@ -2,7 +2,7 @@ export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
   "auth-links-signed-in": `<a href="/profile">
-  <!-- TODO: Add avatar image here -->
+  <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
   <span>{{ username }}</span>
 </a>
 <a href="/settings">Edit profile</a>
@@ -18,6 +18,9 @@ export const partials = {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }} | U</title>
+
+  <link rel="stylesheet" href="/base.css" />
+  <link rel="stylesheet" href="/components.css" />
 </head>
 `,
   header: `<header>
