@@ -7,7 +7,7 @@
 
     <h1>Edit profile</h1>
 
-    <form action="/api/user/upload-avatar" method="post">
+    <form action="/api/user/upload-avatar" method="post" enctype="multipart/form-data">
       <div>
         <label for="avatar">Avatar</label>
         <input type="file" name="avatar" id="avatar" accept="image/*" required />
