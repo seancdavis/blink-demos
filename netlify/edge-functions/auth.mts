@@ -3,7 +3,7 @@ import type { Context } from '@netlify/edge-functions'
 import * as jose from 'https://deno.land/x/jose@v5.9.2/index.ts'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { User } from '../../src/types.d.ts'
-import { edgeFunctionUtils } from '../../src/utils/edge-function-utils.mts'
+import { functionUtils } from '../../src/utils/functions/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.ts'
 
 type AuthLinksHandlerOptions = {
@@ -34,7 +34,7 @@ export class AuthLinksHandler {
 
 export default async function handler(request: Request, context: Context) {
   const { cookies } = context
-  const { setFeedback, url } = edgeFunctionUtils({ request, context })
+  const { setFeedback, url } = functionUtils({ request, context })
   const requestPath = url.pathname
   const isAuthPage = ['/login', '/register', '/api/auth/register', '/api/auth/login'].includes(
     requestPath,

@@ -1,9 +1,9 @@
 import { getStore } from '@netlify/blobs'
-import type { Context } from '@netlify/functions'
+import type { Context } from '@netlify/edge-functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import type { User } from '../../src/types'
-import { functionUtils } from '../../src/utils/function-utils'
+import { functionUtils } from '../../src/utils/functions/index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
