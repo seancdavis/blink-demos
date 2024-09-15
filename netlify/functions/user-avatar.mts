@@ -17,18 +17,14 @@ export default async (request: Request, context: Context) => {
   }
 
   const user = await getUserByUsername(avatarUsername)
-  if (!user) {
+  if (!user || !user.hasAvatar) {
     return new Response('Not Found', { status: 404 })
   }
 
   const userAvatarStore = getStore({ name: 'UserAvatar', consistency: 'strong' })
-  const userAvatarBlob = await userAvatarStore.get(user.id.toString(), {
+  const userAvatarBlob = await userAvatarStore.get(user.username.toString(), {
     type: 'stream',
   })
-
-  if (!userAvatarBlob) {
-    return new Response('Not Found', { status: 404 })
-  }
 
   return new Response(userAvatarBlob)
 }
