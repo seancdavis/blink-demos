@@ -6,22 +6,30 @@ import { renderPartial } from '../../src/utils/render-partial.mts'
 type AuthLinksHandlerOptions = {
   signedIn: boolean
   username?: string
+  hasAvatar?: boolean
 }
 
 export class AuthLinksHandler {
-  signedIn: true | false
+  signedIn: boolean
   username?: string
+  hasAvatar?: boolean
 
   constructor(options: AuthLinksHandlerOptions) {
     this.signedIn = options.signedIn
     this.username = options.username
+    this.hasAvatar = options.hasAvatar
   }
 
   element(element: Element) {
+    const avatarSrc =
+      this.signedIn && this.hasAvatar
+        ? `/uploads/avatar/${this.username}`
+        : '/images/default-avatar.jpg'
+
     const partialContent = this.signedIn
       ? renderPartial({
           name: 'auth-links-signed-in',
-          data: { username: this.username || '', avatarSrc: '/images/default-avatar.jpg' },
+          data: { username: this.username || '', avatarSrc },
         })
       : renderPartial({ name: 'auth-links-signed-out' })
 
@@ -37,10 +45,10 @@ export default async function handler(request: Request, context: Context) {
   )
 
   const nextContextWithAuthLinks = async (options: AuthLinksHandlerOptions) => {
-    const { signedIn, username } = options
+    const { signedIn, username, hasAvatar } = options
     const response = await context.next()
     return new HTMLRewriter()
-      .on('auth-links', new AuthLinksHandler({ signedIn, username }))
+      .on('auth-links', new AuthLinksHandler({ signedIn, username, hasAvatar }))
       .transform(response)
   }
 
@@ -68,5 +76,9 @@ export default async function handler(request: Request, context: Context) {
   //
   // Note: The user does exist at this point based on the logic above, so we can
   // safely assert that the user is not null.
-  return nextContextWithAuthLinks({ signedIn: true, username: user!.username })
+  return nextContextWithAuthLinks({
+    signedIn: true,
+    username: user!.username,
+    hasAvatar: user!.hasAvatar,
+  })
 }
