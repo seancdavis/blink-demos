@@ -25,7 +25,7 @@ export async function getCurrentUser(options: GetCurrentUserOptions): Promise<Us
   // The JWT didn't fail to decode, but it's not a valid JWT
   if (!decodedJwt) return null
 
-  const userStore = getStore('User')
+  const userStore = getStore({ name: 'User', consistency: 'strong' })
   const userBlob: User | null = await userStore.get(decodedJwt.id, { type: 'json' })
 
   // User blob not found

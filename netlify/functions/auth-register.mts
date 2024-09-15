@@ -3,8 +3,8 @@ import type { Context } from '@netlify/edge-functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
-import type { User } from '../../src/types'
 import { functionUtils } from '../../src/utils/index.mts'
+import { User } from '../../src/utils/types.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
@@ -37,7 +37,7 @@ export default async (request: Request, context: Context) => {
     return redirect()
   }
 
-  const userStore = getStore('User')
+  const userStore = getStore({ name: 'User', consistency: 'strong' })
 
   const allUsers = await userStore.list()
   const userExists = allUsers.blobs.some(async (blob) => {

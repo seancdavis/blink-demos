@@ -5,7 +5,7 @@ command = "npm run build"
 [[edge_functions]]
 path = "/*"
 function = "auth"
-excludedPath = "/api/*"
+excludedPath = "/api/auth/*"
 
 [[edge_functions]]
 path = "/*"

@@ -5,6 +5,10 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'info',
     message: 'You are already logged in.',
   },
+  avatar_uploaded: {
+    type: 'success',
+    message: 'Avatar uploaded successfully.',
+  },
   login_required: {
     type: 'error',
     message: 'You must be logged in to access this page.',

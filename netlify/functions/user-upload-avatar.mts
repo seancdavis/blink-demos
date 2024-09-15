@@ -1,74 +1,30 @@
-import type { Context } from '@netlify/functions'
+import { getStore } from '@netlify/blobs'
+import type { Context } from '@netlify/edge-functions'
+import { functionUtils } from '../../src/utils/index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  // const redirect = (path: string = 'login') => {
-  //   return new Response(null, {
-  //     status: 303,
-  //     headers: {
-  //       Location: `${url.origin}/${path}`,
-  //       'Cache-Control': 'no-cache',
-  //     },
-  //   })
-  // }
+  const { redirect, setFeedback, user: userBlob } = await functionUtils({ request, context })
 
-  // const setFeedback = (value: FeedbackName) => {
-  //   cookies.set({ name: 'u_feedback', value, path: '/', httpOnly: true, sameSite: 'Strict' })
-  // }
+  // The auth edge function handles the redirect if the user is not found, so we
+  // can assume that the user is found here
+  const user = userBlob!
 
-  // const { cookies } = context
-  // const url = new URL(request.url)
+  const formData = await request.formData()
+  const image = formData.get('avatar') as File
 
-  // const formData = await request.formData()
-  // const username = formData.get('username') as string | null
-  // const password = formData.get('password') as string | null
+  // Store the avatar image in the UserAvatar store
+  const userAvatarStore = getStore({ name: 'UserAvatar', consistency: 'strong' })
+  await userAvatarStore.set(user.id.toString(), image)
 
-  // if (!username || !password) {
-  //   setFeedback('user_pass_req')
-  //   return redirect()
-  // }
+  // Update the user blob with the new avatar URL
+  const userStore = getStore({ name: 'User', consistency: 'strong' })
+  user.avatar = `/uploads/avatar/${user.id}`
+  await userStore.setJSON(user.id, user)
 
-  // const userStore = getStore('User')
-
-  // const allUsers = await userStore.list()
-  // let userId: string | null = null
-  // for (const blob of allUsers.blobs) {
-  //   const user: User = await userStore.get(blob.key, { type: 'json' })
-  //   if (user.username === username) {
-  //     userId = blob.key
-  //     break
-  //   }
-  // }
-
-  // if (!userId) {
-  //   setFeedback('user_pass_error')
-  //   return redirect()
-  // }
-
-  // const userBlob: User = await userStore.get(userId, { type: 'json' })
-  // const passwordValid = await bycrypt.compare(password, userBlob.password)
-
-  // if (!passwordValid) {
-  //   setFeedback('user_pass_error')
-  //   return redirect()
-  // }
-
-  // if (!process.env.COOKIE_JWT_SECRET) {
-  //   throw new Error('Missing COOKIE_JWT_SECRET environment variable')
-  // }
-  // const secret = new TextEncoder().encode(process.env.COOKIE_JWT_SECRET)
-
-  // const jwt = await new SignJWT(userBlob)
-  //   .setProtectedHeader({ alg: 'HS256' })
-  //   .setIssuedAt()
-  //   .setExpirationTime('1w')
-  //   .sign(secret)
-
-  // cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
-
-  // setFeedback('login_success')
-  // return redirect('')
+  setFeedback('avatar_uploaded')
+  return redirect('/settings')
 }
