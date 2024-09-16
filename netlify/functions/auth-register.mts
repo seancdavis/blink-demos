@@ -39,11 +39,15 @@ export default async (request: Request, context: Context) => {
 
   const userStore = getStore({ name: 'User', consistency: 'strong' })
 
-  const allUsers = await userStore.list()
-  const userExists = allUsers.blobs.some(async (blob) => {
-    const user: User = await userStore.get(blob.key, { type: 'json' })
-    return user.username === username
-  })
+  const userStoreList = await userStore.list()
+  const allUsers = await Promise.all(
+    userStoreList.blobs.map(async (blob) => {
+      const user = await userStore.get(blob.key, { type: 'json' })
+      return user
+    }),
+  )
+  const userExists = allUsers.some((user) => user.username === username)
+
   if (userExists) {
     setFeedback('user_exists')
     return redirect()
