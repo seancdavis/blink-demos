@@ -17,6 +17,10 @@ path = "/*"
 function = "feedback"
 excludedPath = "/api/*"
 
+[[edge_functions]]
+path = "/"
+function = "latest-posts"
+
 [[redirects]]
 from = "/api/:type/*"
 to = "/.netlify/functions/:type-:splat"

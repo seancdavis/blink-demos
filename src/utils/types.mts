@@ -12,3 +12,5 @@ export type Post = {
   userId: string
   createdAt: string
 }
+
+export type PostWithUser = Post & { user: User }

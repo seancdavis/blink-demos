@@ -2,7 +2,7 @@ import { partials, type PartialName } from './partial-data.mts'
 
 type RenderPartialOptions = {
   name: PartialName
-  data?: Record<string, string>
+  data?: Record<string, any>
 }
 
 export function renderPartial(options: RenderPartialOptions): string {

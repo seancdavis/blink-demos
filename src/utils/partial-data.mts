@@ -1,7 +1,7 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  "auth-links-signed-in": `<a href="/profile">
+  "auth-links-signed-in": `<a href="/@{{ username }}">
   <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
   <span>{{ username }}</span>
 </a>
@@ -31,6 +31,16 @@ export const partials = {
     <auth-links></auth-links>
   </nav>
 </header>
+`,
+  "post-card": `<div>
+  <h3>{{ title }}</h3>
+  <div>{{ content }}</div>
+  <a href="/@{{ username }}">
+    <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
+    <span>{{ username }}</span>
+  </a>
+  <div>{{ date }}</div>
+</div>
 `,
 };
 
