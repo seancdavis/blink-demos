@@ -21,6 +21,10 @@ excludedPath = "/api/*"
 path = "/"
 function = "latest-posts"
 
+[[edge_functions]]
+path = "/@:username"
+function = "profile"
+
 [[redirects]]
 from = "/api/:type/*"
 to = "/.netlify/functions/:type-:splat"

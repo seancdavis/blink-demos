@@ -42,6 +42,19 @@ export const partials = {
   <div>{{ date }}</div>
 </div>
 `,
+  profile: `<!doctype html>
+<html lang="en">
+  <partial name="head" title="Login"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <h1>{{ username }}</h1>
+
+    <div>Posts go here ...</div>
+  </body>
+</html>
+`,
 };
 
 export type PartialName = keyof typeof partials;
