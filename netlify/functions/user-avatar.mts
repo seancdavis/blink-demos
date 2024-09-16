@@ -17,7 +17,7 @@ export default async (request: Request, context: Context) => {
   }
 
   const user = await getUserByUsername(avatarUsername)
-  if (!user || !user.hasAvatar) {
+  if (!user || user.avatarSrc === '/images/default-avatar.jpg') {
     return new Response('Not Found', { status: 404 })
   }
 
