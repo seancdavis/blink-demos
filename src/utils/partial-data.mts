@@ -42,6 +42,8 @@ export const partials = {
   <div>{{ date }}</div>
 </div>
 `,
+  "profile-no-posts": `<div>No posts from this user yet.</div>
+`,
   profile: `<!doctype html>
 <html lang="en">
   <partial name="head" title="Login"></partial>

@@ -48,12 +48,16 @@ export default async function handler(request: Request, context: Context) {
     .filter((post) => post.userId === user.id)
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
-  const posts = userPosts
+  let posts = userPosts
     .map((post) => {
       const date = format(new Date(post.createdAt), 'yyyy-MM-dd')
       return renderPartial({ name: 'post-card', data: { ...post, ...user, date } })
     })
     .join('')
+
+  if (posts.length === 0) {
+    posts = renderPartial({ name: 'profile-no-posts', data: { ...user } })
+  }
 
   const data = { ...user, posts }
   const html = renderPartial({ name: 'profile', data })
