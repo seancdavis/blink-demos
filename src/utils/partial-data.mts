@@ -19,8 +19,8 @@ export const partials = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }} | U</title>
 
-  <link rel="stylesheet" href="/base.css" />
-  <link rel="stylesheet" href="/components.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
 </head>
 `,
   header: `<header>
