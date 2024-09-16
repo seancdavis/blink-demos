@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
+import { format } from 'https://deno.land/std@0.203.0/datetime/mod.ts'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { PostWithUser } from '../../src/utils/types.mts'
@@ -17,7 +18,10 @@ export class LatestPostsHandler {
 
   element(element: Element) {
     const partialContent = this.posts
-      .map((post) => renderPartial({ name: 'post-card', data: { ...post, ...post.user } }))
+      .map((post) => {
+        const date = format(new Date(post.createdAt), 'yyyy-MM-dd')
+        return renderPartial({ name: 'post-card', data: { ...post, ...post.user, date } })
+      })
       .join('')
 
     element.replace(partialContent, { html: true })
