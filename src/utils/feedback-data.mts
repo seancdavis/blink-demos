@@ -25,6 +25,14 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Password must be at least 8 characters.',
   },
+  post_created: {
+    type: 'success',
+    message: 'Post created successfully.',
+  },
+  post_missing_fields: {
+    type: 'error',
+    message: 'Title and content are required.',
+  },
   user_created: {
     type: 'success',
     message: 'User created successfully.',

@@ -18,13 +18,8 @@ function = "feedback"
 excludedPath = "/api/*"
 
 [[redirects]]
-from = "/api/auth/*"
-to = "/.netlify/functions/auth-:splat"
-status = 200
-
-[[redirects]]
-from = "/api/user/*"
-to = "/.netlify/functions/user-:splat"
+from = "/api/:type/*"
+to = "/.netlify/functions/:type-:splat"
 status = 200
 
 [[redirects]]

@@ -6,5 +6,14 @@
     <feedback></feedback>
 
     <h1>Welcome to U</h1>
+
+    <div>
+      <h2>New post</h2>
+      <form action="/api/posts/create" method="post">
+        <input type="text" name="title" placeholder="Title" required />
+        <textarea name="content" placeholder="Content" required></textarea>
+        <button type="submit">Post</button>
+      </form>
+    </div>
   </body>
 </html>
