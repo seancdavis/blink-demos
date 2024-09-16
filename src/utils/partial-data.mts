@@ -51,7 +51,10 @@ export const partials = {
 
     <h1>{{ username }}</h1>
 
-    <div>Posts go here ...</div>
+    <div>
+      <h2>My latest posts</h2>
+      {{ posts }}
+    </div>
   </body>
 </html>
 `,

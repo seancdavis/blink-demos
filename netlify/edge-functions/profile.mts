@@ -1,8 +1,9 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
+import { format } from 'https://deno.land/std@0.203.0/datetime/mod.ts'
 import { edgeFunctionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
-import { User } from '../../src/utils/types.mts'
+import { Post, User } from '../../src/utils/types.mts'
 
 // type ProfileHandlerOptions = {
 //   posts: PostWithUser[]
@@ -16,12 +17,6 @@ import { User } from '../../src/utils/types.mts'
 //   }
 
 //   element(element: Element) {
-//     const partialContent = this.posts
-//       .map((post) => {
-//         const date = format(new Date(post.createdAt), 'yyyy-MM-dd')
-//         return renderPartial({ name: 'post-card', data: { ...post, ...post.user, date } })
-//       })
-//       .join('')
 
 //     element.replace(partialContent, { html: true })
 //   }
@@ -45,18 +40,22 @@ export default async function handler(request: Request, context: Context) {
     return context.next()
   }
 
-  // const postStore = getStore({ name: 'Post', consistency: 'strong' })
-  // const allPostIds = (await postStore.list()).blobs.map(({ key }) => key)
-  // const posts: PostWithUser[] = (
-  //   await Promise.all(allPostIds.map(async (id) => await postStore.get(id, { type: 'json' })))
-  // )
-  //   .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-  //   .map((post) => {
-  //     const user = users.find((user) => user.id === post.userId)
-  //     return { ...post, user }
-  //   })
+  const postStore = getStore({ name: 'Post', consistency: 'strong' })
+  const allPostIds = (await postStore.list()).blobs.map(({ key }) => key)
+  const userPosts: Post[] = (
+    await Promise.all(allPostIds.map(async (id) => await postStore.get(id, { type: 'json' })))
+  )
+    .filter((post) => post.userId === user.id)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
-  const data = { ...user }
+  const posts = userPosts
+    .map((post) => {
+      const date = format(new Date(post.createdAt), 'yyyy-MM-dd')
+      return renderPartial({ name: 'post-card', data: { ...post, ...user, date } })
+    })
+    .join('')
+
+  const data = { ...user, posts }
   const html = renderPartial({ name: 'profile', data })
 
   return new Response(html, {
