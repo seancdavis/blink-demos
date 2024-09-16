@@ -51,7 +51,12 @@ export default async (request: Request, context: Context) => {
 
   const passwordHash = await bycrypt.hash(password, 10)
   const uuid = uuidv4()
-  const user: User = { id: uuid, username, password: passwordHash }
+  const user: User = {
+    id: uuid,
+    username,
+    password: passwordHash,
+    avatarSrc: '/images/default-avatar.jpg',
+  }
 
   await userStore.setJSON(uuid, user)
 

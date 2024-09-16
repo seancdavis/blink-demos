@@ -22,7 +22,7 @@ export default async (request: Request, context: Context) => {
 
   // Update the user blob with the new avatar URL
   const userStore = getStore({ name: 'User', consistency: 'strong' })
-  user.hasAvatar = true
+  user.avatarSrc = `/images/avatar/small/${user.username}`
   await userStore.setJSON(user.id, user)
 
   setFeedback('avatar_uploaded')
