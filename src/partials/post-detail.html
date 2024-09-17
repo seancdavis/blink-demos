@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <partial name="head" title="{{ title }}"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <div>
+      <h2>{{ title }}</h2>
+      <div>{{ content }}</div>
+      <a href="/@{{ username }}">
+        <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
+        <span>{{ username }}</span>
+      </a>
+      <div>{{ date }}</div>
+    </div>
+  </body>
+</html>

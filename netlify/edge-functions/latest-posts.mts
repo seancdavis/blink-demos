@@ -20,7 +20,10 @@ export class LatestPostsHandler {
     const partialContent = this.posts
       .map((post) => {
         const date = timeAgoInWords(new Date(post.createdAt))
-        return renderPartial({ name: 'post-card', data: { ...post, ...post.user, date } })
+        return renderPartial({
+          name: 'post-card',
+          data: { ...post, ...post.user, date, postId: post.id },
+        })
       })
       .join('')
 

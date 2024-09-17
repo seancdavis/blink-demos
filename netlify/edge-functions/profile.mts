@@ -43,7 +43,7 @@ export default async function handler(request: Request, context: Context) {
   let posts = userPosts
     .map((post) => {
       const date = timeAgoInWords(new Date(post.createdAt))
-      return renderPartial({ name: 'post-card', data: { ...post, ...user, date } })
+      return renderPartial({ name: 'post-card', data: { ...post, ...user, date, postId: post.id } })
     })
     .join('')
 

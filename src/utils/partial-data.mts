@@ -33,7 +33,7 @@ export const partials = {
 </header>
 `,
   "new-post-form": `<form action="/api/posts/create" method="post">
-  <input type="text" name="title" placeholder="Title" required />
+  <input type="text" name="title" placeholder="Title" required minlength="10" maxlength="64" />
   <div>
     <textarea
       id="new-post-content"
@@ -70,7 +70,7 @@ export const partials = {
 </script>
 `,
   "post-card": `<div>
-  <h3>{{ title }}</h3>
+  <h3><a href="/post/{{ postId }}">{{ title }}</a></h3>
   <div>{{ content }}</div>
   <a href="/@{{ username }}">
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
@@ -79,16 +79,35 @@ export const partials = {
   <div>{{ date }}</div>
 </div>
 `,
-  "profile-no-posts": `<div>No posts from this user yet.</div>
-`,
-  profile: `<!doctype html>
+  "post-detail": `<!doctype html>
 <html lang="en">
-  <partial name="head" title="Login"></partial>
+  <partial name="head" title="{{ title }}"></partial>
   <body>
     <partial name="header"></partial>
     <feedback></feedback>
 
-    <h1>{{ username }}</h1>
+    <div>
+      <h2>{{ title }}</h2>
+      <div>{{ content }}</div>
+      <a href="/@{{ username }}">
+        <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
+        <span>{{ username }}</span>
+      </a>
+      <div>{{ date }}</div>
+    </div>
+  </body>
+</html>
+`,
+  "profile-no-posts": `<div>No posts from this user yet.</div>
+`,
+  profile: `<!doctype html>
+<html lang="en">
+  <partial name="head" title="{{ username }} Profile"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <h1>{{ username }} Profile</h1>
 
     <div>
       <h2>My latest posts</h2>

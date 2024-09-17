@@ -25,6 +25,10 @@ function = "latest-posts"
 path = "/@:username"
 function = "profile"
 
+[[edge_functions]]
+path = "/post/:id"
+function = "post"
+
 [[redirects]]
 from = "/api/:type/*"
 to = "/.netlify/functions/:type-:splat"
