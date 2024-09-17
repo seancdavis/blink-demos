@@ -1,0 +1,6 @@
+- [ ] Add admin seed function that will create users and posts. It should be able to accept a series of posts that I've gotten from ChatGPT.
+- [ ] Show truncated posts on the home page.
+- [ ] Get durable cache working for post detail and profiles.
+- [ ] Add branding, favicon, and logo.
+- [ ] Clean up styles
+- [ ] Better default avatar images for seeded content (or generate them)
