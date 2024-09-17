@@ -1,7 +1,7 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  "auth-links-signed-in": `<a href="/@{{ username }}">
+  'auth-links-signed-in': `<a href="/@{{ username }}">
   <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
   <span>{{ username }}</span>
 </a>
@@ -10,14 +10,14 @@ export const partials = {
   <button type="submit">Sign out</button>
 </form>
 `,
-  "auth-links-signed-out": `<a href="/login">Sign in</a>
+  'auth-links-signed-out': `<a href="/login">Sign in</a>
 `,
   feedback: `<div class="{{ classname }}">{{ message }}</div>
 `,
   head: `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title }} | Wink</title>
+  <title>{{ title }} | Blink</title>
 
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/components.css" />
@@ -32,7 +32,7 @@ export const partials = {
   </nav>
 </header>
 `,
-  "post-card": `<div>
+  'post-card': `<div>
   <h3>{{ title }}</h3>
   <div>{{ content }}</div>
   <a href="/@{{ username }}">
@@ -42,7 +42,7 @@ export const partials = {
   <div>{{ date }}</div>
 </div>
 `,
-  "profile-no-posts": `<div>No posts from this user yet.</div>
+  'profile-no-posts': `<div>No posts from this user yet.</div>
 `,
   profile: `<!doctype html>
 <html lang="en">
@@ -60,6 +60,6 @@ export const partials = {
   </body>
 </html>
 `,
-};
+}
 
-export type PartialName = keyof typeof partials;
+export type PartialName = keyof typeof partials
