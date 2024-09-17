@@ -9,17 +9,7 @@
 
     <div>
       <h2>New post</h2>
-      <form action="/api/posts/create" method="post">
-        <input type="text" name="title" placeholder="Title" required />
-        <textarea
-          name="content"
-          placeholder="Content"
-          required
-          minlength="10"
-          maxlength="400"
-        ></textarea>
-        <button type="submit">Post</button>
-      </form>
+      <partial name="new-post-form"></partial>
     </div>
 
     <div>

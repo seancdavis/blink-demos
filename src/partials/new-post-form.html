@@ -1,0 +1,36 @@
+<form action="/api/posts/create" method="post">
+  <input type="text" name="title" placeholder="Title" required />
+  <div>
+    <textarea
+      id="new-post-content"
+      name="content"
+      placeholder="Content"
+      minlength="10"
+      maxlength="400"
+      required
+    ></textarea>
+    <div id="new-post-remaining-count">400</div>
+  </div>
+  <button type="submit">Post</button>
+</form>
+
+<script>
+  const textarea = document.getElementById('new-post-content')
+  const charCount = document.getElementById('new-post-remaining-count')
+  const maxLength = parseInt(textarea.getAttribute('maxlength'), 10)
+
+  textarea.addEventListener('input', () => {
+    const remaining = maxLength - textarea.value.length
+    charCount.textContent = remaining
+
+    // Reset classes
+    charCount.classList.remove('warning', 'danger')
+
+    // Apply color based on remaining characters
+    if (remaining < 5) {
+      charCount.classList.add('danger')
+    } else if (remaining < 20) {
+      charCount.classList.add('warning')
+    }
+  })
+</script>

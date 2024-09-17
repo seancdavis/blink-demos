@@ -1,7 +1,7 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  'auth-links-signed-in': `<a href="/@{{ username }}">
+  "auth-links-signed-in": `<a href="/@{{ username }}">
   <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
   <span>{{ username }}</span>
 </a>
@@ -10,7 +10,7 @@ export const partials = {
   <button type="submit">Sign out</button>
 </form>
 `,
-  'auth-links-signed-out': `<a href="/login">Sign in</a>
+  "auth-links-signed-out": `<a href="/login">Sign in</a>
 `,
   feedback: `<div class="{{ classname }}">{{ message }}</div>
 `,
@@ -32,7 +32,44 @@ export const partials = {
   </nav>
 </header>
 `,
-  'post-card': `<div>
+  "new-post-form": `<form action="/api/posts/create" method="post">
+  <input type="text" name="title" placeholder="Title" required />
+  <div>
+    <textarea
+      id="new-post-content"
+      name="content"
+      placeholder="Content"
+      minlength="10"
+      maxlength="400"
+      required
+    ></textarea>
+    <div id="new-post-remaining-count">400</div>
+  </div>
+  <button type="submit">Post</button>
+</form>
+
+<script>
+  const textarea = document.getElementById('new-post-content')
+  const charCount = document.getElementById('new-post-remaining-count')
+  const maxLength = parseInt(textarea.getAttribute('maxlength'), 10)
+
+  textarea.addEventListener('input', () => {
+    const remaining = maxLength - textarea.value.length
+    charCount.textContent = remaining
+
+    // Reset classes
+    charCount.classList.remove('warning', 'danger')
+
+    // Apply color based on remaining characters
+    if (remaining < 5) {
+      charCount.classList.add('danger')
+    } else if (remaining < 20) {
+      charCount.classList.add('warning')
+    }
+  })
+</script>
+`,
+  "post-card": `<div>
   <h3>{{ title }}</h3>
   <div>{{ content }}</div>
   <a href="/@{{ username }}">
@@ -42,7 +79,7 @@ export const partials = {
   <div>{{ date }}</div>
 </div>
 `,
-  'profile-no-posts': `<div>No posts from this user yet.</div>
+  "profile-no-posts": `<div>No posts from this user yet.</div>
 `,
   profile: `<!doctype html>
 <html lang="en">
@@ -60,6 +97,6 @@ export const partials = {
   </body>
 </html>
 `,
-}
+};
 
-export type PartialName = keyof typeof partials
+export type PartialName = keyof typeof partials;
