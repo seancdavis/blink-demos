@@ -41,6 +41,14 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Title and content are required.',
   },
+  post_title_too_long: {
+    type: 'error',
+    message: 'Post title must be less than 64 characters.',
+  },
+  post_title_too_short: {
+    type: 'error',
+    message: 'Post title must be at least 10 characters.',
+  },
   user_created: {
     type: 'success',
     message: 'User created successfully.',

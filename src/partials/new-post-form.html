@@ -1,5 +1,5 @@
 <form action="/api/posts/create" method="post">
-  <input type="text" name="title" placeholder="Title" required />
+  <input type="text" name="title" placeholder="Title" required minlength="10" maxlength="64" />
   <div>
     <textarea
       id="new-post-content"

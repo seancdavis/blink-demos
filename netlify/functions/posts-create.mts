@@ -26,6 +26,16 @@ export default async (request: Request, context: Context) => {
     return redirect('/')
   }
 
+  if (title.length < 10) {
+    setFeedback('post_title_too_short')
+    return redirect('/')
+  }
+
+  if (title.length > 64) {
+    setFeedback('post_title_too_long')
+    return redirect('/')
+  }
+
   if (content.length < 10) {
     setFeedback('post_content_too_short')
     return redirect('/')
