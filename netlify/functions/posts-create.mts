@@ -25,6 +25,16 @@ export default async (request: Request, context: Context) => {
     return redirect('/')
   }
 
+  if (content.length < 10) {
+    setFeedback('post_content_too_short')
+    return redirect('/')
+  }
+
+  if (content.length > 400) {
+    setFeedback('post_content_too_long')
+    return redirect('/')
+  }
+
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
   const generatePostId = async () => {
     const id = uuidv4()

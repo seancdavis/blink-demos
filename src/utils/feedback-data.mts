@@ -25,6 +25,14 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'error',
     message: 'Password must be at least 8 characters.',
   },
+  post_content_too_long: {
+    type: 'error',
+    message: 'Post content must be less than 400 characters.',
+  },
+  post_content_too_short: {
+    type: 'error',
+    message: 'Post content must be at least 10 characters.',
+  },
   post_created: {
     type: 'success',
     message: 'Post created successfully.',
