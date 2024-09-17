@@ -1,8 +1,8 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
-import { format } from 'https://deno.land/std@0.203.0/datetime/mod.ts'
 import { edgeFunctionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
+import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { Post, User } from '../../src/utils/types.mts'
 
 // type ProfileHandlerOptions = {
@@ -50,7 +50,7 @@ export default async function handler(request: Request, context: Context) {
 
   let posts = userPosts
     .map((post) => {
-      const date = format(new Date(post.createdAt), 'yyyy-MM-dd')
+      const date = timeAgoInWords(new Date(post.createdAt))
       return renderPartial({ name: 'post-card', data: { ...post, ...user, date } })
     })
     .join('')
