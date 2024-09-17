@@ -17,7 +17,7 @@ export const partials = {
   head: `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ title }} | U</title>
+  <title>{{ title }} | Wink</title>
 
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/components.css" />
