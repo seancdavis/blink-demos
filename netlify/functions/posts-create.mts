@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
+import { purgeCache } from '@netlify/functions'
 import { v4 as uuidv4 } from 'uuid'
 import { functionUtils } from '../../src/utils/index.mts'
 import { Post } from '../../src/utils/types.mts'
@@ -9,7 +10,7 @@ export default async (request: Request, context: Context) => {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { url, user, setFeedback, redirect } = await functionUtils({ request, context })
+  const { user, setFeedback, redirect } = await functionUtils({ request, context })
 
   if (!user) {
     setFeedback('login_required')
@@ -49,6 +50,7 @@ export default async (request: Request, context: Context) => {
 
   await postStore.setJSON(post.id, post)
 
+  await purgeCache({ tags: [post.id, user.id] })
   setFeedback('post_created')
   return redirect('/')
 }

@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
+import { purgeCache } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
@@ -77,6 +78,8 @@ export default async (request: Request, context: Context) => {
 
   cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
 
+  // The username is used to cache 404 responses on the profile page
+  await purgeCache({ tags: [user.username] })
   setFeedback('user_created')
   return redirect()
 }

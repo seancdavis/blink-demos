@@ -12,6 +12,10 @@ export default async function handler(request: Request, context: Context) {
     .find((part) => part.startsWith('@'))
     ?.slice(1)
 
+  if (!username || username.length === 0) {
+    return new Response('Not Found', { status: 404 })
+  }
+
   const userStore = getStore({ name: 'User', consistency: 'strong' })
   const allUsersIds = (await userStore.list()).blobs.map(({ key }) => key)
   const users = await Promise.all(
@@ -19,8 +23,13 @@ export default async function handler(request: Request, context: Context) {
   )
   const user = users.find((user: User) => user.username === username)
 
+  // Cache the 404 result if the user is not found, and return
   if (!user) {
-    return context.next()
+    const response = await context.next()
+    response.headers.set('cache-control', 'public, max-age=0, must-revalidate')
+    response.headers.set('netlify-cdn-cache-control', 'public, durable, s-maxage=31536000')
+    response.headers.set('netlify-cache-tag', username)
+    return response
   }
 
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
@@ -48,6 +57,12 @@ export default async function handler(request: Request, context: Context) {
   return new Response(html, {
     headers: {
       'content-type': 'text/html; charset=utf-8',
+      // The browser should always check freshness
+      'cache-control': 'public, max-age=0, must-revalidate',
+      // The CDN should cache for a year, but revalidate if the cache tag changes
+      'netlify-cdn-cache-control': 'public, durable, s-maxage=31536000',
+      // Tag the page with the user ID
+      'netlify-cache-tag': user.id,
     },
   })
 }
