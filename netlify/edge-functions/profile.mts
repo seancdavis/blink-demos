@@ -5,23 +5,6 @@ import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { Post, User } from '../../src/utils/types.mts'
 
-// type ProfileHandlerOptions = {
-//   posts: PostWithUser[]
-// }
-
-// export class ProfileHandler {
-//   posts: PostWithUser[]
-
-//   constructor(options: ProfileHandlerOptions) {
-//     this.posts = options.posts
-//   }
-
-//   element(element: Element) {
-
-//     element.replace(partialContent, { html: true })
-//   }
-// }
-
 export default async function handler(request: Request, context: Context) {
   const { url } = await edgeFunctionUtils({ request, context })
   const username = url.pathname
