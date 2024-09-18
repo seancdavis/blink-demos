@@ -7,8 +7,11 @@ import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { Post, User } from '../../src/utils/types.mts'
 
 export default async function handler(request: Request, context: Context) {
+  console.log('>>> view-profile.mts: handler: request.url:', request.url)
+
   if (request.method !== 'GET') {
-    return new Response('Method Not Allowed', { status: 405 })
+    const html = renderPartial({ name: 'not-found' })
+    return new Response(html, { status: 404 })
   }
 
   const { url } = await functionUtils({ request, context })
