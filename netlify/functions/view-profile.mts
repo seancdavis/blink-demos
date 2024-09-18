@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import { Config } from '@netlify/functions'
-import { edgeFunctionUtils } from '../../src/utils/index.mts'
+import { functionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { Post, User } from '../../src/utils/types.mts'
@@ -11,14 +11,15 @@ export default async function handler(request: Request, context: Context) {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { url } = await edgeFunctionUtils({ request, context })
+  const { url } = await functionUtils({ request, context })
   const username = url.pathname
     .split('/')
     .find((part) => part.startsWith('@'))
     ?.slice(1)
 
   if (!username || username.length === 0) {
-    return new Response('Not Found', { status: 404 })
+    const html = renderPartial({ name: 'not-found' })
+    return new Response(html, { status: 404 })
   }
 
   const userStore = getStore({ name: 'User', consistency: 'strong' })

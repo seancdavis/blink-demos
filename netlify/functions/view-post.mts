@@ -1,18 +1,20 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
-import { edgeFunctionUtils } from '../../src/utils/index.mts'
+import { Config } from '@netlify/functions'
+import { functionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 
 export default async function handler(request: Request, context: Context) {
-  const { url } = await edgeFunctionUtils({ request, context })
+  const { url } = await functionUtils({ request, context })
   const postId = url.pathname
     .split('/')
     .find((part) => part.length > 0 && !part.startsWith('index.') && part !== 'post')
     ?.replace(/\.html?$/, '')
 
   if (!postId || postId.length === 0) {
-    return new Response('Not Found', { status: 404 })
+    const html = renderPartial({ name: 'not-found' })
+    return new Response(html, { status: 404 })
   }
 
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
@@ -25,10 +27,14 @@ export default async function handler(request: Request, context: Context) {
 
   return new Response(html, {
     headers: {
-      'content-type': 'text/html; charset=utf-8',
-      'cache-control': 'public, max-age=0, must-revalidate',
-      'netlify-cdn-cache-control': 'public, durable, s-maxage=31536000',
-      'netlify-cache-tag': post.id,
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=0, must-revalidate',
+      'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
+      'Netlify-Cache-Tag': post.id,
     },
   })
+}
+
+export const config: Config = {
+  path: '/post/:id',
 }
