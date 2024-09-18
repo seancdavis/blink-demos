@@ -1,0 +1,14 @@
+header {
+  padding: 1rem;
+}
+
+.header-content {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: var(--width-container);
+}

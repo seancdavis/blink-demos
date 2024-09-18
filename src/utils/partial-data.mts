@@ -19,16 +19,23 @@ export const partials = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title }} | Blink</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap"
+    rel="stylesheet"
+  />
+
   <link rel="stylesheet" href="/styles.css" />
 </head>
 `,
   header: `<header>
-  <h1>My Site</h1>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <auth-links></auth-links>
-  </nav>
+  <div class="header-content container">
+    <h1><a href="/">Blink</a></h1>
+    <nav>
+      <auth-links></auth-links>
+    </nav>
+  </div>
 </header>
 `,
   "new-post-form": `<form action="/api/posts/create" method="post">

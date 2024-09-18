@@ -6,7 +6,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname)
 const stylesDir = path.join(__dirname, '../styles')
 
 async function run() {
-  const stylesContent = ['base', 'components']
+  const stylesContent = ['variables', 'base', 'layout', 'components']
     .map((file) => {
       const filePath = path.join(stylesDir, `${file}.css`)
       const fileContent = fs.readFileSync(filePath, 'utf8')
