@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "npx tsx ./src/scripts/bundle-partials.ts",
+    "build": "npx tsx ./src/scripts/build.ts",
     "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
   },
   "dependencies": {
