@@ -69,6 +69,17 @@ export const partials = {
   })
 </script>
 `,
+  "not-found": `<!doctype html>
+<html lang="en">
+  <partial name="head" title="Login"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <h1>Page not found</h1>
+  </body>
+</html>
+`,
   "post-card": `<div>
   <h3><a href="/post/{{ postId }}">{{ title }}</a></h3>
   <div>{{ content }}</div>

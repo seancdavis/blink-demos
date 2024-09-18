@@ -22,10 +22,6 @@ path = "/"
 function = "latest-posts"
 
 [[edge_functions]]
-path = "/@:username"
-function = "profile"
-
-[[edge_functions]]
 path = "/post/:id"
 function = "post"
 
