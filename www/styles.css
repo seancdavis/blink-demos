@@ -1,3 +1,5 @@
+/* ---- Variables ---- */
+
 :root {
   --color-purple-50: #e8e9ff;
   --color-purple-100: #d5d6ff;
@@ -54,6 +56,8 @@
   --width-container: 75rem;
 }
 
+/* ---- Base ---- */
+
 *,
 *::before,
 *::after {
@@ -79,7 +83,7 @@ body {
     var(--color-purple-950) 100%
   ); */
   color: var(--color-purple-50);
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   line-height: 1.5;
 }
 
@@ -106,7 +110,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: var(--font-weight-medium);
   overflow-wrap: break-word;
 }
@@ -115,6 +119,8 @@ a {
   color: var(--color-purple-400);
   text-decoration: none;
 }
+
+/* ---- Layout ---- */
 
 header {
   padding: 1rem;
@@ -131,7 +137,7 @@ header {
   max-width: var(--width-container);
 }
 
-/* --- Avatar --- */
+/* ---- Components ---- */
 
 img.avatar {
   border-radius: 100%;

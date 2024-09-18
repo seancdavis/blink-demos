@@ -1,8 +1,6 @@
 {
   "scripts": {
-    "build": "npm run build:partials && npm run build:styles",
-    "build:partials": "npx tsx ./src/scripts/bundle-partials.ts",
-    "build:styles": "npx tsx ./src/scripts/bundle-styles.ts",
+    "build": "npx tsx ./src/scripts/bundle-partials.ts",
     "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
   },
   "dependencies": {
