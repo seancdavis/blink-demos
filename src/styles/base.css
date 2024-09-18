@@ -15,7 +15,13 @@ html {
 
 body {
   -webkit-font-smoothing: antialiased;
-  background-color: var(--color-purple-950);
+  background: var(--color-purple-950);
+  /* background: radial-gradient(
+    circle,
+    var(--color-purple-800) 0%,
+    var(--color-purple-900) 15%,
+    var(--color-purple-950) 100%
+  ); */
   color: var(--color-purple-50);
   font-family: 'Open Sans', sans-serif;
   line-height: 1.5;
