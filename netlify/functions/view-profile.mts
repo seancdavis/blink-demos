@@ -1,12 +1,11 @@
 // import type { Context } from '@netlify/edge-functions'
 import type { Config, Context } from '@netlify/functions'
-import { renderPartial } from '../../src/utils/render-partial.mts'
 
 export default async function handler(request: Request, context: Context) {
   console.log('>>> view-profile.mts: handler: request.url:', request.url)
 
-  const html = renderPartial({ name: 'not-found' })
-  return new Response(html, { status: 404 })
+  // const html = renderPartial({ name: 'not-found' })
+  return new Response(`<p>Hello world</p>`, { status: 404 })
 
   // if (request.method !== 'GET') {
   //   const html = renderPartial({ name: 'not-found' })
