@@ -57,7 +57,8 @@ export default async (request: Request, context: Context) => {
   for (const { title, content } of postData) {
     const user = users[Math.floor(Math.random() * users.length)]
     const id = uuidv4()
-    const createdAt = new Date().toISOString()
+    // Time between now and 7 days ago
+    const createdAt = new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
 
     const post: Post = { id, title, content, userId: user.id, createdAt }
     await postStore.setJSON(post.id, post)
