@@ -80,5 +80,5 @@ export default async function handler(request: Request, context: Context) {
 }
 
 export const config: Config = {
-  path: '/@*',
+  path: '/hello-world',
 }
