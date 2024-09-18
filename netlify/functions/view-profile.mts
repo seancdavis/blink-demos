@@ -1,5 +1,5 @@
-import type { Context } from '@netlify/edge-functions'
-import { Config } from '@netlify/functions'
+// import type { Context } from '@netlify/edge-functions'
+import type { Config, Context } from '@netlify/functions'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 
 export default async function handler(request: Request, context: Context) {
