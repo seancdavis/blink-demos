@@ -5,9 +5,7 @@ import { functionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 
-export default async function handler(request: Request, context: Context) {
-  console.log('>>> view-post.mts: handler: request.url:', request.url)
-
+export default async (request: Request, context: Context) => {
   if (request.method !== 'GET') {
     const html = renderPartial({ name: 'not-found' })
     return new Response(html, { status: 404 })
