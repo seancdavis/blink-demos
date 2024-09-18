@@ -1,5 +1,4 @@
-import type { Context } from '@netlify/edge-functions'
-import { Config } from '@netlify/functions'
+import type { Config, Context } from '@netlify/functions'
 
 export default async (request: Request, context: Context) => {
   return new Response('Hello, World!')
