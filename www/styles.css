@@ -158,11 +158,12 @@ button {
 
 .container {
   margin: 0 auto;
+  padding: 0 1rem;
   max-width: var(--width-container);
 }
 
 header {
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .header-content {
@@ -223,4 +224,78 @@ header {
   height: 3rem;
   object-fit: cover;
   width: 3rem;
+}
+
+.post-card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+
+.post-card {
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-neutral-950);
+  padding: 1rem;
+}
+
+.post-card:hover {
+  animation: rotateColors 10s linear infinite;
+}
+
+@keyframes rotateColors {
+  0% {
+    border-color: var(--color-purple-900);
+  }
+  20% {
+    border-color: var(--color-rose-900);
+  }
+  40% {
+    border-color: var(--color-lime-900);
+  }
+  60% {
+    border-color: var(--color-blue-900);
+  }
+  80% {
+    border-color: var(--color-orange-900);
+  }
+  100% {
+    border-color: var(--color-purple-900);
+  }
+}
+
+.post-card-meta {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.post-card-username,
+.post-card-date {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.post-card-username {
+  color: var(--color-purple-300);
+  font-weight: var(--font-weight-medium);
+}
+
+.post-card-username:hover {
+  text-decoration: underline;
+}
+
+.post-card-date {
+  color: var(--color-neutral-500);
+}
+
+.post-card-content {
+  padding: 1rem 0;
+}
+
+.post-card-title {
+  margin-bottom: 0.25rem;
+}
+
+.post-card-title a:hover {
+  text-decoration: underline;
 }

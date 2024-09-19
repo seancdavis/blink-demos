@@ -92,14 +92,18 @@ export const partials = {
   </body>
 </html>
 `,
-  "post-card": `<div>
-  <h3><a href="/post/{{ postId }}">{{ title }}</a></h3>
-  <div>{{ content }}</div>
-  <a href="/@{{ username }}">
+  "post-card": `<div class="post-card">
+  <div class="post-card-meta">
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
-    <span>{{ username }}</span>
-  </a>
-  <div>{{ date }}</div>
+    <div>
+      <a class="post-card-username" href="/@{{ username }}">{{ username }}</a>
+      <span class="post-card-date">{{ date }}</span>
+    </div>
+  </div>
+  <div class="post-card-content">
+    <h3 class="post-card-title"><a href="/post/{{ postId }}">{{ title }}</a></h3>
+    <div>{{ content }}</div>
+  </div>
 </div>
 `,
   "post-detail": `<!doctype html>
