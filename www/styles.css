@@ -49,6 +49,30 @@
   --color-lime-900: #385c0b;
   --color-lime-950: #1b3400;
 
+  --color-orange-50: #fef3f2;
+  --color-orange-100: #ffe4e1;
+  --color-orange-200: #ffcdc8;
+  --color-orange-300: #ffaba2;
+  --color-orange-400: #fd7a6c;
+  --color-orange-500: #f54936;
+  --color-orange-600: #e3321f;
+  --color-orange-700: #bf2716;
+  --color-orange-800: #9e2416;
+  --color-orange-900: #832419;
+  --color-orange-950: #470e08;
+
+  --color-neutral-50: #f5f6f8;
+  --color-neutral-100: #ecedf3;
+  --color-neutral-200: #dddde8;
+  --color-neutral-300: #c8c8d9;
+  --color-neutral-400: #b3b1c8;
+  --color-neutral-500: #a09cb8;
+  --color-neutral-600: #8d86a5;
+  --color-neutral-700: #79728f;
+  --color-neutral-800: #645e75;
+  --color-neutral-900: #534f60;
+  --color-neutral-950: #312e38;
+
   --font-weight-normal: 400;
   --font-weight-medium: 600;
   --font-weight-bold: 800;
@@ -120,7 +144,22 @@ a {
   text-decoration: none;
 }
 
+button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  outline: inherit;
+  padding: 0;
+}
+
 /* ---- Layout ---- */
+
+.container {
+  margin: 0 auto;
+  max-width: var(--width-container);
+}
 
 header {
   padding: 1rem;
@@ -132,14 +171,54 @@ header {
   justify-content: space-between;
 }
 
-.container {
-  margin: 0 auto;
-  max-width: var(--width-container);
+.header-logo {
+  width: 10rem;
+}
+
+.header-auth-links.signed-in summary {
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.header-auth-links.signed-in {
+  position: relative;
+}
+
+.header-auth-links.signed-in summary {
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.header-auth-links-dropdown {
+  background: var(--color-neutral-50);
+  border-radius: 0.5rem;
+  min-width: 10rem;
+  padding: 0.25rem 0;
+  position: absolute;
+  right: 0;
+  top: 3.5rem;
+  z-index: 1;
+}
+
+.header-auth-links-dropdown a,
+.header-auth-links-dropdown button {
+  color: var(--color-purple-800);
+  display: block;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  padding: 0.25rem 1rem;
+  text-align: left;
+  width: 100%;
+}
+
+.header-auth-links-dropdown a:hover,
+.header-auth-links-dropdown button:hover {
+  color: var(--color-purple-950);
 }
 
 /* ---- Components ---- */
 
-img.avatar {
+.avatar {
   border-radius: 100%;
   height: 3rem;
   object-fit: cover;

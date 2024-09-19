@@ -1,14 +1,18 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  "auth-links-signed-in": `<a href="/@{{ username }}">
-  <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
-  <span>{{ username }}</span>
-</a>
-<a href="/settings">Edit profile</a>
-<form action="/api/auth/logout" method="post">
-  <button type="submit">Sign out</button>
-</form>
+  "auth-links-signed-in": `<details class="header-auth-links signed-in">
+  <summary>
+    <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
+  </summary>
+  <div class="header-auth-links-dropdown">
+    <a href="/@{{ username }}">{{ username }}</a>
+    <a href="/settings">Edit profile</a>
+    <form action="/api/auth/logout" method="post">
+      <button class="sign-out" type="submit">Sign out</button>
+    </form>
+  </div>
+</details>
 `,
   "auth-links-signed-out": `<a href="/login">Sign in</a>
 `,
@@ -31,7 +35,9 @@ export const partials = {
 `,
   header: `<header>
   <div class="header-content container">
-    <h1><a href="/">Blink</a></h1>
+    <a class="header-logo" href="/">
+      <img src="/images/blink-logo.svg" alt="BLINK Logo" />
+    </a>
     <nav>
       <auth-links></auth-links>
     </nav>
