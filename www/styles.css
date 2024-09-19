@@ -139,6 +139,14 @@ h6 {
   overflow-wrap: break-word;
 }
 
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
 a {
   color: var(--color-purple-400);
   text-decoration: none;
@@ -155,6 +163,11 @@ button {
 }
 
 /* ---- Layout ---- */
+
+main {
+  margin: 0 auto;
+  padding: 2rem 0;
+}
 
 .container {
   margin: 0 auto;

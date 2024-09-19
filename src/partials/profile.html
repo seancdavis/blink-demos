@@ -5,11 +5,11 @@
     <partial name="header"></partial>
     <feedback></feedback>
 
-    <h1>{{ username }} Profile</h1>
-
-    <div>
-      <h2>My latest posts</h2>
-      {{ posts }}
-    </div>
+    <main>
+      <div class="container">
+        <h1>Posts by {{ username }}</h1>
+        <div class="post-card-grid">{{ posts }}</div>
+      </div>
+    </main>
   </body>
 </html>
