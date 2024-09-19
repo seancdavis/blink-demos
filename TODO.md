@@ -3,6 +3,7 @@
 - [ ] Show truncated posts on the home page.
 - [ ] Get durable cache working for post detail and profiles.
 - [ ] Better default avatar images for seeded content (or generate them)
+- [ ] Add avatar to new post form so we know who's posting
 
 ### Styles to clean up
 
