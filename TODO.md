@@ -1,8 +1,13 @@
 - [✔︎] Add admin seed function that will create users and posts. It should be able to accept a series of posts that I've gotten from ChatGPT.
-- [ ] Need to be signed in to post, but not to view home page or individual posts.
+- [ ] Everything should be public. The auth control could really just be an extension of the partial view that is displayed when a user is logged in (or not).
 - [ ] Show truncated posts on the home page.
 - [ ] Get durable cache working for post detail and profiles.
-- [ ] Add branding, favicon, and logo.
-- [ ] Clean up styles
 - [ ] Better default avatar images for seeded content (or generate them)
-- [ ] Feedback appears when reloading the login and register pages sometimes. I think there is a route that shouldn't be running the auth middleware. Perhaps we should specify the individual routes.
+
+### Styles to clean up
+
+- [ ] favicon
+- [ ] feedback
+- [ ] post form
+- [ ] sign in button
+- [ ] auth form buttons
