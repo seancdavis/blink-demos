@@ -78,7 +78,8 @@
   --font-weight-bold: 800;
 
   --width-container: 75rem;
-  --width-container-small: 50rem;
+  --width-container-sm: 50rem;
+  --width-container-xs: 30rem;
 }
 
 /* ---- Base ---- */
@@ -163,6 +164,33 @@ button {
   padding: 0;
 }
 
+form > div {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 0.5rem;
+}
+
+input {
+  background: transparent;
+  border: 1px solid var(--color-neutral-500);
+  border-radius: 0.25rem;
+  color: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+  outline: 1px solid;
+  animation: rotateColors 10s linear infinite;
+}
+
 /* ---- Layout ---- */
 
 main {
@@ -171,14 +199,19 @@ main {
 }
 
 .container,
-.container-small {
+.container-sm,
+.container-xs {
   margin: 0 auto;
   padding: 0 1rem;
   max-width: var(--width-container);
 }
 
-.container-small {
-  max-width: var(--width-container-small);
+.container-sm {
+  max-width: var(--width-container-sm);
+}
+
+.container-xs {
+  max-width: var(--width-container-xs);
 }
 
 header {
@@ -264,21 +297,27 @@ header {
 @keyframes rotateColors {
   0% {
     border-color: var(--color-purple-900);
+    outline-color: var(--color-purple-900);
   }
   20% {
     border-color: var(--color-rose-900);
+    outline-color: var(--color-rose-900);
   }
   40% {
     border-color: var(--color-lime-900);
+    outline-color: var(--color-lime-900);
   }
   60% {
     border-color: var(--color-blue-900);
+    outline-color: var(--color-blue-900);
   }
   80% {
     border-color: var(--color-orange-900);
+    outline-color: var(--color-orange-900);
   }
   100% {
     border-color: var(--color-purple-900);
+    outline-color: var(--color-purple-900);
   }
 }
 

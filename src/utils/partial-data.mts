@@ -114,7 +114,7 @@ export const partials = {
     <feedback></feedback>
 
     <main>
-      <div class="post-detail container-small">
+      <div class="post-detail container-sm">
         <div class="post-detail-meta">
           <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
           <div>

@@ -5,22 +5,27 @@
     <partial name="header"></partial>
     <feedback></feedback>
 
-    <h1>Sign in</h1>
+    <main>
+      <div class="container-xs">
+        <h1>Sign in</h1>
 
-    <form action="/api/auth/login" method="post">
-      <div>
-        <label for="username">username</label>
-        <input type="username" name="username" id="username" required autofocus />
+        <form action="/api/auth/login" method="post">
+          <div>
+            <label for="username">username</label>
+            <input type="username" name="username" id="username" required autofocus />
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" minlength="8" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit">Sign in</button>
+            <a href="/register">Create an account</a>
+          </div>
+        </form>
       </div>
-
-      <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" minlength="8" required />
-      </div>
-
-      <button type="submit">Sign in</button>
-    </form>
-
-    <p><a href="/register">Create an account</a></p>
+    </main>
   </body>
 </html>
