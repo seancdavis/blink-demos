@@ -16,7 +16,11 @@ export const partials = {
 `,
   "auth-links-signed-out": `<a href="/login">Sign in</a>
 `,
-  feedback: `<div class="{{ classname }}">{{ message }}</div>
+  feedback: `<div class="feedback container-xs">
+  <div class="feedback-content">
+    <p class="{{ classname }}">{{ message }}</p>
+  </div>
+</div>
 `,
   head: `<head>
   <meta charset="UTF-8" />

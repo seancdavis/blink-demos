@@ -379,3 +379,10 @@ header {
 .post-detail-content {
   font-size: 1.125rem;
 }
+
+.feedback {
+  background-color: var(--color-neutral-50);
+  color: var(--color-purple-800);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}

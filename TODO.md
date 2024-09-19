@@ -5,3 +5,4 @@
 - [ ] Add branding, favicon, and logo.
 - [ ] Clean up styles
 - [ ] Better default avatar images for seeded content (or generate them)
+- [ ] Feedback appears when reloading the login and register pages sometimes. I think there is a route that shouldn't be running the auth middleware. Perhaps we should specify the individual routes.
