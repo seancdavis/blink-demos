@@ -78,6 +78,7 @@
   --font-weight-bold: 800;
 
   --width-container: 75rem;
+  --width-container-small: 50rem;
 }
 
 /* ---- Base ---- */
@@ -169,10 +170,15 @@ main {
   padding: 2rem 0;
 }
 
-.container {
+.container,
+.container-small {
   margin: 0 auto;
   padding: 0 1rem;
   max-width: var(--width-container);
+}
+
+.container-small {
+  max-width: var(--width-container-small);
 }
 
 header {
@@ -276,39 +282,61 @@ header {
   }
 }
 
-.post-card-meta {
+.post-card-meta,
+.post-detail-meta {
   align-items: center;
   display: flex;
   gap: 0.5rem;
 }
 
 .post-card-username,
-.post-card-date {
+.post-card-date,
+.post-detail-username,
+.post-detail-date {
   display: block;
   font-size: 0.875rem;
 }
 
-.post-card-username {
+.post-card-username,
+.post-detail-username {
   color: var(--color-purple-300);
   font-weight: var(--font-weight-medium);
 }
 
-.post-card-username:hover {
+.post-card-username:hover,
+.post-detail-username:hover {
   text-decoration: underline;
 }
 
-.post-card-date {
+.post-card-date,
+.post-detail-date {
   color: var(--color-neutral-500);
 }
 
-.post-card-content {
+.post-card-content,
+.post-detail-content {
   padding: 1rem 0;
 }
 
-.post-card-title {
+.post-card-title,
+.post-detail-title {
   margin-bottom: 0.25rem;
 }
 
-.post-card-title a:hover {
+.post-card-title a:hover,
+.post-detail-title a:hover {
   text-decoration: underline;
+}
+
+.post-detail-content {
+  padding: 1.5rem 0;
+}
+
+.post-detail-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.post-detail-content {
+  font-size: 1.125rem;
 }

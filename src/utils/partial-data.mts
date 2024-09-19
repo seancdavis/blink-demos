@@ -113,15 +113,21 @@ export const partials = {
     <partial name="header"></partial>
     <feedback></feedback>
 
-    <div>
-      <h2>{{ title }}</h2>
-      <div>{{ content }}</div>
-      <a href="/@{{ username }}">
-        <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
-        <span>{{ username }}</span>
-      </a>
-      <div>{{ date }}</div>
-    </div>
+    <main>
+      <div class="post-detail container-small">
+        <div class="post-detail-meta">
+          <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
+          <div>
+            <a class="post-detail-username" href="/@{{ username }}">{{ username }}</a>
+            <span class="post-detail-date">{{ date }}</span>
+          </div>
+        </div>
+        <div class="post-detail-content">
+          <h2 class="post-detail-title">{{ title }}</h2>
+          <div>{{ content }}</div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
 `,
