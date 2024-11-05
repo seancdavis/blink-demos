@@ -2,27 +2,27 @@
 publish = "www"
 command = "npm run build"
 
-[[edge_functions]]
-path = "/*"
-function = "auth"
-excludedPath = [
-  "/api/auth/*",
-  "/uploads/avatar/*",
-  "/api/admin/*",
-  "/images/*",
-  "/uploads/*",
-  "/css/*",
-]
+# [[edge_functions]]
+# path = "/*"
+# function = "auth"
+# excludedPath = [
+#   "/api/auth/*",
+#   "/uploads/avatar/*",
+#   "/api/admin/*",
+#   "/images/*",
+#   "/uploads/*",
+#   "/css/*",
+# ]
 
-[[edge_functions]]
-path = "/*"
-function = "partial"
-excludedPath = ["/api/*", "/images/*", "/uploads/*", "/css/*"]
+# [[edge_functions]]
+# path = "/*"
+# function = "partial"
+# excludedPath = ["/api/*", "/images/*", "/uploads/*", "/css/*"]
 
-[[edge_functions]]
-path = "/*"
-function = "feedback"
-excludedPath = ["/api/*", "/images/*", "/uploads/*", "/css/*"]
+# [[edge_functions]]
+# path = "/*"
+# function = "feedback"
+# excludedPath = ["/api/*", "/images/*", "/uploads/*", "/css/*"]
 
 [[edge_functions]]
 path = "/"
