@@ -1,7 +1,6 @@
 import { getStore } from '@netlify/blobs'
-import type { Context } from '@netlify/edge-functions'
-import { Config } from '@netlify/functions'
-import { functionUtils } from '../../src/utils/index.mts'
+import { Config, type Context } from '@netlify/functions'
+// import { functionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 
@@ -11,7 +10,8 @@ export default async (request: Request, context: Context) => {
     return new Response(html, { status: 404 })
   }
 
-  const { url } = await functionUtils({ request, context })
+  // const { url } = await functionUtils({ request, context })
+  const url = new URL(request.url)
   const postId = url.pathname
     .split('/')
     .find((part) => part.length > 0 && !part.startsWith('index.') && part !== 'post')
