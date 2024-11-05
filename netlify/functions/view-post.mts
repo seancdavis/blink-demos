@@ -1,12 +1,13 @@
 import { getStore } from '@netlify/blobs'
 import { Config, type Context } from '@netlify/functions'
 // import { functionUtils } from '../../src/utils/index.mts'
-import { renderPartial } from '../../src/utils/render-partial.mts'
-import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
+// import { renderPartial } from '../../src/utils/render-partial.mts'
+// import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'GET') {
-    const html = renderPartial({ name: 'not-found' })
+    // const html = renderPartial({ name: 'not-found' })
+    const html = 'Not found'
     return new Response(html, { status: 404 })
   }
 
@@ -18,17 +19,19 @@ export default async (request: Request, context: Context) => {
     ?.replace(/\.html?$/, '')
 
   if (!postId || postId.length === 0) {
-    const html = renderPartial({ name: 'not-found' })
+    // const html = renderPartial({ name: 'not-found' })
+    const html = 'Not found'
     return new Response(html, { status: 404 })
   }
 
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
   const userStore = getStore({ name: 'User', consistency: 'strong' })
   const post = await postStore.get(postId, { type: 'json' })
-  const date = timeAgoInWords(new Date(post.createdAt))
+  // const date = timeAgoInWords(new Date(post.createdAt))
   const user = await userStore.get(post.userId, { type: 'json' })
 
-  const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date } })
+  // const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date } })
+  const html = 'Post detail'
 
   return new Response(html, {
     headers: {
