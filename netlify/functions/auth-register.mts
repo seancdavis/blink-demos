@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
-import { purgeCache } from '@netlify/functions'
+import { type Config, purgeCache } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
@@ -82,4 +82,8 @@ export default async (request: Request, context: Context) => {
   await purgeCache({ tags: [user.username] })
   setFeedback('user_created')
   return redirect()
+}
+
+export const config: Config = {
+  path: '/api/auth/register',
 }

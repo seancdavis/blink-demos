@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "build": "npx tsx ./src/scripts/build.ts",
     "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"

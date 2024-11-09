@@ -1,4 +1,5 @@
 import type { Context } from '@netlify/edge-functions'
+import type { Config } from '@netlify/functions'
 import { functionUtils } from '../../src/utils/index.mts'
 
 export default async (request: Request, context: Context) => {
@@ -14,4 +15,8 @@ export default async (request: Request, context: Context) => {
 
   cookies.delete({ name: 'u_session', path: '/' })
   return redirect()
+}
+
+export const config: Config = {
+  path: '/api/auth/logout',
 }
