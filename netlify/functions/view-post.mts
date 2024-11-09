@@ -1,47 +1,43 @@
-import { Config, type Context } from '@netlify/functions'
-// import { functionUtils } from '../../src/utils/index.mts'
-// import { renderPartial } from '../../src/utils/render-partial.mts'
-// import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
+import { getStore } from '@netlify/blobs'
+import type { Context } from '@netlify/edge-functions'
+import { Config } from '@netlify/functions'
+import { functionUtils } from '../../src/utils/index.mts'
+import { renderPartial } from '../../src/utils/render-partial.mts'
+import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 
 export default async (request: Request, context: Context) => {
-  return new Response('Hello world', { status: 200 })
+  if (request.method !== 'GET') {
+    const html = renderPartial({ name: 'not-found' })
+    return new Response(html, { status: 404 })
+  }
 
-  // if (request.method !== 'GET') {
-  //   // const html = renderPartial({ name: 'not-found' })
-  //   const html = 'Not found'
-  //   return new Response(html, { status: 404 })
-  // }
+  const { url } = await functionUtils({ request, context })
+  const postId = url.pathname
+    .split('/')
+    .find((part) => part.length > 0 && !part.startsWith('index.') && part !== 'post')
+    ?.replace(/\.html?$/, '')
 
-  // // const { url } = await functionUtils({ request, context })
-  // const url = new URL(request.url)
-  // const postId = url.pathname
-  //   .split('/')
-  //   .find((part) => part.length > 0 && !part.startsWith('index.') && part !== 'post')
-  //   ?.replace(/\.html?$/, '')
+  if (!postId || postId.length === 0) {
+    const html = renderPartial({ name: 'not-found' })
+    return new Response(html, { status: 404 })
+  }
 
-  // if (!postId || postId.length === 0) {
-  //   // const html = renderPartial({ name: 'not-found' })
-  //   const html = 'Not found'
-  //   return new Response(html, { status: 404 })
-  // }
+  const postStore = getStore({ name: 'Post', consistency: 'strong' })
+  const userStore = getStore({ name: 'User', consistency: 'strong' })
+  const post = await postStore.get(postId, { type: 'json' })
+  const date = timeAgoInWords(new Date(post.createdAt))
+  const user = await userStore.get(post.userId, { type: 'json' })
 
-  // const postStore = getStore({ name: 'Post', consistency: 'strong' })
-  // const userStore = getStore({ name: 'User', consistency: 'strong' })
-  // const post = await postStore.get(postId, { type: 'json' })
-  // // const date = timeAgoInWords(new Date(post.createdAt))
-  // const user = await userStore.get(post.userId, { type: 'json' })
+  const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date } })
 
-  // // const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date } })
-  // const html = 'Post detail'
-
-  // return new Response(html, {
-  //   headers: {
-  //     'Content-Type': 'text/html; charset=utf-8',
-  //     'Cache-Control': 'public, max-age=0, must-revalidate',
-  //     'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
-  //     'Netlify-Cache-Tag': post.id,
-  //   },
-  // })
+  return new Response(html, {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=0, must-revalidate',
+      'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
+      'Netlify-Cache-Tag': post.id,
+    },
+  })
 }
 
 export const config: Config = {
