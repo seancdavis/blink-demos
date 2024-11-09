@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
+import type { Config } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { functionUtils } from '../../src/utils/index.mts'
@@ -65,4 +66,8 @@ export default async (request: Request, context: Context) => {
 
   setFeedback('login_success')
   return redirect('/')
+}
+
+export const config: Config = {
+  path: '/api/auth/login',
 }

@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
-import { purgeCache } from '@netlify/functions'
+import { type Config, purgeCache } from '@netlify/functions'
 import { v4 as uuidv4 } from 'uuid'
 import { functionUtils } from '../../src/utils/index.mts'
 import { Post } from '../../src/utils/types.mts'
@@ -63,4 +63,8 @@ export default async (request: Request, context: Context) => {
   await purgeCache({ tags: [post.id, user.id] })
   setFeedback('post_created')
   return redirect('/')
+}
+
+export const config: Config = {
+  path: '/api/posts/create',
 }
