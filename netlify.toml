@@ -34,11 +34,6 @@ to = "/.netlify/functions/:type-:splat"
 status = 200
 
 [[redirects]]
-from = "/uploads/avatar/:username"
-to = "/.netlify/functions/user-avatar?username=:username"
-status = 200
-
-[[redirects]]
 from = "/images/avatar/small/:username"
 to = "/.netlify/images?url=/uploads/avatar/:username&width=256&height=256&fit=cover"
 status = 200
