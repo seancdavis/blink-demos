@@ -5,15 +5,21 @@
     <partial name="header"></partial>
     <feedback></feedback>
 
-    <h1>Edit profile</h1>
+    <main>
+      <div class="container-xs">
+        <h1>Edit profile</h1>
 
-    <form action="/api/user/upload-avatar" method="post" enctype="multipart/form-data">
-      <div>
-        <label for="avatar">Avatar</label>
-        <input type="file" name="avatar" id="avatar" accept="image/*" required />
+        <form action="/api/user/upload-avatar" method="post" enctype="multipart/form-data">
+          <div>
+            <label for="avatar">Avatar</label>
+            <input type="file" name="avatar" id="avatar" accept="image/*" required />
+          </div>
+
+          <div class="form-actions">
+            <button class="button" type="submit">Upload</button>
+          </div>
+        </form>
       </div>
-
-      <button type="submit">Upload</button>
-    </form>
+    </main>
   </body>
 </html>
