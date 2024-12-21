@@ -308,6 +308,10 @@ header {
   font-size: 0.875rem;
 }
 
+.form-actions.is-compact {
+  margin-top: 0;
+}
+
 /* New Post Form */
 
 .new-post-form {

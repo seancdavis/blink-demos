@@ -66,8 +66,8 @@ export const partials = {
       ></textarea>
       <div id="new-post-remaining-count">400</div>
     </div>
-    <div class="form-actions">
-      <button class="button" type="submit">Post</button>
+    <div class="form-actions is-compact">
+      <button class="button" type="submit">Create post</button>
     </div>
   </form>
 </div>
