@@ -12,6 +12,8 @@ excludedPath = [
   "/images/*",
   "/uploads/*",
   "/css/*",
+  "/favicon*",
+  "/service-worker*",
 ]
 
 [[edge_functions]]
