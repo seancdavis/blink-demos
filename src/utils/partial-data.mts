@@ -14,12 +14,10 @@ export const partials = {
   </div>
 </details>
 `,
-  "auth-links-signed-out": `<a href="/login">Sign in</a>
+  "auth-links-signed-out": `<a class="button" href="/login">Sign in</a>
 `,
-  feedback: `<div class="feedback container-xs">
-  <div class="feedback-content">
-    <p class="{{ classname }}">{{ message }}</p>
-  </div>
+  feedback: `<div class="feedback container-xs {{ classname }}">
+  <small>{{ message }}</small>
 </div>
 `,
   head: `<head>
