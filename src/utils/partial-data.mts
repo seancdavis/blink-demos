@@ -46,21 +46,31 @@ export const partials = {
   </div>
 </header>
 `,
-  "new-post-form": `<form action="/api/posts/create" method="post">
-  <input type="text" name="title" placeholder="Title" required minlength="10" maxlength="64" />
-  <div>
-    <textarea
-      id="new-post-content"
-      name="content"
-      placeholder="Content"
-      minlength="10"
-      maxlength="400"
-      required
-    ></textarea>
-    <div id="new-post-remaining-count">400</div>
-  </div>
-  <button type="submit">Post</button>
-</form>
+  "new-post-form": `<div class="container-xs new-post-form">
+  <h2>New post</h2>
+
+  <form action="/api/posts/create" method="post">
+    <div>
+      <label for="title">Title</label>
+      <input type="text" name="title" placeholder="Title" required minlength="10" maxlength="64" />
+    </div>
+    <div>
+      <label for="content">Content</label>
+      <textarea
+        id="new-post-content"
+        name="content"
+        placeholder="Content"
+        minlength="10"
+        maxlength="400"
+        required
+      ></textarea>
+      <div id="new-post-remaining-count">400</div>
+    </div>
+    <div class="form-actions">
+      <button class="button" type="submit">Post</button>
+    </div>
+  </form>
+</div>
 
 <script>
   const textarea = document.getElementById('new-post-content')
