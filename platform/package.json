@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "dev": "ntl dev . --no-open",
     "build": "npx tsx ./src/scripts/build.ts",
     "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
   },
