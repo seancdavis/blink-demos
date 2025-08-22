@@ -1,6 +1,1 @@
-node_modules
 .DS_Store
-.envrc
-
-# Local Netlify folder
-.netlify
