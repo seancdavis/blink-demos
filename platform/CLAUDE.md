@@ -32,7 +32,7 @@ This project is a social media platform built specifically for Netlify's platfor
 
 - JWT-based auth using `jose` library
 - Passwords hashed with `bcrypt`
-- Session stored in httpOnly cookie `u_session`
+- Session stored in httpOnly cookie `blink_session`
 - JWT secret from `COOKIE_JWT_SECRET` environment variable
 - Auth middleware in `edge-functions/auth.mts` validates all requests
 

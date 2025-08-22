@@ -62,7 +62,7 @@ export default async (request: Request, context: Context) => {
     .setExpirationTime('1w')
     .sign(secret)
 
-  cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
+  cookies.set({ name: 'blink_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
 
   setFeedback('login_success')
   return redirect('/')

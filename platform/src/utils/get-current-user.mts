@@ -11,7 +11,7 @@ export async function getCurrentUser(options: GetCurrentUserOptions): Promise<Us
   const { cookies } = options
   let decodedJwt: User | null = null
 
-  const sessionCookie = cookies.get('u_session')
+  const sessionCookie = cookies.get('blink_session')
   // No session cookie is set
   if (!sessionCookie) return null
 

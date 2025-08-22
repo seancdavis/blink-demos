@@ -49,7 +49,7 @@ export default async function handler(request: Request, context: Context) {
 
   // If no user is found and the page is not an auth page, redirect to login
   if (!user && !isAuthPage) {
-    cookies.delete({ name: 'u_session', path: '/' })
+    cookies.delete({ name: 'blink_session', path: '/' })
     setFeedback('login_required')
     return Response.redirect('/login', 303)
   }

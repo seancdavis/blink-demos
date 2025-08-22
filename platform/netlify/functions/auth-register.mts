@@ -76,7 +76,7 @@ export default async (request: Request, context: Context) => {
     .setExpirationTime('1w')
     .sign(secret)
 
-  cookies.set({ name: 'u_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
+  cookies.set({ name: 'blink_session', value: jwt, path: '/', httpOnly: true, sameSite: 'Strict' })
 
   // The username is used to cache 404 responses on the profile page
   await purgeCache({ tags: [user.username] })

@@ -31,13 +31,13 @@ export default async function handler(_: Request, context: Context) {
   const response = await context.next()
   const { cookies } = context
   // Check if the feedback cookie is present
-  const feedbackName = cookies.get('u_feedback') as FeedbackName
+  const feedbackName = cookies.get('blink_feedback') as FeedbackName
   if (!feedbackName) return
   // Ensure the feedback is present in the feedback data
   const { message, type } = feedbackData[feedbackName]
   if (!message || !type) return
   // Delete the cookie after reading and displaying it
-  cookies.delete({ name: 'u_feedback', path: '/' })
+  cookies.delete({ name: 'blink_feedback', path: '/' })
 
   return new HTMLRewriter()
     .on('feedback', new FeedbackHandler({ type, message }))

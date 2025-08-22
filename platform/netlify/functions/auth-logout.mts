@@ -13,7 +13,7 @@ export default async (request: Request, context: Context) => {
     defaultRedirectPath: '/login',
   })
 
-  cookies.delete({ name: 'u_session', path: '/' })
+  cookies.delete({ name: 'blink_session', path: '/' })
   return redirect()
 }
 
