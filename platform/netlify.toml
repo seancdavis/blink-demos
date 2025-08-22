@@ -4,6 +4,7 @@ command = "npm run build"
 
 [template.environment]
 ADMIN_API_KEY = "replace me with your generated secret"
+COOKIE_JWT_SECRET = "replace me with your generated secret"
 
 [[edge_functions]]
 path = "/*"
