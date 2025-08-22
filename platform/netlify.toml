@@ -2,6 +2,9 @@
 publish = "www"
 command = "npm run build"
 
+[template.environment]
+ADMIN_API_KEY = "replace me with your generated secret"
+
 [[edge_functions]]
 path = "/*"
 function = "auth"
