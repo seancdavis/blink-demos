@@ -25,6 +25,7 @@ A Twitter/X-like social media platform built on Netlify's serverless architectur
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/seancdavis/blink-demos&dir=platform)
 
 After deploying, update the environment variables in your Netlify dashboard:
+
 - `COOKIE_JWT_SECRET` - Generate with `npm run generate-secret`
 - `ADMIN_API_KEY` - Use the same generated secret for admin access
 
@@ -56,10 +57,11 @@ After deploying, update the environment variables in your Netlify dashboard:
    This connects your local environment to your deployed site, allowing you to use the same environment variables.
 
 3. **Start development server:**
+
    ```bash
    npm run dev
    ```
-   
+
    The Netlify CLI automatically pulls environment variables from your deployed site, so no local `.env` file is needed.
 
 ### Development Commands
