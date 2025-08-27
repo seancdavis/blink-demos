@@ -5,6 +5,7 @@ import type { Config } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 import { Post, User } from '../../src/utils/types.mts'
+import { addToPostsIndex } from '../../src/utils/posts-index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
@@ -63,6 +64,7 @@ export default async (request: Request, context: Context) => {
 
     const post: Post = { id, title, content, userId: user.id, createdAt }
     await postStore.setJSON(post.id, post)
+    await addToPostsIndex(post.id, post.createdAt)
   }
 
   return new Response('Seeded successfully')
