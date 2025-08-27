@@ -10,6 +10,7 @@ COOKIE_JWT_SECRET = "replace me with your generated secret"
 path = "/*"
 function = "auth"
 excludedPath = [
+  "/",
   "/api/auth/*",
   "/uploads/avatar/*",
   "/api/admin/*",
