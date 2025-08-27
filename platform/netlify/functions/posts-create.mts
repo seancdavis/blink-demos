@@ -3,6 +3,7 @@ import type { Context } from '@netlify/edge-functions'
 import { type Config, purgeCache } from '@netlify/functions'
 import { v4 as uuidv4 } from 'uuid'
 import { functionUtils } from '../../src/utils/index.mts'
+import { addToPostsIndex } from '../../src/utils/posts-index.mts'
 import { Post } from '../../src/utils/types.mts'
 
 export default async (request: Request, context: Context) => {
@@ -59,6 +60,7 @@ export default async (request: Request, context: Context) => {
   const post: Post = { id, title, content, userId: user.id, createdAt }
 
   await postStore.setJSON(post.id, post)
+  await addToPostsIndex(post.id, post.createdAt)
 
   await purgeCache({ tags: [post.id, user.id] })
   setFeedback('post_created')

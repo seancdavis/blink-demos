@@ -1,6 +1,7 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
+import { getRecentPostIds } from '../../src/utils/posts-index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { PostWithUser } from '../../src/utils/types.mts'
@@ -34,22 +35,28 @@ export class LatestPostsHandler {
 export default async function handler(_: Request, context: Context) {
   const response = await context.next()
 
-  const userStore = getStore({ name: 'User', consistency: 'strong' })
-  const allUsersIds = (await userStore.list()).blobs.map(({ key }) => key)
-  const users = await Promise.all(
-    allUsersIds.map(async (id) => await userStore.get(id, { type: 'json' })),
+  // Get the 10 most recent post IDs from the sorted index
+  const recentPostIds = await getRecentPostIds(10)
+
+  // Fetch only the recent posts
+  const postStore = getStore({ name: 'Post', consistency: 'strong' })
+  const recentPosts = await Promise.all(
+    recentPostIds.map(async (id) => await postStore.get(id, { type: 'json' })),
   )
 
-  const postStore = getStore({ name: 'Post', consistency: 'strong' })
-  const allPostIds = (await postStore.list()).blobs.map(({ key }) => key)
-  const posts: PostWithUser[] = (
-    await Promise.all(allPostIds.map(async (id) => await postStore.get(id, { type: 'json' })))
+  // Get unique user IDs from recent posts
+  const uniqueUserIds = [...new Set(recentPosts.map((post) => post.userId))]
+
+  // Only fetch users that are needed for recent posts
+  const userStore = getStore({ name: 'User', consistency: 'strong' })
+  const users = await Promise.all(
+    uniqueUserIds.map(async (id) => await userStore.get(id, { type: 'json' })),
   )
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .map((post) => {
-      const user = users.find((user) => user.id === post.userId)
-      return { ...post, user }
-    })
+
+  const posts: PostWithUser[] = recentPosts.map((post) => {
+    const user = users.find((user) => user.id === post.userId)
+    return { ...post, user }
+  })
 
   return new HTMLRewriter()
     .on('latest-posts', new LatestPostsHandler({ posts }))

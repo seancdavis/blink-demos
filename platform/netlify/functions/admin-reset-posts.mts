@@ -1,6 +1,7 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import type { Config } from '@netlify/functions'
+import { clearPostsIndex } from '../../src/utils/posts-index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {
@@ -17,6 +18,7 @@ export default async (request: Request, context: Context) => {
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
   const allPostIds = (await postStore.list()).blobs.map(({ key }) => key)
   await Promise.all(allPostIds.map((id) => postStore.delete(id)))
+  await clearPostsIndex()
 
   return new Response('All posts deleted successfully')
 }
