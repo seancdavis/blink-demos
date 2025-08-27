@@ -14,6 +14,7 @@ excludedPath = [
   "/api/auth/*",
   "/uploads/avatar/*",
   "/api/admin/*",
+  "/api/debug/*",
   "/images/*",
   "/uploads/*",
   "/css/*",
