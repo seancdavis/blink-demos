@@ -9,6 +9,18 @@ export const feedbackData: Record<string, { type: FeedbackType; message: string 
     type: 'success',
     message: 'Avatar uploaded successfully.',
   },
+  avatar_required: {
+    type: 'error',
+    message: 'Please select an image to upload.',
+  },
+  avatar_too_large: {
+    type: 'error',
+    message: 'Image file is too large. Please select an image under 2 MB.',
+  },
+  avatar_invalid_type: {
+    type: 'error',
+    message: 'Invalid file type. Please select a JPG, PNG, GIF, or WebP image.',
+  },
   login_required: {
     type: 'error',
     message: 'You must be logged in to access this page.',

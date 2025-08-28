@@ -17,6 +17,26 @@ export default async (request: Request, context: Context) => {
   const formData = await request.formData()
   const image = formData.get('avatar') as File
 
+  // Validate file exists
+  if (!image || !image.size) {
+    setFeedback('avatar_required')
+    return redirect('/settings')
+  }
+
+  // Validate file size (2 MB limit)
+  const maxSizeBytes = 2 * 1024 * 1024 // 2 MB
+  if (image.size > maxSizeBytes) {
+    setFeedback('avatar_too_large')
+    return redirect('/settings')
+  }
+
+  // Validate file type
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+  if (!allowedTypes.includes(image.type)) {
+    setFeedback('avatar_invalid_type')
+    return redirect('/settings')
+  }
+
   // Store the avatar image in the UserAvatar store
   const userAvatarStore = getStore({ name: 'UserAvatar', consistency: 'strong' })
   await userAvatarStore.set(user.username.toString(), image)

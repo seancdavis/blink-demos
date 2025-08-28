@@ -320,6 +320,20 @@ header {
   margin-top: 0;
 }
 
+.form-help {
+  color: var(--color-neutral-400);
+  display: block;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-error {
+  color: var(--color-rose-400);
+  display: block;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
 /* New Post Form */
 
 .new-post-form {
