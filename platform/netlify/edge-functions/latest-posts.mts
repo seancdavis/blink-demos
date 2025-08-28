@@ -29,12 +29,12 @@ export class LatestPostsHandler {
         const truncatedContent = truncateText(post.content, 150)
         return renderPartial({
           name: 'post-card',
-          data: { 
-            ...post, 
-            ...post.user, 
-            date, 
+          data: {
+            ...post,
+            ...post.user,
+            date,
             postId: post.id,
-            content: truncatedContent
+            content: truncatedContent,
           },
         })
       })
@@ -53,7 +53,7 @@ export class PaginationHandler {
 
   element(element: Element) {
     const { currentPage, totalPages, hasNextPage, hasPrevPage } = this.pagination
-    
+
     const partialContent = renderPartial({
       name: 'pagination',
       data: {
@@ -72,13 +72,13 @@ export class PaginationHandler {
 
 export default async function handler(request: Request, context: Context) {
   const response = await context.next()
-  
+
   // Get page number from query params (default to 1)
   const url = new URL(request.url)
   const page = parseInt(url.searchParams.get('page') || '1', 10)
-  
+
   // Get paginated post IDs and metadata
-  const pagination = await getPaginatedPostIds(page, 10)
+  const pagination = await getPaginatedPostIds(page, 12)
 
   // Fetch only the posts for current page
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
