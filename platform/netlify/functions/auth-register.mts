@@ -81,7 +81,7 @@ export default async (request: Request, context: Context) => {
   // The username is used to cache 404 responses on the profile page
   await purgeCache({ tags: [user.username] })
   setFeedback('user_created')
-  return redirect()
+  return redirect('/')
 }
 
 export const config: Config = {
