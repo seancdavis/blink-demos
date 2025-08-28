@@ -133,7 +133,8 @@ Utilizes Netlify Blobs for persistence. Schema is defined in `src/utils/types.mt
 1. User registers/logs in via forms
 2. Password hashed with bcrypt
 3. JWT token created and stored in httpOnly cookie
-4. Edge function validates token on each request
+4. Auth-gate edge function processes conditional content
+5. Content varies based on authentication state (logged in vs guest)
 
 ## API Endpoints
 
