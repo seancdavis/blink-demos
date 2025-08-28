@@ -4,7 +4,23 @@
   <body>
     <partial name="header"></partial>
     <feedback></feedback>
-    <partial name="new-post-form" auth-state="authenticated"></partial>
+    <auth-gate>
+      <is-authenticated>
+        <partial name="new-post-form"></partial>
+      </is-authenticated>
+      <is-unauthenticated>
+        <div class="container-xs new-post-form guest">
+          <div class="auth-prompt">
+            <h2>Share your thoughts</h2>
+            <p>Sign in to create posts and join the conversation.</p>
+            <div class="form-actions">
+              <a class="button" href="/login">Sign in</a>
+              <a class="button secondary" href="/register">Create account</a>
+            </div>
+          </div>
+        </div>
+      </is-unauthenticated>
+    </auth-gate>
 
     <div class="container">
       <h1>Latest posts</h1>

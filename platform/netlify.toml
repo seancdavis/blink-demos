@@ -13,6 +13,11 @@ COOKIE_JWT_SECRET = "replace me with your generated secret"
 
 [[edge_functions]]
 path = "/*"
+function = "auth-gate"
+excludedPath = ["/api/*", "/images/*", "/uploads/*", "/css/*"]
+
+[[edge_functions]]
+path = "/*"
 function = "partial"
 excludedPath = ["/api/*", "/images/*", "/uploads/*", "/css/*"]
 

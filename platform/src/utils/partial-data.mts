@@ -41,7 +41,47 @@ export const partials = {
       <img src="/images/blink-logo.svg" alt="BLINK Logo" />
     </a>
     <nav>
-      <auth-links></auth-links>
+      <auth-gate>
+        <is-authenticated>
+          <details class="header-auth-links signed-in">
+            <summary>
+              <img class="avatar" src="" alt="avatar" />
+            </summary>
+            <div class="header-auth-links-dropdown">
+              <a href="/@" class="profile-link">Profile</a>
+              <a href="/settings">Edit profile</a>
+              <form action="/api/auth/logout" method="post">
+                <button class="sign-out" type="submit">Sign out</button>
+              </form>
+            </div>
+          </details>
+          <script>
+            // Update avatar and profile link with user data
+            document.addEventListener('DOMContentLoaded', () => {
+              const authDiv = document.querySelector('[data-username]')
+              if (authDiv) {
+                const username = authDiv.getAttribute('data-username')
+                const avatarSrc = authDiv.getAttribute('data-avatar-src')
+                
+                const avatar = authDiv.querySelector('.avatar')
+                const profileLink = authDiv.querySelector('.profile-link')
+                
+                if (avatar && avatarSrc) {
+                  avatar.src = avatarSrc
+                  avatar.alt = username + ' avatar'
+                }
+                if (profileLink && username) {
+                  profileLink.href = '/@' + username
+                  profileLink.textContent = username
+                }
+              }
+            })
+          </script>
+        </is-authenticated>
+        <is-unauthenticated>
+          <a class="button" href="/login">Sign in</a>
+        </is-unauthenticated>
+      </auth-gate>
     </nav>
   </div>
 </header>

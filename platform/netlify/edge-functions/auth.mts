@@ -1,36 +1,5 @@
 import type { Context } from '@netlify/edge-functions'
-import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { edgeFunctionUtils } from '../../src/utils/index.mts'
-import { renderPartial } from '../../src/utils/render-partial.mts'
-
-type AuthLinksHandlerOptions = {
-  signedIn: boolean
-  username?: string
-  avatarSrc?: string
-}
-
-export class AuthLinksHandler {
-  signedIn: boolean
-  username: string
-  avatarSrc: string
-
-  constructor(options: AuthLinksHandlerOptions) {
-    this.signedIn = options.signedIn
-    this.username = options.username || ''
-    this.avatarSrc = options.avatarSrc || ''
-  }
-
-  element(element: Element) {
-    const partialContent = this.signedIn
-      ? renderPartial({
-          name: 'auth-links-signed-in',
-          data: { username: this.username, avatarSrc: this.avatarSrc },
-        })
-      : renderPartial({ name: 'auth-links-signed-out' })
-
-    element.replace(partialContent, { html: true })
-  }
-}
 
 export default async function handler(request: Request, context: Context) {
   const { setFeedback, url, cookies, user } = await edgeFunctionUtils({ request, context })
@@ -39,25 +8,11 @@ export default async function handler(request: Request, context: Context) {
     requestPath,
   )
 
-  const nextContextWithAuthLinks = async (options: AuthLinksHandlerOptions) => {
-    const { signedIn, username, avatarSrc } = options
-    const response = await context.next()
-    return new HTMLRewriter()
-      .on('auth-links', new AuthLinksHandler({ signedIn, username, avatarSrc }))
-      .transform(response)
-  }
-
   // If no user is found and the page is not an auth page, redirect to login
   if (!user && !isAuthPage) {
     cookies.delete({ name: 'blink_session', path: '/' })
     setFeedback('login_required')
     return Response.redirect('/login', 303)
-  }
-
-  // If no user is found and the page is an auth page, render the page with the
-  // unauthenticated auth links
-  if (!user && isAuthPage) {
-    return nextContextWithAuthLinks({ signedIn: false })
   }
 
   // If a user is found and the page is an auth page, redirect to the home page
@@ -66,14 +21,6 @@ export default async function handler(request: Request, context: Context) {
     return Response.redirect('/', 303)
   }
 
-  // If a user is found and the page is not an auth page, render the page with
-  // the authenticated auth links.
-  //
-  // Note: The user does exist at this point based on the logic above, so we can
-  // safely assert that the user is not null.
-  return nextContextWithAuthLinks({
-    signedIn: true,
-    username: user!.username,
-    avatarSrc: user!.avatarSrc,
-  })
+  // Continue to next handler
+  return context.next()
 }
