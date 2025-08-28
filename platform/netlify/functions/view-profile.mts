@@ -4,6 +4,7 @@ import { Config } from '@netlify/functions'
 import { functionUtils } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
+import { truncateText } from '../../src/utils/truncate-text.mts'
 import { Post, User } from '../../src/utils/types.mts'
 
 export default async (request: Request, context: Context) => {
@@ -55,7 +56,11 @@ export default async (request: Request, context: Context) => {
   let posts = userPosts
     .map((post) => {
       const date = timeAgoInWords(new Date(post.createdAt))
-      return renderPartial({ name: 'post-card', data: { ...post, ...user, date, postId: post.id } })
+      const truncatedContent = truncateText(post.content, 150)
+      return renderPartial({ 
+        name: 'post-card', 
+        data: { ...post, ...user, date, postId: post.id, content: truncatedContent } 
+      })
     })
     .join('')
 

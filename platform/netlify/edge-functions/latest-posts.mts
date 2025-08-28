@@ -4,6 +4,7 @@ import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewrite
 import { getPaginatedPostIds, PaginationResult } from '../../src/utils/posts-index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
+import { truncateText } from '../../src/utils/truncate-text.mts'
 import { PostWithUser } from '../../src/utils/types.mts'
 
 type LatestPostsHandlerOptions = {
@@ -25,9 +26,16 @@ export class LatestPostsHandler {
     const partialContent = this.posts
       .map((post) => {
         const date = timeAgoInWords(new Date(post.createdAt))
+        const truncatedContent = truncateText(post.content, 150)
         return renderPartial({
           name: 'post-card',
-          data: { ...post, ...post.user, date, postId: post.id },
+          data: { 
+            ...post, 
+            ...post.user, 
+            date, 
+            postId: post.id,
+            content: truncatedContent
+          },
         })
       })
       .join('')
