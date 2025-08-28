@@ -33,6 +33,11 @@ export const partials = {
   />
 
   <link rel="stylesheet" href="/css/styles.css" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/images/favicon.svg" sizes="any">
+  <link rel="apple-touch-icon" href="/images/favicon.svg">
 </head>
 `,
   header: `<header>
