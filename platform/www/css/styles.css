@@ -506,3 +506,36 @@ header {
 .pagination:empty {
   display: none;
 }
+
+/* 404 Page */
+
+.not-found-page {
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.not-found-content h1 {
+  color: var(--color-purple-400);
+  font-size: 6rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.not-found-content h2 {
+  color: var(--color-purple-200);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.not-found-content p {
+  color: var(--color-neutral-400);
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}

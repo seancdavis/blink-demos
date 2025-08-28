@@ -143,22 +143,6 @@ export const partials = {
   })
 </script>
 `,
-  "not-found": `<!doctype html>
-<html lang="en">
-  <partial name="head" title="Login"></partial>
-  <body>
-    <partial name="header"></partial>
-    <feedback></feedback>
-
-    <main>
-      <div class="container-xs">
-        <h1>Page not found</h1>
-        <p>The page you are looking for does not exist.</p>
-      </div>
-    </main>
-  </body>
-</html>
-`,
   pagination: `<nav class="pagination container-xs">
   <div class="pagination-info">
     Page {{ currentPage }} of {{ totalPages }}
