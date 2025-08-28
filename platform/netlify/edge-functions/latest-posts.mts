@@ -1,13 +1,17 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
-import { getRecentPostIds } from '../../src/utils/posts-index.mts'
+import { getPaginatedPostIds, PaginationResult } from '../../src/utils/posts-index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { PostWithUser } from '../../src/utils/types.mts'
 
 type LatestPostsHandlerOptions = {
   posts: PostWithUser[]
+}
+
+type PaginationHandlerOptions = {
+  pagination: PaginationResult
 }
 
 export class LatestPostsHandler {
@@ -32,33 +36,64 @@ export class LatestPostsHandler {
   }
 }
 
-export default async function handler(_: Request, context: Context) {
+export class PaginationHandler {
+  pagination: PaginationResult
+
+  constructor(options: PaginationHandlerOptions) {
+    this.pagination = options.pagination
+  }
+
+  element(element: Element) {
+    const { currentPage, totalPages, hasNextPage, hasPrevPage } = this.pagination
+    
+    const partialContent = renderPartial({
+      name: 'pagination',
+      data: {
+        currentPage: currentPage.toString(),
+        totalPages: totalPages.toString(),
+        hasNextPage: hasNextPage.toString(),
+        hasPrevPage: hasPrevPage.toString(),
+        prevPage: (currentPage - 1).toString(),
+        nextPage: (currentPage + 1).toString(),
+      },
+    })
+
+    element.replace(partialContent, { html: true })
+  }
+}
+
+export default async function handler(request: Request, context: Context) {
   const response = await context.next()
+  
+  // Get page number from query params (default to 1)
+  const url = new URL(request.url)
+  const page = parseInt(url.searchParams.get('page') || '1', 10)
+  
+  // Get paginated post IDs and metadata
+  const pagination = await getPaginatedPostIds(page, 10)
 
-  // Get the 10 most recent post IDs from the sorted index
-  const recentPostIds = await getRecentPostIds(10)
-
-  // Fetch only the recent posts
+  // Fetch only the posts for current page
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
-  const recentPosts = await Promise.all(
-    recentPostIds.map(async (id) => await postStore.get(id, { type: 'json' })),
+  const posts = await Promise.all(
+    pagination.postIds.map(async (id) => await postStore.get(id, { type: 'json' })),
   )
 
-  // Get unique user IDs from recent posts
-  const uniqueUserIds = [...new Set(recentPosts.map((post) => post.userId))]
+  // Get unique user IDs from posts
+  const uniqueUserIds = [...new Set(posts.map((post) => post.userId))]
 
-  // Only fetch users that are needed for recent posts
+  // Only fetch users that are needed for posts
   const userStore = getStore({ name: 'User', consistency: 'strong' })
   const users = await Promise.all(
     uniqueUserIds.map(async (id) => await userStore.get(id, { type: 'json' })),
   )
 
-  const posts: PostWithUser[] = recentPosts.map((post) => {
+  const postsWithUsers: PostWithUser[] = posts.map((post) => {
     const user = users.find((user) => user.id === post.userId)
     return { ...post, user }
   })
 
   return new HTMLRewriter()
-    .on('latest-posts', new LatestPostsHandler({ posts }))
+    .on('latest-posts', new LatestPostsHandler({ posts: postsWithUsers }))
+    .on('pagination', new PaginationHandler({ pagination }))
     .transform(response)
 }

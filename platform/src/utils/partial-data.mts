@@ -159,6 +159,37 @@ export const partials = {
   </body>
 </html>
 `,
+  pagination: `<nav class="pagination container-xs">
+  <div class="pagination-info">
+    Page {{ currentPage }} of {{ totalPages }}
+  </div>
+  
+  <div class="pagination-controls">
+    <a href="/?page={{ prevPage }}" class="button pagination-prev" rel="prev" data-show="{{ hasPrevPage }}">
+      ← Previous
+    </a>
+    
+    <a href="/?page={{ nextPage }}" class="button pagination-next" rel="next" data-show="{{ hasNextPage }}">
+      Next →
+    </a>
+  </div>
+</nav>
+
+<script>
+  // Hide pagination buttons when not needed
+  document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.querySelector('.pagination-prev')
+    const nextBtn = document.querySelector('.pagination-next')
+    
+    if (prevBtn && prevBtn.getAttribute('data-show') === 'false') {
+      prevBtn.style.display = 'none'
+    }
+    
+    if (nextBtn && nextBtn.getAttribute('data-show') === 'false') {
+      nextBtn.style.display = 'none'
+    }
+  })
+</script>`,
   "post-card": `<div class="post-card">
   <div class="post-card-meta">
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />

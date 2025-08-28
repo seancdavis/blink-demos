@@ -456,3 +456,53 @@ header {
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
 }
+
+/* Pagination */
+
+.pagination {
+  margin: 3rem auto 2rem;
+  text-align: center;
+}
+
+.pagination-info {
+  color: var(--color-neutral-400);
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-prev,
+.pagination-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.pagination-prev {
+  border-radius: 0.375rem 0.25rem 0.25rem 0.375rem;
+}
+
+.pagination-next {
+  border-radius: 0.25rem 0.375rem 0.375rem 0.25rem;
+}
+
+.pagination-prev:hover,
+.pagination-next:hover {
+  background: var(--color-purple-400);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Empty state when no pagination needed */
+.pagination:empty {
+  display: none;
+}

@@ -46,3 +46,39 @@ export async function getRecentPostIds(limit = 10): Promise<string[]> {
   const index = await getPostsIndex()
   return index.slice(0, limit).map((entry) => entry.id)
 }
+
+export type PaginationResult = {
+  postIds: string[]
+  currentPage: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  totalPosts: number
+}
+
+/**
+ * Get paginated post IDs with pagination metadata
+ */
+export async function getPaginatedPostIds(page: number = 1, limit: number = 10): Promise<PaginationResult> {
+  const index = await getPostsIndex()
+  const totalPosts = index.length
+  const totalPages = Math.ceil(totalPosts / limit)
+  
+  // Ensure page is within valid range
+  const currentPage = Math.max(1, Math.min(page, totalPages || 1))
+  
+  // Calculate offset
+  const offset = (currentPage - 1) * limit
+  
+  // Get the page slice
+  const postIds = index.slice(offset, offset + limit).map((entry) => entry.id)
+  
+  return {
+    postIds,
+    currentPage,
+    totalPages,
+    hasNextPage: currentPage < totalPages,
+    hasPrevPage: currentPage > 1,
+    totalPosts
+  }
+}
