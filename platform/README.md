@@ -101,6 +101,23 @@ Uses a custom partial system with server-side rendering. These elements are repl
 <latest-posts></latest-posts>
 ```
 
+### Auth-Gate System
+
+Provides conditional content rendering based on authentication state using semantic HTML:
+
+```html
+<auth-gate>
+  <is-authenticated>
+    <!-- Content for logged-in users -->
+  </is-authenticated>
+  <is-unauthenticated>
+    <!-- Content for guest users -->
+  </is-unauthenticated>
+</auth-gate>
+```
+
+The authenticated sections receive user data attributes for template population.
+
 The `build` script collects all the HTML partials from `src/partials/` and compiles them into the final output.
 
 ### Data Storage
