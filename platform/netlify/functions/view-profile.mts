@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import { Config } from '@netlify/functions'
-import { functionUtils } from '../../src/utils/index.mts'
+import { functionUtils, newlineToLineBreak } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { truncateText } from '../../src/utils/truncate-text.mts'
@@ -59,7 +59,7 @@ export default async (request: Request, context: Context) => {
       const truncatedContent = truncateText(post.content, 150)
       return renderPartial({ 
         name: 'post-card', 
-        data: { ...post, ...user, date, postId: post.id, content: truncatedContent } 
+        data: { ...post, ...user, date, postId: post.id, content: newlineToLineBreak(truncatedContent) } 
       })
     })
     .join('')

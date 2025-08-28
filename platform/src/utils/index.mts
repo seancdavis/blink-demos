@@ -3,6 +3,8 @@ import { getCurrentUser } from './get-current-user.mts'
 import { redirectFn } from './redirect-fn.mts'
 import { setFeedbackFn } from './set-feedback-fn.mts'
 
+export { newlineToLineBreak } from './nl2br.mts'
+
 /* ---- Functions ---- */
 
 type FunctionUtilsOptions = {

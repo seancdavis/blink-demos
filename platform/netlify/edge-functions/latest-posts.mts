@@ -6,6 +6,7 @@ import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 import { truncateText } from '../../src/utils/truncate-text.mts'
 import { PostWithUser } from '../../src/utils/types.mts'
+import { newlineToLineBreak } from '../../src/utils/nl2br.mts'
 
 type LatestPostsHandlerOptions = {
   posts: PostWithUser[]
@@ -34,7 +35,7 @@ export class LatestPostsHandler {
             ...post.user,
             date,
             postId: post.id,
-            content: truncatedContent,
+            content: newlineToLineBreak(truncatedContent),
           },
         })
       })

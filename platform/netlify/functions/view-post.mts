@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import { Config } from '@netlify/functions'
-import { functionUtils } from '../../src/utils/index.mts'
+import { functionUtils, newlineToLineBreak } from '../../src/utils/index.mts'
 import { renderPartial } from '../../src/utils/render-partial.mts'
 import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 
@@ -28,7 +28,7 @@ export default async (request: Request, context: Context) => {
   const date = timeAgoInWords(new Date(post.createdAt))
   const user = await userStore.get(post.userId, { type: 'json' })
 
-  const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date } })
+  const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date, content: newlineToLineBreak(post.content) } })
 
   return new Response(html, {
     headers: {
