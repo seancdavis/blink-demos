@@ -97,7 +97,10 @@ export const partials = {
   </div>
 </div>`,
   "new-post-form": `<div class="container-xs new-post-form">
-  <h2>New post</h2>
+  <div class="new-post-header">
+    <img class="avatar new-post-avatar" src="" alt="Your avatar" />
+    <h2>Write a New post</h2>
+  </div>
 
   <form action="/api/posts/create" method="post">
     <div>
@@ -123,22 +126,39 @@ export const partials = {
 </div>
 
 <script>
-  const textarea = document.getElementById('new-post-content')
-  const charCount = document.getElementById('new-post-remaining-count')
-  const maxLength = parseInt(textarea.getAttribute('maxlength'), 10)
+  document.addEventListener('DOMContentLoaded', () => {
+    const textarea = document.getElementById('new-post-content')
+    const charCount = document.getElementById('new-post-remaining-count')
+    const maxLength = parseInt(textarea.getAttribute('maxlength'), 10)
 
-  textarea.addEventListener('input', () => {
-    const remaining = maxLength - textarea.value.length
-    charCount.textContent = remaining
+    // Character counter
+    textarea.addEventListener('input', () => {
+      const remaining = maxLength - textarea.value.length
+      charCount.textContent = remaining
 
-    // Reset classes
-    charCount.classList.remove('warning', 'danger')
+      // Reset classes
+      charCount.classList.remove('warning', 'danger')
 
-    // Apply color based on remaining characters
-    if (remaining < 5) {
-      charCount.classList.add('danger')
-    } else if (remaining < 20) {
-      charCount.classList.add('warning')
+      // Apply color based on remaining characters
+      if (remaining < 5) {
+        charCount.classList.add('danger')
+      } else if (remaining < 20) {
+        charCount.classList.add('warning')
+      }
+    })
+
+    // Update avatar with user data from auth-gate
+    const authDiv = document.querySelector('[data-username]')
+    const avatar = document.querySelector('.new-post-avatar')
+
+    if (authDiv && avatar) {
+      const username = authDiv.getAttribute('data-username')
+      const avatarSrc = authDiv.getAttribute('data-avatar-src')
+
+      if (avatarSrc) {
+        avatar.src = avatarSrc
+        avatar.alt = username + "'s avatar"
+      }
     }
   })
 </script>

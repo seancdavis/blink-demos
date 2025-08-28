@@ -329,6 +329,25 @@ header {
   padding: 1rem 2rem;
 }
 
+.new-post-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.new-post-avatar {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.new-post-header h2 {
+  margin: 0;
+  color: var(--color-purple-300);
+}
+
 #new-post-remaining-count {
   color: var(--color-neutral-500);
   font-size: 0.875rem;
