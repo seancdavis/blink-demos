@@ -6,21 +6,10 @@ command = "npm run build"
 ADMIN_API_KEY = "replace me with your generated secret"
 COOKIE_JWT_SECRET = "replace me with your generated secret"
 
-[[edge_functions]]
-path = "/*"
-function = "auth"
-excludedPath = [
-  "/",
-  "/api/auth/*",
-  "/uploads/avatar/*",
-  "/api/admin/*",
-  "/api/debug/*",
-  "/images/*",
-  "/uploads/*",
-  "/css/*",
-  "/favicon*",
-  "/service-worker*",
-]
+# Auth edge function available for specific paths when needed
+# [[edge_functions]]
+# path = ["/protected-path", "/..."]
+# function = "auth"
 
 [[edge_functions]]
 path = "/*"
