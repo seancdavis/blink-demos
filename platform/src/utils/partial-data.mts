@@ -56,9 +56,11 @@ export const partials = {
             </div>
           </details>
           <script>
-            // Update avatar and profile link with user data
             document.addEventListener('DOMContentLoaded', () => {
               const authDiv = document.querySelector('[data-username]')
+              const dropdown = document.querySelector('.header-auth-links')
+              
+              // Update avatar and profile link with user data
               if (authDiv) {
                 const username = authDiv.getAttribute('data-username')
                 const avatarSrc = authDiv.getAttribute('data-avatar-src')
@@ -74,6 +76,23 @@ export const partials = {
                   profileLink.href = '/@' + username
                   profileLink.textContent = username
                 }
+              }
+              
+              // Close dropdown on outside click or Escape key
+              if (dropdown) {
+                // Close on outside click
+                document.addEventListener('click', (e) => {
+                  if (!dropdown.contains(e.target)) {
+                    dropdown.open = false
+                  }
+                })
+                
+                // Close on Escape key
+                document.addEventListener('keydown', (e) => {
+                  if (e.key === 'Escape' && dropdown.open) {
+                    dropdown.open = false
+                  }
+                })
               }
             })
           </script>
