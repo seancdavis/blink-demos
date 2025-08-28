@@ -31,6 +31,7 @@
             const uploadBtn = document.getElementById('upload-btn')
             const errorDiv = document.getElementById('file-size-error')
             const maxSizeBytes = 2 * 1024 * 1024 // 2 MB
+            let isSubmitting = false
 
             fileInput.addEventListener('change', (e) => {
               const file = e.target.files[0]
@@ -52,6 +53,22 @@
                 errorDiv.style.display = 'block'
                 return false
               }
+
+              if (isSubmitting) {
+                e.preventDefault()
+                return false
+              }
+              
+              isSubmitting = true
+              uploadBtn.disabled = true
+              uploadBtn.textContent = 'Uploading...'
+              
+              // Re-enable after 10 seconds as fallback (file uploads may take longer)
+              setTimeout(() => {
+                isSubmitting = false
+                uploadBtn.disabled = false
+                uploadBtn.textContent = 'Upload'
+              }, 10000)
             })
           })
         </script>

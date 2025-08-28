@@ -302,6 +302,13 @@ header {
   background: var(--color-purple-600);
 }
 
+.button[disabled] {
+  background: var(--color-neutral-800);
+  color: var(--color-neutral-200);
+  cursor: not-allowed;
+  transition: none;
+}
+
 /* Form */
 
 .form-actions {

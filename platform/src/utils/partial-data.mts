@@ -126,7 +126,7 @@ export const partials = {
     <h2>Write a New post</h2>
   </div>
 
-  <form action="/api/posts/create" method="post">
+  <form action="/api/posts/create" method="post" id="new-post-form">
     <div>
       <label for="title">Title</label>
       <input type="text" name="title" placeholder="Title" required minlength="10" maxlength="64" />
@@ -144,16 +144,19 @@ export const partials = {
       <div id="new-post-remaining-count">400</div>
     </div>
     <div class="form-actions is-compact">
-      <button class="button" type="submit">Create post</button>
+      <button class="button" type="submit" id="create-post-btn">Create post</button>
     </div>
   </form>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('new-post-form')
     const textarea = document.getElementById('new-post-content')
     const charCount = document.getElementById('new-post-remaining-count')
+    const submitBtn = document.getElementById('create-post-btn')
     const maxLength = parseInt(textarea.getAttribute('maxlength'), 10)
+    let isSubmitting = false
 
     // Character counter
     textarea.addEventListener('input', () => {
@@ -169,6 +172,25 @@ export const partials = {
       } else if (remaining < 20) {
         charCount.classList.add('warning')
       }
+    })
+
+    // Prevent multiple submissions
+    form.addEventListener('submit', (e) => {
+      if (isSubmitting) {
+        e.preventDefault()
+        return false
+      }
+      
+      isSubmitting = true
+      submitBtn.disabled = true
+      submitBtn.textContent = 'Creating...'
+      
+      // Re-enable after 5 seconds as fallback (in case of network issues)
+      setTimeout(() => {
+        isSubmitting = false
+        submitBtn.disabled = false
+        submitBtn.textContent = 'Create post'
+      }, 5000)
     })
 
     // Update avatar with user data from auth-gate
