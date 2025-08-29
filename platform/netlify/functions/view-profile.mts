@@ -57,9 +57,15 @@ export default async (request: Request, context: Context) => {
     .map((post) => {
       const date = timeAgoInWords(new Date(post.createdAt))
       const truncatedContent = truncateText(post.content, 150)
-      return renderPartial({ 
-        name: 'post-card', 
-        data: { ...post, ...user, date, postId: post.id, content: newlineToLineBreak(truncatedContent) } 
+      return renderPartial({
+        name: 'post-card',
+        data: {
+          ...post,
+          ...user,
+          date,
+          postId: post.id,
+          content: newlineToLineBreak(truncatedContent),
+        },
       })
     })
     .join('')

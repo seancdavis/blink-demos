@@ -22,15 +22,15 @@
             document.addEventListener('DOMContentLoaded', () => {
               const authDiv = document.querySelector('[data-username]')
               const dropdown = document.querySelector('.header-auth-links')
-              
+
               // Update avatar and profile link with user data
               if (authDiv) {
                 const username = authDiv.getAttribute('data-username')
                 const avatarSrc = authDiv.getAttribute('data-avatar-src')
-                
+
                 const avatar = authDiv.querySelector('.avatar')
                 const profileLink = authDiv.querySelector('.profile-link')
-                
+
                 if (avatar && avatarSrc) {
                   avatar.src = avatarSrc
                   avatar.alt = username + ' avatar'
@@ -40,7 +40,7 @@
                   profileLink.textContent = username
                 }
               }
-              
+
               // Close dropdown on outside click or Escape key
               if (dropdown) {
                 // Close on outside click
@@ -49,7 +49,7 @@
                     dropdown.open = false
                   }
                 })
-                
+
                 // Close on Escape key
                 document.addEventListener('keydown', (e) => {
                   if (e.key === 'Escape' && dropdown.open) {

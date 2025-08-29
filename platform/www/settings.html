@@ -9,12 +9,19 @@
       <div class="container-xs">
         <h1>Edit profile</h1>
 
-        <form action="/api/user/upload-avatar" method="post" enctype="multipart/form-data" id="avatar-form">
+        <form
+          action="/api/user/upload-avatar"
+          method="post"
+          enctype="multipart/form-data"
+          id="avatar-form"
+        >
           <div>
             <label for="avatar">Avatar</label>
             <input type="file" name="avatar" id="avatar" accept="image/*" required />
-            <small class="form-help">Maximum file size: 2 MB. Supported formats: JPG, PNG, GIF, WebP</small>
-            <div id="file-size-error" class="form-error" style="display: none;">
+            <small class="form-help"
+              >Maximum file size: 2 MB. Supported formats: JPG, PNG, GIF, WebP</small
+            >
+            <div id="file-size-error" class="form-error" style="display: none">
               File is too large. Please select an image under 2 MB.
             </div>
           </div>
@@ -58,11 +65,11 @@
                 e.preventDefault()
                 return false
               }
-              
+
               isSubmitting = true
               uploadBtn.disabled = true
               uploadBtn.textContent = 'Uploading...'
-              
+
               // Re-enable after 10 seconds as fallback (file uploads may take longer)
               setTimeout(() => {
                 isSubmitting = false

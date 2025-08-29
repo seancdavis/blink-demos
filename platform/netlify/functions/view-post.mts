@@ -28,7 +28,10 @@ export default async (request: Request, context: Context) => {
   const date = timeAgoInWords(new Date(post.createdAt))
   const user = await userStore.get(post.userId, { type: 'json' })
 
-  const html = renderPartial({ name: 'post-detail', data: { ...post, ...user, date, content: newlineToLineBreak(post.content) } })
+  const html = renderPartial({
+    name: 'post-detail',
+    data: { ...post, ...user, date, content: newlineToLineBreak(post.content) },
+  })
 
   return new Response(html, {
     headers: {

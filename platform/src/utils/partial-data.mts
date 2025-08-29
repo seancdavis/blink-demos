@@ -1,7 +1,7 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  "auth-links-signed-in": `<details class="header-auth-links signed-in">
+  'auth-links-signed-in': `<details class="header-auth-links signed-in">
   <summary>
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
   </summary>
@@ -14,7 +14,7 @@ export const partials = {
   </div>
 </details>
 `,
-  "auth-links-signed-out": `<a class="button" href="/login">Sign in</a>
+  'auth-links-signed-out': `<a class="button" href="/login">Sign in</a>
 `,
   feedback: `<div class="feedback container-xs {{ classname }}">
   <small>{{ message }}</small>
@@ -110,7 +110,7 @@ export const partials = {
   </div>
 </header>
 `,
-  "new-post-form-guest": `<div class="container-xs new-post-form guest">
+  'new-post-form-guest': `<div class="container-xs new-post-form guest">
   <div class="auth-prompt">
     <h2>Share your thoughts</h2>
     <p>Sign in to create posts and join the conversation.</p>
@@ -120,7 +120,7 @@ export const partials = {
     </div>
   </div>
 </div>`,
-  "new-post-form": `<div class="container-xs new-post-form">
+  'new-post-form': `<div class="container-xs new-post-form">
   <div class="new-post-header">
     <img class="avatar new-post-avatar" src="" alt="Your avatar" />
     <h2>Write a New post</h2>
@@ -240,7 +240,7 @@ export const partials = {
     }
   })
 </script>`,
-  "post-card": `<div class="post-card">
+  'post-card': `<div class="post-card">
   <div class="post-card-meta">
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
     <div>
@@ -254,7 +254,7 @@ export const partials = {
   </div>
 </div>
 `,
-  "post-detail": `<!doctype html>
+  'post-detail': `<!doctype html>
 <html lang="en">
   <partial name="head" title="{{ title }}"></partial>
   <body>
@@ -279,7 +279,7 @@ export const partials = {
   </body>
 </html>
 `,
-  "profile-no-posts": `<div>No posts from this user yet.</div>
+  'profile-no-posts': `<div>No posts from this user yet.</div>
 `,
   profile: `<!doctype html>
 <html lang="en">
@@ -297,6 +297,6 @@ export const partials = {
   </body>
 </html>
 `,
-};
+}
 
-export type PartialName = keyof typeof partials;
+export type PartialName = keyof typeof partials

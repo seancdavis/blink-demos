@@ -19,7 +19,7 @@ export class IsAuthenticatedHandler {
       element.setAttribute('data-username', this.user.username || '')
       element.setAttribute('data-avatar-src', this.user.avatarSrc || '')
       element.setAttribute('data-user-id', this.user.id || '')
-      
+
       // Remove the custom tag name
       element.tagName = 'div'
     }
@@ -55,7 +55,7 @@ export class AuthGateHandler {
 export default async function handler(request: Request, context: Context) {
   const { user } = await edgeFunctionUtils({ request, context })
   const response = await context.next()
-  
+
   return new HTMLRewriter()
     .on('is-authenticated', new IsAuthenticatedHandler(user))
     .on('is-unauthenticated', new IsUnauthenticatedHandler(user))

@@ -39,11 +39,11 @@
                 e.preventDefault()
                 return false
               }
-              
+
               isSubmitting = true
               submitBtn.disabled = true
               submitBtn.textContent = 'Signing in...'
-              
+
               // Re-enable after 5 seconds as fallback (in case of network issues)
               setTimeout(() => {
                 isSubmitting = false
