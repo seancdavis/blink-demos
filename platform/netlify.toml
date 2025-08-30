@@ -42,6 +42,11 @@ path = "/"
 function = "latest-posts"
 
 [[redirects]]
+from = "/*"
+to = "/404"
+status = 404
+
+[[redirects]]
 from = "/images/avatar/small/:username"
 to = "/.netlify/images?url=/uploads/avatar/:username&width=256&height=256&fit=cover"
 status = 200
@@ -55,8 +60,3 @@ status = 200
 from = "/images/*"
 to = "/.netlify/images?url=/images/:splat"
 status = 200
-
-[[redirects]]
-from = "/*"
-to = "/404"
-status = 404
