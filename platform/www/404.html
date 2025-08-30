@@ -1,46 +1,12 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page Not Found | Blink</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="/css/styles.css" />
-
-    <!-- Favicon -->
-    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/images/favicon.svg" sizes="any" />
-    <link rel="apple-touch-icon" href="/images/favicon.svg" />
-  </head>
+  <partial name="head"></partial>
 
   <body>
-    <header>
-      <div class="header-content container">
-        <a class="header-logo" href="/">
-          <img src="/images/blink-logo.svg" alt="BLINK Logo" />
-        </a>
-        <nav></nav>
-      </div>
-    </header>
+    <partial name="header"></partial>
 
     <main>
-      <div class="container-xs not-found-page">
-        <div class="not-found-content">
-          <h1>404</h1>
-          <h2>Page not found</h2>
-          <p>The page you're looking for doesn't exist or has been moved.</p>
-          <div class="not-found-actions">
-            <a href="/" class="button">Go home</a>
-          </div>
-        </div>
-      </div>
+      <partial name="not-found-content"></partial>
     </main>
   </body>
 </html>

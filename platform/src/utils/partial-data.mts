@@ -210,7 +210,7 @@ export const partials = {
   })
 </script>
 `,
-  "not-found": `<!doctype html>
+  "not-found-content": `<!doctype html>
 <html lang="en">
   <partial name="head" title="Page Not Found"></partial>
   <body>
@@ -228,6 +228,19 @@ export const partials = {
           </div>
         </div>
       </div>
+    </main>
+  </body>
+</html>
+`,
+  "not-found": `<!doctype html>
+<html lang="en">
+  <partial name="head" title="Page Not Found"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <main>
+      <partial name="not-found-content"></partial>
     </main>
   </body>
 </html>
