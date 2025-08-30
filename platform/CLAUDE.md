@@ -129,6 +129,12 @@ type Post = {
 - Always set appropriate HTTP status codes
 - Use UUID for all entity IDs
 
+### Code Quality Standards
+- NEVER duplicate functions across multiple files
+- ALWAYS create utility functions for shared logic in `src/utils/`
+- Follow existing patterns in the codebase
+- Test edge function behavior before creating complex workarounds
+
 ### Security Patterns
 
 - Validate all user inputs
