@@ -2,6 +2,7 @@ import type { Context } from '@netlify/edge-functions'
 import { html } from 'https://deno.land/x/html@v1.2.0/mod.ts'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { FeedbackName, feedbackData, type FeedbackType } from '../../src/utils/feedback-data.mts'
+import { shouldProcessHtml } from '../../src/utils/index.mts'
 
 type FeedbackHandlerOptions = {
   type: FeedbackType
@@ -27,7 +28,7 @@ export class FeedbackHandler {
   }
 }
 
-export default async function handler(_: Request, context: Context) {
+export default async function handler(request: Request, context: Context) {
   const response = await context.next()
   const { cookies } = context
   // Check if the feedback cookie is present
@@ -37,9 +38,7 @@ export default async function handler(_: Request, context: Context) {
   const { message, type } = feedbackData[feedbackName]
   if (!message || !type) return response
 
-  // Only process HTML responses
-  const contentType = response.headers.get('content-type')
-  if (!contentType || !contentType.includes('text/html')) {
+  if (!shouldProcessHtml(request, response)) {
     return response
   }
 

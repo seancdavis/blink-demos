@@ -1,6 +1,6 @@
 import type { Context } from '@netlify/edge-functions'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
-import { edgeFunctionUtils } from '../../src/utils/index.mts'
+import { edgeFunctionUtils, shouldProcessHtml } from '../../src/utils/index.mts'
 import type { User } from '../../src/utils/types.mts'
 
 export class IsAuthenticatedHandler {
@@ -56,9 +56,7 @@ export default async function handler(request: Request, context: Context) {
   const { user } = await edgeFunctionUtils({ request, context })
   const response = await context.next()
 
-  // Only process HTML responses
-  const contentType = response.headers.get('content-type')
-  if (!contentType || !contentType.includes('text/html')) {
+  if (!shouldProcessHtml(request, response)) {
     return response
   }
 
