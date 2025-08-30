@@ -129,12 +129,27 @@ type Post = {
 - Always set appropriate HTTP status codes
 - Use UUID for all entity IDs
 
+### 404 Error Handling Pattern
+
+The platform uses a two-tiered approach for 404 handling that avoids edge function conflicts:
+
+1. **Static 404 page** (`www/404.html`) - Netlify's default 404 handling serves this automatically
+2. **Dynamic 404 partial** (`src/partials/not-found.html`) - Used by edge functions that need to show 404 content
+3. **Shared content partial** (`src/partials/not-found-content.html`) - Contains the actual 404 content
+
+Both the static page and dynamic partial reference the same `not-found-content` partial, ensuring consistent 404 messaging while allowing:
+- Static files to be served normally by Netlify without edge function interference  
+- Dynamic routes to show 404 content when needed
+- Single source of truth for 404 content that's easy to maintain
+
+This pattern prevents edge functions from interfering with static file serving while maintaining dynamic functionality where needed.
+
 ### Code Quality Standards
 
 - NEVER duplicate functions across multiple files
 - ALWAYS create utility functions for shared logic in `src/utils/`
 - Follow existing patterns in the codebase
-- Test edge function behavior before creating complex workarounds
+- Avoid edge function processing for static assets to prevent MIME type issues
 
 ### Security Patterns
 
