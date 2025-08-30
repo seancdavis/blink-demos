@@ -17,5 +17,12 @@ export class PartialHandler {
 
 export default async function handler(request: Request, context: Context) {
   const response = await context.next()
+
+  // Only process HTML responses
+  const contentType = response.headers.get('content-type')
+  if (!contentType || !contentType.includes('text/html')) {
+    return response
+  }
+
   return new HTMLRewriter().on('partial', new PartialHandler()).transform(response)
 }

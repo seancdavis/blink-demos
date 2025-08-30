@@ -32,10 +32,17 @@ export default async function handler(_: Request, context: Context) {
   const { cookies } = context
   // Check if the feedback cookie is present
   const feedbackName = cookies.get('blink_feedback') as FeedbackName
-  if (!feedbackName) return
+  if (!feedbackName) return response
   // Ensure the feedback is present in the feedback data
   const { message, type } = feedbackData[feedbackName]
-  if (!message || !type) return
+  if (!message || !type) return response
+
+  // Only process HTML responses
+  const contentType = response.headers.get('content-type')
+  if (!contentType || !contentType.includes('text/html')) {
+    return response
+  }
+
   // Delete the cookie after reading and displaying it
   cookies.delete({ name: 'blink_feedback', path: '/' })
 
