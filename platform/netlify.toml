@@ -57,11 +57,6 @@ to = "/.netlify/images?url=/images/:splat"
 status = 200
 
 [[redirects]]
-from = "/css/*"
-to = "/css/:splat"
-status = 200
-
-[[redirects]]
 from = "/*"
 to = "/404"
-status = 404
+status = 200
