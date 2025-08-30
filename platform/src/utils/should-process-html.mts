@@ -5,14 +5,21 @@
  * @returns true if the response should be processed by HTMLRewriter
  */
 export function shouldProcessHtml(request: Request, response: Response): boolean {
-  // Skip processing for static asset file extensions
   const url = new URL(request.url)
-  if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)) {
+  const pathname = url.pathname
+  const contentType = response.headers.get('content-type')
+  
+  // Debug logging for CSS files
+  if (pathname.includes('.css')) {
+    console.log(`CSS DEBUG - Path: ${pathname}, Content-Type: ${contentType}`)
+  }
+  
+  // Skip processing for static asset file extensions
+  if (pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)) {
     return false
   }
 
   // Only process HTML responses
-  const contentType = response.headers.get('content-type')
   if (contentType && !contentType.includes('text/html')) {
     return false
   }
