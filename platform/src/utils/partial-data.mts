@@ -1,7 +1,7 @@
 export const partials = {
   __undefined__: `<div>PARTIAL_NOT_FOUND</div>
 `,
-  'auth-links-signed-in': `<details class="header-auth-links signed-in">
+  "auth-links-signed-in": `<details class="header-auth-links signed-in">
   <summary>
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
   </summary>
@@ -14,7 +14,7 @@ export const partials = {
   </div>
 </details>
 `,
-  'auth-links-signed-out': `<a class="button" href="/login">Sign in</a>
+  "auth-links-signed-out": `<a class="button" href="/login">Sign in</a>
 `,
   feedback: `<div class="feedback container-xs {{ classname }}">
   <small>{{ message }}</small>
@@ -33,11 +33,11 @@ export const partials = {
   />
 
   <link rel="stylesheet" href="/css/styles.css" />
-  
+
   <!-- Favicon -->
-  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/images/favicon.svg" sizes="any">
-  <link rel="apple-touch-icon" href="/images/favicon.svg">
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/images/favicon.svg" sizes="any" />
+  <link rel="apple-touch-icon" href="/images/favicon.svg" />
 </head>
 `,
   header: `<header>
@@ -64,15 +64,15 @@ export const partials = {
             document.addEventListener('DOMContentLoaded', () => {
               const authDiv = document.querySelector('[data-username]')
               const dropdown = document.querySelector('.header-auth-links')
-              
+
               // Update avatar and profile link with user data
               if (authDiv) {
                 const username = authDiv.getAttribute('data-username')
                 const avatarSrc = authDiv.getAttribute('data-avatar-src')
-                
+
                 const avatar = authDiv.querySelector('.avatar')
                 const profileLink = authDiv.querySelector('.profile-link')
-                
+
                 if (avatar && avatarSrc) {
                   avatar.src = avatarSrc
                   avatar.alt = username + ' avatar'
@@ -82,7 +82,7 @@ export const partials = {
                   profileLink.textContent = username
                 }
               }
-              
+
               // Close dropdown on outside click or Escape key
               if (dropdown) {
                 // Close on outside click
@@ -91,7 +91,7 @@ export const partials = {
                     dropdown.open = false
                   }
                 })
-                
+
                 // Close on Escape key
                 document.addEventListener('keydown', (e) => {
                   if (e.key === 'Escape' && dropdown.open) {
@@ -110,7 +110,7 @@ export const partials = {
   </div>
 </header>
 `,
-  'new-post-form-guest': `<div class="container-xs new-post-form guest">
+  "new-post-form-guest": `<div class="container-xs new-post-form guest">
   <div class="auth-prompt">
     <h2>Share your thoughts</h2>
     <p>Sign in to create posts and join the conversation.</p>
@@ -119,8 +119,9 @@ export const partials = {
       <a class="button secondary" href="/register">Create account</a>
     </div>
   </div>
-</div>`,
-  'new-post-form': `<div class="container-xs new-post-form">
+</div>
+`,
+  "new-post-form": `<div class="container-xs new-post-form">
   <div class="new-post-header">
     <img class="avatar new-post-avatar" src="" alt="Your avatar" />
     <h2>Write a New post</h2>
@@ -180,11 +181,11 @@ export const partials = {
         e.preventDefault()
         return false
       }
-      
+
       isSubmitting = true
       submitBtn.disabled = true
       submitBtn.textContent = 'Creating...'
-      
+
       // Re-enable after 5 seconds as fallback (in case of network issues)
       setTimeout(() => {
         isSubmitting = false
@@ -209,17 +210,47 @@ export const partials = {
   })
 </script>
 `,
+  "not-found": `<!doctype html>
+<html lang="en">
+  <partial name="head" title="Page Not Found"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <main>
+      <div class="container-xs not-found-page">
+        <div class="not-found-content">
+          <h1>404</h1>
+          <h2>Page not found</h2>
+          <p>The page you're looking for doesn't exist or has been moved.</p>
+          <div class="not-found-actions">
+            <a href="/" class="button">Go home</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+`,
   pagination: `<nav class="pagination container-xs">
-  <div class="pagination-info">
-    Page {{ currentPage }} of {{ totalPages }}
-  </div>
-  
+  <div class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</div>
+
   <div class="pagination-controls">
-    <a href="/?page={{ prevPage }}" class="button pagination-prev" rel="prev" data-show="{{ hasPrevPage }}">
+    <a
+      href="/?page={{ prevPage }}"
+      class="button pagination-prev"
+      rel="prev"
+      data-show="{{ hasPrevPage }}"
+    >
       ← Previous
     </a>
-    
-    <a href="/?page={{ nextPage }}" class="button pagination-next" rel="next" data-show="{{ hasNextPage }}">
+
+    <a
+      href="/?page={{ nextPage }}"
+      class="button pagination-next"
+      rel="next"
+      data-show="{{ hasNextPage }}"
+    >
       Next →
     </a>
   </div>
@@ -230,17 +261,18 @@ export const partials = {
   document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.querySelector('.pagination-prev')
     const nextBtn = document.querySelector('.pagination-next')
-    
+
     if (prevBtn && prevBtn.getAttribute('data-show') === 'false') {
       prevBtn.style.display = 'none'
     }
-    
+
     if (nextBtn && nextBtn.getAttribute('data-show') === 'false') {
       nextBtn.style.display = 'none'
     }
   })
-</script>`,
-  'post-card': `<div class="post-card">
+</script>
+`,
+  "post-card": `<div class="post-card">
   <div class="post-card-meta">
     <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
     <div>
@@ -254,7 +286,7 @@ export const partials = {
   </div>
 </div>
 `,
-  'post-detail': `<!doctype html>
+  "post-detail": `<!doctype html>
 <html lang="en">
   <partial name="head" title="{{ title }}"></partial>
   <body>
@@ -279,7 +311,7 @@ export const partials = {
   </body>
 </html>
 `,
-  'profile-no-posts': `<div>No posts from this user yet.</div>
+  "profile-no-posts": `<div>No posts from this user yet.</div>
 `,
   profile: `<!doctype html>
 <html lang="en">
@@ -297,6 +329,6 @@ export const partials = {
   </body>
 </html>
 `,
-}
+};
 
-export type PartialName = keyof typeof partials
+export type PartialName = keyof typeof partials;

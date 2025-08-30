@@ -10,7 +10,10 @@ import { Post, User } from '../../src/utils/types.mts'
 export default async (request: Request, context: Context) => {
   if (request.method !== 'GET') {
     const html = renderPartial({ name: 'not-found' })
-    return new Response(html, { status: 404 })
+    return new Response(html, {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    })
   }
 
   const { url } = await functionUtils({ request, context })
@@ -21,7 +24,10 @@ export default async (request: Request, context: Context) => {
 
   if (!username || username.length === 0) {
     const html = renderPartial({ name: 'not-found' })
-    return new Response(html, { status: 404 })
+    return new Response(html, {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    })
   }
 
   const userStore = getStore({ name: 'User', consistency: 'strong' })
@@ -41,7 +47,7 @@ export default async (request: Request, context: Context) => {
         'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
         'Netlify-Cache-Tag': username,
       },
-      status: 404,
+      status: 200,
     })
   }
 

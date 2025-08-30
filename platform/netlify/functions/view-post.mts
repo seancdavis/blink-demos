@@ -8,7 +8,10 @@ import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
 export default async (request: Request, context: Context) => {
   if (request.method !== 'GET') {
     const html = renderPartial({ name: 'not-found' })
-    return new Response(html, { status: 404 })
+    return new Response(html, {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    })
   }
 
   const { url } = await functionUtils({ request, context })
@@ -19,12 +22,24 @@ export default async (request: Request, context: Context) => {
 
   if (!postId || postId.length === 0) {
     const html = renderPartial({ name: 'not-found' })
-    return new Response(html, { status: 404 })
+    return new Response(html, {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    })
   }
 
   const postStore = getStore({ name: 'Post', consistency: 'strong' })
   const userStore = getStore({ name: 'User', consistency: 'strong' })
   const post = await postStore.get(postId, { type: 'json' })
+
+  if (!post) {
+    const html = renderPartial({ name: 'not-found' })
+    return new Response(html, {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    })
+  }
+
   const date = timeAgoInWords(new Date(post.createdAt))
   const user = await userStore.get(post.userId, { type: 'json' })
 
