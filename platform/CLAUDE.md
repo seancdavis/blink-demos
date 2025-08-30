@@ -130,6 +130,7 @@ type Post = {
 - Use UUID for all entity IDs
 
 ### Code Quality Standards
+
 - NEVER duplicate functions across multiple files
 - ALWAYS create utility functions for shared logic in `src/utils/`
 - Follow existing patterns in the codebase

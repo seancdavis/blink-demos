@@ -10,7 +10,11 @@ export default async (request: Request, context: Context) => {
     const html = renderPartial({ name: 'not-found' })
     return new Response(html, {
       status: 200,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=0, must-revalidate',
+        'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
+      },
     })
   }
 
@@ -24,7 +28,11 @@ export default async (request: Request, context: Context) => {
     const html = renderPartial({ name: 'not-found' })
     return new Response(html, {
       status: 200,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=0, must-revalidate',
+        'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
+      },
     })
   }
 
@@ -36,7 +44,12 @@ export default async (request: Request, context: Context) => {
     const html = renderPartial({ name: 'not-found' })
     return new Response(html, {
       status: 200,
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=0, must-revalidate',
+        'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
+        'Netlify-Cache-Tag': postId,
+      },
     })
   }
 
