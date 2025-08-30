@@ -2,7 +2,6 @@ import type { Context } from '@netlify/edge-functions'
 import { html } from 'https://deno.land/x/html@v1.2.0/mod.ts'
 import { Element, HTMLRewriter } from 'https://ghuc.cc/worker-tools/html-rewriter/index.ts'
 import { FeedbackName, feedbackData, type FeedbackType } from '../../src/utils/feedback-data.mts'
-import { shouldProcessHtml } from '../../src/utils/index.mts'
 
 type FeedbackHandlerOptions = {
   type: FeedbackType
@@ -28,7 +27,7 @@ export class FeedbackHandler {
   }
 }
 
-export default async function handler(request: Request, context: Context) {
+export default async function handler(_: Request, context: Context) {
   const response = await context.next()
   const { cookies } = context
   // Check if the feedback cookie is present
@@ -37,11 +36,6 @@ export default async function handler(request: Request, context: Context) {
   // Ensure the feedback is present in the feedback data
   const { message, type } = feedbackData[feedbackName]
   if (!message || !type) return response
-
-  if (!shouldProcessHtml(request, response)) {
-    return response
-  }
-
   // Delete the cookie after reading and displaying it
   cookies.delete({ name: 'blink_feedback', path: '/' })
 
