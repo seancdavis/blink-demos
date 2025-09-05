@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <partial name="head" title="{{ username }} Profile"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <main>
+      <div class="container">
+        <h1>Posts by {{ username }}</h1>
+        <div class="post-card-grid">{{ posts }}</div>
+      </div>
+    </main>
+  </body>
+</html>
