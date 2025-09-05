@@ -42,7 +42,7 @@ export async function clearPostsIndex() {
 /**
  * Get the most recent N post IDs
  */
-export async function getRecentPostIds(limit = 10): Promise<string[]> {
+export async function getRecentPostIds(limit = 12): Promise<string[]> {
   const index = await getPostsIndex()
   return index.slice(0, limit).map((entry) => entry.id)
 }
@@ -61,7 +61,7 @@ export type PaginationResult = {
  */
 export async function getPaginatedPostIds(
   page: number = 1,
-  limit: number = 10,
+  limit: number = 12,
 ): Promise<PaginationResult> {
   const index = await getPostsIndex()
   const totalPosts = index.length

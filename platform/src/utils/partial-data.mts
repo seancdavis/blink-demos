@@ -210,27 +210,16 @@ export const partials = {
   })
 </script>
 `,
-  "not-found-content": `<!doctype html>
-<html lang="en">
-  <partial name="head" title="Page Not Found"></partial>
-  <body>
-    <partial name="header"></partial>
-    <feedback></feedback>
-
-    <main>
-      <div class="container-xs not-found-page">
-        <div class="not-found-content">
-          <h1>404</h1>
-          <h2>Page not found</h2>
-          <p>The page you're looking for doesn't exist or has been moved.</p>
-          <div class="not-found-actions">
-            <a href="/" class="button">Go home</a>
-          </div>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+  "not-found-content": `<div class="container-xs not-found-page">
+  <div class="not-found-content">
+    <h1>404</h1>
+    <h2>Page not found</h2>
+    <p>The page you're looking for doesn't exist or has been moved.</p>
+    <div class="not-found-actions">
+      <a href="/" class="button">Go home</a>
+    </div>
+  </div>
+</div>
 `,
   "not-found": `<!doctype html>
 <html lang="en">
