@@ -19,6 +19,7 @@ This project is a social media platform built with Astro and deployed on Netlify
 - Export named functions (GET, POST, etc.) following Astro conventions
 - Receive { request, cookies, redirect, params } as parameters
 - Return proper HTTP responses with status codes
+- Use consistent route naming (e.g., all post routes under /api/posts/)
 
 ### Data Storage with Netlify Blobs
 
@@ -49,12 +50,13 @@ This project is a social media platform built with Astro and deployed on Netlify
 
 #### Authentication System
 
-Authentication is handled natively in Astro components and middleware:
+Authentication is handled using utility functions and SSR:
 
-- Authentication logic in components using conditional rendering
-- Middleware (src/middleware.ts) handles route-level authentication
-- User data fetched directly in components via getCurrentUser()
-- No need for auth-gate HTML elements - use standard conditional rendering
+- Authentication utilities in src/utils/auth.ts
+- Auth checks performed directly in page frontmatter
+- Redirects handled server-side in Astro pages
+- User data fetched directly in components via getCurrentUserFromAstro()
+- No middleware needed - pure SSR authentication pattern
 
 ```astro
 {user ? (
@@ -125,14 +127,15 @@ type Post = {
 
 ### Conventions
 
-- Pages use `.astro` extension, API routes use `.ts` extension
+- Pages use `.astro` extension, utilities and API routes use `.ts` extension
 - API route functions named after HTTP methods (GET, POST, etc.)
+- Use consistent route naming patterns (no mixing /api/post/ and /api/posts/)
 - Use strong consistency for Netlify Blobs when data integrity matters
 - Handle form submissions with proper validation and feedback
 - Always set appropriate HTTP status codes
 - Use UUID for all entity IDs
 - Components can use both server-side and client-side JavaScript
-- Middleware handles authentication and redirects
+- Authentication handled via utilities, not middleware
 
 ### 404 Error Handling Pattern
 
@@ -168,5 +171,5 @@ Astro automatically serves the 404.astro page for unmatched routes, and dynamic 
 - Static assets served from `public/` directory (Astro standard)
 - Astro handles routing and server-side rendering
 - Netlify adapter enables server-side features
-- Middleware runs automatically for all routes
+- Authentication handled per-page, not via middleware
 - API routes deployed as Netlify Functions automatically

@@ -1,14 +1,7 @@
 ---
-import { getCurrentUser } from '../utils/get-current-user.mts';
+import { getCurrentUserFromAstro } from '../utils/auth.ts';
 
-const cookies = {
-  get: (name: string) => {
-    const cookie = Astro.cookies.get(name);
-    return cookie?.value;
-  }
-};
-
-const user = await getCurrentUser({ cookies });
+const user = await getCurrentUserFromAstro(Astro.cookies);
 ---
 
 <header>

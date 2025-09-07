@@ -1,19 +1,12 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
 import { v4 as uuidv4 } from 'uuid';
-import { getCurrentUser } from '../../../utils/get-current-user.mts';
-import { addToPostsIndex } from '../../../utils/posts-index.mts';
-import { Post } from '../../../utils/types.mts';
+import { getCurrentUserFromAstro } from '../../../utils/auth.ts';
+import { addToPostsIndex } from '../../../utils/posts-index.ts';
+import { Post } from '../../../utils/types.ts';
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
-  const convertedCookies = {
-    get: (name: string) => {
-      const cookie = cookies.get(name);
-      return cookie?.value;
-    }
-  };
-
-  const user = await getCurrentUser({ cookies: convertedCookies });
+  const user = await getCurrentUserFromAstro(cookies);
 
   if (!user) {
     cookies.set('feedback', 'login_required', {

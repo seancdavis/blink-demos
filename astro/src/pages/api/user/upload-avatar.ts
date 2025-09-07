@@ -1,40 +1,10 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
-import { getCurrentUser } from '../../../utils/get-current-user.mts';
-
-// Adapted getCurrentUser for Astro cookies
-async function getCurrentUserAstro(cookies: any) {
-  const sessionCookie = cookies.get('blink_session')?.value;
-  if (!sessionCookie) return null;
-
-  try {
-    const { decodeJwt } = await import('jose');
-    const decodedJwt = decodeJwt(sessionCookie);
-    
-    if (!decodedJwt) return null;
-
-    const userStore = getStore({ name: 'User', consistency: 'strong' });
-    const userBlob = await userStore.get(decodedJwt.id as string, { type: 'json' });
-
-    if (!userBlob) return null;
-
-    const userMatches =
-      userBlob &&
-      userBlob.username === decodedJwt.username &&
-      userBlob.id === decodedJwt.id &&
-      userBlob.password === decodedJwt.password;
-
-    if (!userMatches) return null;
-
-    return userBlob;
-  } catch (_err: unknown) {
-    return null;
-  }
-}
+import { getCurrentUserFromAstro } from '../../../utils/auth.ts';
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   // Get current user
-  const user = await getCurrentUserAstro(cookies);
+  const user = await getCurrentUserFromAstro(cookies);
 
   // Check authentication
   if (!user) {

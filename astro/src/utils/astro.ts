@@ -1,7 +1,7 @@
 import type { AstroCookies } from 'astro';
-import { getCurrentUser } from './get-current-user.mts';
+import { getCurrentUser } from './get-current-user.ts';
 
-export { newlineToLineBreak } from './nl2br.mts';
+export { newlineToLineBreak } from './nl2br.ts';
 
 /* ---- Astro Utilities ---- */
 

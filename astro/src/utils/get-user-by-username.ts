@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs'
-import { User } from './types.mts'
+import { User } from './types.ts'
 
 export async function getUserByUsername(username: string): Promise<User | null> {
   const userStore = getStore({ name: 'User', consistency: 'strong' })

@@ -3,8 +3,8 @@ import { faker } from '@faker-js/faker';
 import { getStore } from '@netlify/blobs';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { Post, User } from '../../../utils/types.mts';
-import { addToPostsIndex } from '../../../utils/posts-index.mts';
+import { Post, User } from '../../../utils/types.ts';
+import { addToPostsIndex } from '../../../utils/posts-index.ts';
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();

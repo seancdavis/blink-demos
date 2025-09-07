@@ -2,18 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Feedback from '../components/Feedback.astro';
-import { getCurrentUser } from '../utils/get-current-user.mts';
-import { getFeedback } from '../utils/astro.mts';
+import { getCurrentUserFromAstro } from '../utils/auth.ts';
 
-const cookies = {
-  get: (name: string) => {
-    const cookie = Astro.cookies.get(name);
-    return cookie?.value;
-  }
-};
-
-const user = await getCurrentUser({ cookies });
-const feedbackMessage = getFeedback(Astro.cookies);
+const user = await getCurrentUserFromAstro(Astro.cookies);
 ---
 
 <BaseLayout title="Feed">

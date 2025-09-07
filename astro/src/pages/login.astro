@@ -2,6 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Feedback from '../components/Feedback.astro';
+import { isAuthenticated } from '../utils/auth.ts';
+
+// Redirect authenticated users away from login page
+if (await isAuthenticated(Astro.cookies)) {
+  return Astro.redirect('/');
+}
 ---
 
 <BaseLayout title="Login">

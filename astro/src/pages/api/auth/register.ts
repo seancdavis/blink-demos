@@ -3,7 +3,7 @@ import { getStore } from '@netlify/blobs';
 import bcrypt from 'bcrypt';
 import { SignJWT } from 'jose';
 import { v4 as uuidv4 } from 'uuid';
-import { User } from '../../../utils/types.mts';
+import { User } from '../../../utils/types.ts';
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();

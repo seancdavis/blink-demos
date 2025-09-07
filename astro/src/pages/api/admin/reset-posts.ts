@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
-import { clearPostsIndex } from '../../../utils/posts-index.mts';
+import { clearPostsIndex } from '../../../utils/posts-index.ts';
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
-import { getUserByUsername } from '../../../utils/get-user-by-username.mts';
+import { getUserByUsername } from '../../../utils/get-user-by-username.ts';
 
 export const GET: APIRoute = async ({ params }) => {
   const avatarUsername = params.username?.split('.')[0];

@@ -2,6 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Feedback from '../components/Feedback.astro';
+import { isAuthenticated } from '../utils/auth.ts';
+
+// Redirect unauthenticated users to login
+if (!(await isAuthenticated(Astro.cookies))) {
+  return Astro.redirect('/login');
+}
 ---
 
 <BaseLayout title="Edit profile">

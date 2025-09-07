@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
-import { getPostsIndex } from '../../../utils/posts-index.mts';
-import { Post, User } from '../../../utils/types.mts';
+import { getPostsIndex } from '../../../utils/posts-index.ts';
+import { Post, User } from '../../../utils/types.ts';
 
 export const GET: APIRoute = async ({ url }) => {
   const pageParam = url.searchParams.get('page') || '1';

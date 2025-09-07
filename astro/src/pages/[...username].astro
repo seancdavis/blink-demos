@@ -3,8 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Feedback from '../components/Feedback.astro';
 import { getStore } from '@netlify/blobs';
-import { getUserByUsername } from '../utils/get-user-by-username.mts';
-import { Post, User } from '../utils/types.mts';
+import { getUserByUsername } from '../utils/get-user-by-username.ts';
+import { Post, User } from '../utils/types.ts';
 
 const { username } = Astro.params;
 
