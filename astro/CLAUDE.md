@@ -165,7 +165,7 @@ Astro automatically serves the 404.astro page for unmatched routes, and dynamic 
 ### Deployment
 
 - Built files output to `dist/` directory
-- Static assets served from `www/` directory (configured as publicDir)
+- Static assets served from `public/` directory (Astro standard)
 - Astro handles routing and server-side rendering
 - Netlify adapter enables server-side features
 - Middleware runs automatically for all routes

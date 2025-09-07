@@ -2,12 +2,10 @@ import { defineMiddleware } from 'astro:middleware';
 import { getCurrentUser } from './utils/get-current-user.mts';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  // Skip middleware for static assets and API routes that don't need auth
-  if (context.url.pathname.startsWith('/css/') || 
-      context.url.pathname.startsWith('/images/') || 
-      context.url.pathname.startsWith('/uploads/') ||
-      context.url.pathname.startsWith('/api/debug/') ||
-      context.url.pathname.startsWith('/api/admin/')) {
+  // Skip middleware for API routes that don't need auth checks
+  if (context.url.pathname.startsWith('/api/debug/') ||
+      context.url.pathname.startsWith('/api/admin/') ||
+      context.url.pathname.startsWith('/uploads/')) {
     return next();
   }
 

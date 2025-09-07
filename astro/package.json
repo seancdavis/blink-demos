@@ -4,9 +4,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "netlify:dev": "ntl dev . --no-open", 
-    "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
+    "netlify:dev": "ntl dev . --no-open",
+    "generate-secret": "npx tsx ./scripts/generate-secret.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

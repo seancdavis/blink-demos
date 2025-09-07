@@ -84,7 +84,8 @@ platform/
 │   │   ├── api/           # API endpoints (auth, posts, admin)
 │   │   └── *.astro        # Page components
 │   └── utils/             # Shared TypeScript utilities
-├── www/                   # Static assets (CSS, images, etc.)
+├── public/                # Static assets (CSS, images, etc.)
+├── scripts/               # Build and utility scripts
 ├── astro.config.mjs       # Astro configuration
 ├── netlify.toml           # Netlify configuration
 └── package.json
