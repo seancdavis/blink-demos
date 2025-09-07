@@ -25,13 +25,13 @@ const user = await getCurrentUserFromAstro(Astro.cookies);
         </details>
         <script>
           document.addEventListener('DOMContentLoaded', () => {
-            const dropdown = document.querySelector('.header-auth-links')
+            const dropdown = document.querySelector('.header-auth-links') as HTMLDetailsElement
 
             // Close dropdown on outside click or Escape key
             if (dropdown) {
               // Close on outside click
               document.addEventListener('click', (e) => {
-                if (!dropdown.contains(e.target)) {
+                if (e.target && !dropdown.contains(e.target as Node)) {
                   dropdown.open = false
                 }
               })

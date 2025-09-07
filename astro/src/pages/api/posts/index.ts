@@ -28,8 +28,14 @@ export const GET: APIRoute = async ({ url }) => {
     
     for (const postId of postIds) {
       try {
-        const post: Post = await postStore.get(postId, { type: 'json' });
-        const user: User = await userStore.get(post.userId, { type: 'json' });
+        const postData = await postStore.get(postId, { type: 'json' });
+        if (!postData) continue;
+        const post = postData as Post;
+        
+        const userData = await userStore.get(post.userId, { type: 'json' });
+        if (!userData) continue;
+        const user = userData as User;
+        
         if (post && user) {
           posts.push({ ...post, user });
         }

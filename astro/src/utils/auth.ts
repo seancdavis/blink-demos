@@ -1,14 +1,16 @@
 import type { AstroCookies } from 'astro';
 import { getCurrentUser } from './get-current-user.ts';
 
-// Convert Astro cookies to format expected by getCurrentUser
+// Convert Astro cookies to format expected by getCurrentUser  
 function convertCookies(astroCookies: AstroCookies) {
   return {
     get: (name: string) => {
       const cookie = astroCookies.get(name);
-      return cookie?.value;
-    }
-  };
+      return cookie?.value || '';
+    },
+    set: () => '', // Not used in getCurrentUser
+    delete: () => {} // Not used in getCurrentUser
+  } as any; // Type assertion to avoid interface mismatch
 }
 
 // Check if user is authenticated
@@ -24,8 +26,8 @@ export async function getCurrentUserFromAstro(cookies: AstroCookies) {
   return await getCurrentUser({ cookies: convertedCookies });
 }
 
-// Redirect helpers
-export function redirectIfAuthenticated(cookies: AstroCookies, path: string) {
+// Redirect helpers (path parameter kept for future use)
+export function redirectIfAuthenticated(cookies: AstroCookies, _path: string) {
   return async function(redirect: (url: string) => Response) {
     const authenticated = await isAuthenticated(cookies);
     if (authenticated) {
@@ -35,7 +37,7 @@ export function redirectIfAuthenticated(cookies: AstroCookies, path: string) {
   };
 }
 
-export function redirectIfNotAuthenticated(cookies: AstroCookies, path: string) {
+export function redirectIfNotAuthenticated(cookies: AstroCookies, _path: string) {
   return async function(redirect: (url: string) => Response) {
     const authenticated = await isAuthenticated(cookies);
     if (!authenticated) {

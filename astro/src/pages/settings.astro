@@ -42,50 +42,53 @@ if (!(await isAuthenticated(Astro.cookies))) {
 
       <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const form = document.getElementById('avatar-form')
-          const fileInput = document.getElementById('avatar')
-          const uploadBtn = document.getElementById('upload-btn')
-          const errorDiv = document.getElementById('file-size-error')
+          const form = document.getElementById('avatar-form') as HTMLFormElement
+          const fileInput = document.getElementById('avatar') as HTMLInputElement
+          const uploadBtn = document.getElementById('upload-btn') as HTMLButtonElement
+          const errorDiv = document.getElementById('file-size-error') as HTMLDivElement
           const maxSizeBytes = 2 * 1024 * 1024 // 2 MB
           let isSubmitting = false
 
-          fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0]
-            if (file) {
-              if (file.size > maxSizeBytes) {
-                errorDiv.style.display = 'block'
-                uploadBtn.disabled = true
-              } else {
-                errorDiv.style.display = 'none'
-                uploadBtn.disabled = false
+          if (form && fileInput && uploadBtn && errorDiv) {
+            fileInput.addEventListener('change', (e) => {
+              const target = e.target as HTMLInputElement
+              const file = target?.files?.[0]
+              if (file) {
+                if (file.size > maxSizeBytes) {
+                  errorDiv.style.display = 'block'
+                  uploadBtn.disabled = true
+                } else {
+                  errorDiv.style.display = 'none'
+                  uploadBtn.disabled = false
+                }
               }
-            }
-          })
+            })
 
-          form.addEventListener('submit', (e) => {
-            const file = fileInput.files[0]
-            if (file && file.size > maxSizeBytes) {
-              e.preventDefault()
-              errorDiv.style.display = 'block'
-              return false
-            }
+            form.addEventListener('submit', (e) => {
+              const file = fileInput.files?.[0]
+              if (file && file.size > maxSizeBytes) {
+                e.preventDefault()
+                errorDiv.style.display = 'block'
+                return false
+              }
 
-            if (isSubmitting) {
-              e.preventDefault()
-              return false
-            }
+              if (isSubmitting) {
+                e.preventDefault()
+                return false
+              }
 
-            isSubmitting = true
-            uploadBtn.disabled = true
-            uploadBtn.textContent = 'Uploading...'
+              isSubmitting = true
+              uploadBtn.disabled = true
+              uploadBtn.textContent = 'Uploading...'
 
-            // Re-enable after 10 seconds as fallback (file uploads may take longer)
-            setTimeout(() => {
-              isSubmitting = false
-              uploadBtn.disabled = false
-              uploadBtn.textContent = 'Upload'
-            }, 10000)
-          })
+              // Re-enable after 10 seconds as fallback (file uploads may take longer)
+              setTimeout(() => {
+                isSubmitting = false
+                uploadBtn.disabled = false
+                uploadBtn.textContent = 'Upload'
+              }, 10000)
+            })
+          }
         })
       </script>
     </div>

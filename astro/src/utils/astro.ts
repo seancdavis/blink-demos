@@ -25,19 +25,20 @@ function convertCookies(astroCookies: AstroCookies) {
   return {
     get: (name: string) => {
       const cookie = astroCookies.get(name);
-      return cookie?.value;
+      return cookie?.value || '';
     },
     set: (name: string, value: string, options?: any) => {
       astroCookies.set(name, value, options);
+      return '';
     },
     delete: (name: string) => {
       astroCookies.delete(name);
     }
-  };
+  } as any; // Type assertion to avoid interface mismatch
 }
 
 export async function astroUtils(options: AstroUtilsOptions): Promise<AstroUtilsResponse> {
-  const { request, cookies, url, redirect } = options;
+  const { cookies, url, redirect } = options;
 
   const convertedCookies = convertCookies(cookies);
   const user = await getCurrentUser({ cookies: convertedCookies });

@@ -73,7 +73,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   }
 
   const postStore = getStore({ name: 'Post', consistency: 'strong' });
-  const generatePostId = async () => {
+  const generatePostId = async (): Promise<string> => {
     const id = uuidv4();
     const existingPost = await postStore.get(id, { type: 'json' });
     return existingPost ? generatePostId() : id;

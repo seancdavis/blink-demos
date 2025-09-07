@@ -58,11 +58,17 @@ const user = await getCurrentUserFromAstro(Astro.cookies);
         const response = await fetch('/api/posts?page=1');
         if (response.ok) {
           const html = await response.text();
-          document.getElementById('posts-container').innerHTML = html;
+          const postsContainer = document.getElementById('posts-container');
+          if (postsContainer) {
+            postsContainer.innerHTML = html;
+          }
         }
       } catch (error) {
         console.error('Failed to load posts:', error);
-        document.getElementById('posts-container').innerHTML = '<p>Failed to load posts.</p>';
+        const postsContainer = document.getElementById('posts-container');
+        if (postsContainer) {
+          postsContainer.innerHTML = '<p>Failed to load posts.</p>';
+        }
       }
     }
 

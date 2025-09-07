@@ -21,7 +21,7 @@ if (await isAuthenticated(Astro.cookies)) {
       <form action="/api/auth/register" method="post" id="register-form">
         <div>
           <label for="username">Username</label>
-          <input type="username" name="username" id="username" required autofocus />
+          <input type="text" name="username" id="username" required autofocus />
         </div>
 
         <div>
@@ -49,27 +49,29 @@ if (await isAuthenticated(Astro.cookies)) {
 
       <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const form = document.getElementById('register-form')
-          const submitBtn = document.getElementById('register-btn')
+          const form = document.getElementById('register-form') as HTMLFormElement
+          const submitBtn = document.getElementById('register-btn') as HTMLButtonElement
           let isSubmitting = false
 
-          form.addEventListener('submit', (e) => {
-            if (isSubmitting) {
-              e.preventDefault()
-              return false
-            }
+          if (form && submitBtn) {
+            form.addEventListener('submit', (e) => {
+              if (isSubmitting) {
+                e.preventDefault()
+                return false
+              }
 
-            isSubmitting = true
-            submitBtn.disabled = true
-            submitBtn.textContent = 'Creating account...'
+              isSubmitting = true
+              submitBtn.disabled = true
+              submitBtn.textContent = 'Creating account...'
 
-            // Re-enable after 5 seconds as fallback (in case of network issues)
-            setTimeout(() => {
-              isSubmitting = false
-              submitBtn.disabled = false
-              submitBtn.textContent = 'Register'
-            }, 5000)
-          })
+              // Re-enable after 5 seconds as fallback (in case of network issues)
+              setTimeout(() => {
+                isSubmitting = false
+                submitBtn.disabled = false
+                submitBtn.textContent = 'Register'
+              }, 5000)
+            })
+          }
         })
       </script>
     </div>
