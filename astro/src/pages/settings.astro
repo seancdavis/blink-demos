@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Feedback from '../components/Feedback.astro';
+import FileUpload from '../components/react/FileUpload.tsx';
+import SubmitButton from '../components/react/SubmitButton.tsx';
 import { isAuthenticated } from '../utils/auth.ts';
 
 // Redirect unauthenticated users to login
@@ -24,73 +26,20 @@ if (!(await isAuthenticated(Astro.cookies))) {
         enctype="multipart/form-data"
         id="avatar-form"
       >
-        <div>
-          <label for="avatar">Avatar</label>
-          <input type="file" name="avatar" id="avatar" accept="image/*" required />
-          <small class="form-help"
-            >Maximum file size: 2 MB. Supported formats: JPG, PNG, GIF, WebP</small
-          >
-          <div id="file-size-error" class="form-error" style="display: none">
-            File is too large. Please select an image under 2 MB.
-          </div>
-        </div>
+        <FileUpload 
+          name="avatar" 
+          accept="image/*" 
+          maxSizeMB={2} 
+          required={true}
+          client:load 
+        />
 
         <div class="form-actions">
-          <button class="button" type="submit" id="upload-btn">Upload</button>
+          <SubmitButton formId="avatar-form" loadingText="Uploading..." timeout={10000} client:load>
+            Upload
+          </SubmitButton>
         </div>
       </form>
-
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const form = document.getElementById('avatar-form') as HTMLFormElement
-          const fileInput = document.getElementById('avatar') as HTMLInputElement
-          const uploadBtn = document.getElementById('upload-btn') as HTMLButtonElement
-          const errorDiv = document.getElementById('file-size-error') as HTMLDivElement
-          const maxSizeBytes = 2 * 1024 * 1024 // 2 MB
-          let isSubmitting = false
-
-          if (form && fileInput && uploadBtn && errorDiv) {
-            fileInput.addEventListener('change', (e) => {
-              const target = e.target as HTMLInputElement
-              const file = target?.files?.[0]
-              if (file) {
-                if (file.size > maxSizeBytes) {
-                  errorDiv.style.display = 'block'
-                  uploadBtn.disabled = true
-                } else {
-                  errorDiv.style.display = 'none'
-                  uploadBtn.disabled = false
-                }
-              }
-            })
-
-            form.addEventListener('submit', (e) => {
-              const file = fileInput.files?.[0]
-              if (file && file.size > maxSizeBytes) {
-                e.preventDefault()
-                errorDiv.style.display = 'block'
-                return false
-              }
-
-              if (isSubmitting) {
-                e.preventDefault()
-                return false
-              }
-
-              isSubmitting = true
-              uploadBtn.disabled = true
-              uploadBtn.textContent = 'Uploading...'
-
-              // Re-enable after 10 seconds as fallback (file uploads may take longer)
-              setTimeout(() => {
-                isSubmitting = false
-                uploadBtn.disabled = false
-                uploadBtn.textContent = 'Upload'
-              }, 10000)
-            })
-          }
-        })
-      </script>
     </div>
   </main>
 </BaseLayout>

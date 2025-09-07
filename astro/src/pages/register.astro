@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Feedback from '../components/Feedback.astro';
+import SubmitButton from '../components/react/SubmitButton.tsx';
 import { isAuthenticated } from '../utils/auth.ts';
 
 // Redirect authenticated users away from register page
@@ -40,40 +41,14 @@ if (await isAuthenticated(Astro.cookies)) {
         </div>
 
         <div class="form-actions">
-          <button class="button" type="submit" id="register-btn">Register</button>
+          <SubmitButton formId="register-form" loadingText="Creating account..." client:load>
+            Register
+          </SubmitButton>
           <span class="form-actions-link">
             Already have an account? <a href="/login">Sign in</a>
           </span>
         </div>
       </form>
-
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const form = document.getElementById('register-form') as HTMLFormElement
-          const submitBtn = document.getElementById('register-btn') as HTMLButtonElement
-          let isSubmitting = false
-
-          if (form && submitBtn) {
-            form.addEventListener('submit', (e) => {
-              if (isSubmitting) {
-                e.preventDefault()
-                return false
-              }
-
-              isSubmitting = true
-              submitBtn.disabled = true
-              submitBtn.textContent = 'Creating account...'
-
-              // Re-enable after 5 seconds as fallback (in case of network issues)
-              setTimeout(() => {
-                isSubmitting = false
-                submitBtn.disabled = false
-                submitBtn.textContent = 'Register'
-              }, 5000)
-            })
-          }
-        })
-      </script>
     </div>
   </main>
 </BaseLayout>

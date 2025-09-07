@@ -1,5 +1,6 @@
 ---
 import { getCurrentUserFromAstro } from '../utils/auth.ts';
+import UserProfileDropdown from './react/UserProfileDropdown.tsx';
 
 const user = await getCurrentUserFromAstro(Astro.cookies);
 ---
@@ -11,40 +12,7 @@ const user = await getCurrentUserFromAstro(Astro.cookies);
     </a>
     <nav>
       {user ? (
-        <details class="header-auth-links signed-in" data-username={user.username} data-avatar-src={user.avatarSrc} data-user-id={user.id}>
-          <summary>
-            <img class="avatar" src={user.avatarSrc} alt={`${user.username} avatar`} />
-          </summary>
-          <div class="header-auth-links-dropdown">
-            <a href={`/@${user.username}`} class="profile-link">{user.username}</a>
-            <a href="/settings">Edit profile</a>
-            <form action="/api/auth/logout" method="post">
-              <button class="sign-out" type="submit">Sign out</button>
-            </form>
-          </div>
-        </details>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const dropdown = document.querySelector('.header-auth-links') as HTMLDetailsElement
-
-            // Close dropdown on outside click or Escape key
-            if (dropdown) {
-              // Close on outside click
-              document.addEventListener('click', (e) => {
-                if (e.target && !dropdown.contains(e.target as Node)) {
-                  dropdown.open = false
-                }
-              })
-
-              // Close on Escape key
-              document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && dropdown.open) {
-                  dropdown.open = false
-                }
-              })
-            }
-          })
-        </script>
+        <UserProfileDropdown user={user} client:load />
       ) : (
         <a class="button" href="/login">Sign in</a>
       )}

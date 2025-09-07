@@ -1,0 +1,72 @@
+---
+import { getStore } from '@netlify/blobs';
+import { getPostsIndex } from '../utils/posts-index.ts';
+import { Post, User } from '../utils/types.ts';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  page?: number;
+  postsPerPage?: number;
+}
+
+const { page = 1, postsPerPage = 12 } = Astro.props;
+const skip = (page - 1) * postsPerPage;
+
+// Get posts from index
+const postsIndex = await getPostsIndex();
+const postIds = postsIndex.slice(skip, skip + postsPerPage);
+const totalPosts = postsIndex.length;
+const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+// Get post and user data
+const postStore = getStore({ name: 'Post', consistency: 'strong' });
+const userStore = getStore({ name: 'User', consistency: 'strong' });
+
+const posts: (Post & { user: User })[] = [];
+
+for (const postId of postIds) {
+  try {
+    const postData = await postStore.get(postId, { type: 'json' });
+    if (!postData) continue;
+    const post = postData as Post;
+    
+    const userData = await userStore.get(post.userId, { type: 'json' });
+    if (!userData) continue;
+    const user = userData as User;
+    
+    if (post && user) {
+      posts.push({ ...post, user });
+    }
+  } catch (error) {
+    console.error(`Failed to load post ${postId}:`, error);
+  }
+}
+---
+
+<div class="posts-container">
+  {posts.length > 0 ? (
+    posts.map(post => (
+      <PostCard key={post.id} post={post} />
+    ))
+  ) : (
+    <p>No posts available.</p>
+  )}
+</div>
+
+{totalPages > 1 && (
+  <div class="pagination">
+    <nav aria-label="Posts pagination">
+      {page > 1 && (
+        <a href={`/?page=${page - 1}`} class="pagination-link">← Previous</a>
+      )}
+      
+      <span class="pagination-info">
+        Page {page} of {totalPages}
+      </span>
+      
+      {page < totalPages && (
+        <a href={`/?page=${page + 1}`} class="pagination-link">Next →</a>
+      )}
+    </nav>
+  </div>
+)}

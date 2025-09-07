@@ -1,0 +1,31 @@
+---
+import { Post, User } from '../utils/types.ts';
+
+interface Props {
+  post: Post & { user: User };
+}
+
+const { post } = Astro.props;
+const postDate = new Date(post.createdAt);
+const truncatedContent = post.content.length > 150 
+  ? post.content.substring(0, 150) + '...' 
+  : post.content;
+---
+
+<article class="post-card">
+  <header class="post-card-header">
+    <div class="post-author">
+      <img class="avatar" src={post.user.avatarSrc} alt={`${post.user.username}'s avatar`} />
+      <div class="author-info">
+        <a href={`/@${post.user.username}`} class="author-name">@{post.user.username}</a>
+        <time class="post-date" datetime={post.createdAt}>
+          {postDate.toLocaleDateString()}
+        </time>
+      </div>
+    </div>
+  </header>
+  <div class="post-card-content">
+    <h3><a href={`/post/${post.id}`}>{post.title}</a></h3>
+    <p>{truncatedContent}</p>
+  </div>
+</article>
