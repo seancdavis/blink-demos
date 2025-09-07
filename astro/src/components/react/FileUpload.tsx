@@ -9,7 +9,6 @@ interface FileUploadProps {
 
 export default function FileUpload({ name, accept, maxSizeMB, required = false }: FileUploadProps) {
   const [error, setError] = useState<string>('');
-  const [isValid, setIsValid] = useState(true);
 
   const maxSizeBytes = maxSizeMB * 1024 * 1024;
 

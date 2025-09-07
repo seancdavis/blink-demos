@@ -1,60 +1,81 @@
 ---
+import { getStore } from '@netlify/blobs';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Feedback from '../components/Feedback.astro';
-import PostsIsland from '../components/PostsIsland.astro';
-import SubmitButton from '../components/react/SubmitButton.tsx';
-import { getCurrentUserFromAstro } from '../utils/auth.ts';
-
-const user = await getCurrentUserFromAstro(Astro.cookies);
+import NewPostForm from '../components/NewPostForm.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPostsIndex } from '../utils/posts-index.ts';
+import { Post, User } from '../utils/types.ts';
 
 // Get page from URL params
 const url = new URL(Astro.request.url);
 const pageParam = url.searchParams.get('page');
 const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+const postsPerPage = 12;
+
+// Get posts using the same logic as PostsIsland
+const skip = (currentPage - 1) * postsPerPage;
+const postsIndex = await getPostsIndex();
+const postEntries = postsIndex.slice(skip, skip + postsPerPage);
+const totalPosts = postsIndex.length;
+const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+// Get post and user data
+const postStore = getStore({ name: 'Post', consistency: 'strong' });
+const userStore = getStore({ name: 'User', consistency: 'strong' });
+
+const posts: (Post & { user: User })[] = [];
+
+for (const postEntry of postEntries) {
+  const postId = postEntry.id;
+  try {
+    const postData = await postStore.get(postId, { type: 'json' });
+    if (!postData) continue;
+    const post = postData as Post;
+    
+    const userData = await userStore.get(post.userId, { type: 'json' });
+    if (!userData) continue;
+    const user = userData as User;
+    
+    if (post && user) {
+      posts.push({ ...post, user });
+    }
+  } catch (error) {
+    console.error(`Failed to load post ${postId}:`, error);
+  }
+}
 ---
 
 <BaseLayout title="Feed">
-  <Header />
-  <Feedback />
-  
-  {user ? (
-    <div class="container-xs new-post-form">
-      <form action="/api/posts/create" method="post" id="post-form">
-        <div class="form-field">
-          <label for="title">Title</label>
-          <input type="text" name="title" id="title" required maxlength="64" />
-        </div>
-        <div class="form-field">
-          <label for="content">Content</label>
-          <textarea name="content" id="content" required maxlength="400" rows="4"></textarea>
-        </div>
-        <SubmitButton formId="post-form" loadingText="Creating post..." client:idle>
-          Create Post
-        </SubmitButton>
-      </form>
-    </div>
-  ) : (
-    <div class="container-xs new-post-form guest">
-      <div class="auth-prompt">
-        <h2>Share your thoughts</h2>
-        <p>Sign in to create posts and join the conversation.</p>
-        <div class="form-actions">
-          <a class="button" href="/login">Sign in</a>
-          <a class="button secondary" href="/register">Create account</a>
-        </div>
-      </div>
-    </div>
-  )}
+  <NewPostForm />
 
   <div class="container">
     <h1>Latest posts</h1>
     <div class="post-card-grid">
-      <PostsIsland page={currentPage} server:defer>
-        <div slot="fallback">
-          <p>Loading posts...</p>
-        </div>
-      </PostsIsland>
+      {posts.length > 0 ? (
+        posts.map(post => (
+          <PostCard post={post} />
+        ))
+      ) : (
+        <p>No posts available.</p>
+      )}
     </div>
+
+    {totalPages > 1 && (
+      <div class="pagination">
+        <nav aria-label="Posts pagination">
+          {currentPage > 1 && (
+            <a href={`/?page=${currentPage - 1}`} class="pagination-link">← Previous</a>
+          )}
+          
+          <span class="pagination-info">
+            Page {currentPage} of {totalPages}
+          </span>
+          
+          {currentPage < totalPages && (
+            <a href={`/?page=${currentPage + 1}`} class="pagination-link">Next →</a>
+          )}
+        </nav>
+      </div>
+    )}
   </div>
 </BaseLayout>

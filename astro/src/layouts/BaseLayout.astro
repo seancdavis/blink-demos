@@ -1,4 +1,8 @@
 ---
+import Header from '../components/Header.astro';
+import Feedback from '../components/Feedback.astro';
+import '../styles/main.css';
+
 export interface Props {
   title: string;
 }
@@ -20,7 +24,6 @@ const { title } = Astro.props;
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="/css/styles.css" />
 
     <!-- Favicon -->
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
@@ -28,6 +31,8 @@ const { title } = Astro.props;
     <link rel="apple-touch-icon" href="/images/favicon.svg" />
   </head>
   <body>
+    <Header />
+    <Feedback />
     <slot />
   </body>
 </html>

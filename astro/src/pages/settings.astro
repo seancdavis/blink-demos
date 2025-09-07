@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Feedback from '../components/Feedback.astro';
 import FileUpload from '../components/react/FileUpload.tsx';
 import SubmitButton from '../components/react/SubmitButton.tsx';
 import { isAuthenticated } from '../utils/auth.ts';
@@ -13,8 +11,6 @@ if (!(await isAuthenticated(Astro.cookies))) {
 ---
 
 <BaseLayout title="Edit profile">
-  <Header />
-  <Feedback />
 
   <main>
     <div class="container-xs">

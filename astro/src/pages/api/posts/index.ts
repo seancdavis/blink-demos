@@ -12,9 +12,9 @@ export const GET: APIRoute = async ({ url }) => {
   try {
     // Get posts from index
     const postsIndex = await getPostsIndex();
-    const postIds = postsIndex.slice(skip, skip + postsPerPage);
+    const postEntries = postsIndex.slice(skip, skip + postsPerPage);
 
-    if (postIds.length === 0) {
+    if (postEntries.length === 0) {
       return new Response('<p>No posts available.</p>', {
         headers: { 'Content-Type': 'text/html' }
       });
@@ -26,7 +26,8 @@ export const GET: APIRoute = async ({ url }) => {
 
     const posts: (Post & { user: User })[] = [];
     
-    for (const postId of postIds) {
+    for (const postEntry of postEntries) {
+      const postId = postEntry.id;
       try {
         const postData = await postStore.get(postId, { type: 'json' });
         if (!postData) continue;
