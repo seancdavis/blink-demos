@@ -10,8 +10,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '@components': '/src/components'
-      }
-    }
-  }
+        '@components': '/src/components',
+      },
+    },
+  },
 })

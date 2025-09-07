@@ -1,6 +1,6 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ cookies, redirect }) => {
-  cookies.delete('blink_session', { path: '/' });
-  return redirect('/login');
-};
+  cookies.delete('blink_session', { path: '/' })
+  return redirect('/login')
+}

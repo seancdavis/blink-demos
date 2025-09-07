@@ -1,15 +1,15 @@
-import type { APIRoute } from 'astro';
-import { getStore } from '@netlify/blobs';
+import type { APIRoute } from 'astro'
+import { getStore } from '@netlify/blobs'
 
 export const GET: APIRoute = async () => {
   try {
-    const cacheStore = getStore({ name: 'Cache', consistency: 'strong' });
-    const cacheList = await cacheStore.list();
+    const cacheStore = getStore({ name: 'Cache', consistency: 'strong' })
+    const cacheList = await cacheStore.list()
 
-    const cacheEntries = [];
+    const cacheEntries = []
     for (const { key } of cacheList.blobs) {
-      const cacheData = await cacheStore.get(key, { type: 'json' });
-      cacheEntries.push({ key, data: cacheData });
+      const cacheData = await cacheStore.get(key, { type: 'json' })
+      cacheEntries.push({ key, data: cacheData })
     }
 
     return new Response(
@@ -27,7 +27,7 @@ export const GET: APIRoute = async () => {
           'Content-Type': 'application/json',
         },
       },
-    );
+    )
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -40,6 +40,6 @@ export const GET: APIRoute = async () => {
           'Content-Type': 'application/json',
         },
       },
-    );
+    )
   }
-};
+}

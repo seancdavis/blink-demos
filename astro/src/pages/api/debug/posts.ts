@@ -1,15 +1,15 @@
-import type { APIRoute } from 'astro';
-import { getStore } from '@netlify/blobs';
+import type { APIRoute } from 'astro'
+import { getStore } from '@netlify/blobs'
 
 export const GET: APIRoute = async () => {
   try {
-    const postsStore = getStore({ name: 'Post', consistency: 'strong' });
-    const postsList = await postsStore.list();
+    const postsStore = getStore({ name: 'Post', consistency: 'strong' })
+    const postsList = await postsStore.list()
 
-    const posts: { key: string; data: any }[] = [];
+    const posts: { key: string; data: any }[] = []
     for (const { key } of postsList.blobs) {
-      const post = await postsStore.get(key, { type: 'json' });
-      posts.push({ key, data: post });
+      const post = await postsStore.get(key, { type: 'json' })
+      posts.push({ key, data: post })
     }
 
     return new Response(
@@ -31,7 +31,7 @@ export const GET: APIRoute = async () => {
           'Content-Type': 'application/json',
         },
       },
-    );
+    )
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -44,6 +44,6 @@ export const GET: APIRoute = async () => {
           'Content-Type': 'application/json',
         },
       },
-    );
+    )
   }
-};
+}

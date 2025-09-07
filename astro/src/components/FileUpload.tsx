@@ -1,39 +1,39 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 interface FileUploadProps {
-  name: string;
-  accept: string;
-  maxSizeMB: number;
-  required?: boolean;
+  name: string
+  accept: string
+  maxSizeMB: number
+  required?: boolean
 }
 
 export default function FileUpload({ name, accept, maxSizeMB, required = false }: FileUploadProps) {
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>('')
 
-  const maxSizeBytes = maxSizeMB * 1024 * 1024;
+  const maxSizeBytes = maxSizeMB * 1024 * 1024
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    
+    const file = e.target.files?.[0]
+
     if (file) {
       if (file.size > maxSizeBytes) {
-        setError(`File is too large. Please select a file under ${maxSizeMB} MB.`);
-        setIsValid(false);
+        setError(`File is too large. Please select a file under ${maxSizeMB} MB.`)
+        setIsValid(false)
       } else {
-        setError('');
-        setIsValid(true);
+        setError('')
+        setIsValid(true)
       }
     }
-  };
+  }
 
   return (
     <div>
       <label htmlFor={name}>Avatar</label>
-      <input 
-        type="file" 
-        name={name} 
-        id={name} 
-        accept={accept} 
+      <input
+        type="file"
+        name={name}
+        id={name}
+        accept={accept}
         required={required}
         onChange={handleFileChange}
       />
@@ -57,5 +57,5 @@ export default function FileUpload({ name, accept, maxSizeMB, required = false }
         }
       `}</style>
     </div>
-  );
+  )
 }
