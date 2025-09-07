@@ -1,9 +1,9 @@
 ---
-import { getCurrentUserFromAstro } from '../utils/auth.ts'
+import { getUserFromJWT } from '../utils/auth.ts'
 import BlinkLogo from './BlinkLogo.svg'
 import UserProfileDropdown from '@components/UserProfileDropdown.tsx'
 
-const user = await getCurrentUserFromAstro(Astro.cookies)
+const user = getUserFromJWT(Astro.cookies)
 ---
 
 <header>

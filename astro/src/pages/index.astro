@@ -23,26 +23,48 @@ const totalPages = Math.ceil(totalPosts / postsPerPage);
 const postStore = getStore({ name: 'Post', consistency: 'strong' });
 const userStore = getStore({ name: 'User', consistency: 'strong' });
 
-const posts: (Post & { user: User })[] = [];
-
-for (const postEntry of postEntries) {
-  const postId = postEntry.id;
+// Parallelize all database queries
+const postPromises = postEntries.map(async (postEntry) => {
   try {
-    const postData = await postStore.get(postId, { type: 'json' });
-    if (!postData) continue;
-    const post = postData as Post;
-    
-    const userData = await userStore.get(post.userId, { type: 'json' });
-    if (!userData) continue;
-    const user = userData as User;
-    
-    if (post && user) {
-      posts.push({ ...post, user });
-    }
+    const postData = await postStore.get(postEntry.id, { type: 'json' });
+    if (!postData) return null;
+    return { postEntry, post: postData as Post };
   } catch (error) {
-    console.error(`Failed to load post ${postId}:`, error);
+    console.error(`Failed to load post ${postEntry.id}:`, error);
+    return null;
   }
-}
+});
+
+const postResults = await Promise.all(postPromises);
+const validPosts = postResults.filter(Boolean) as { postEntry: any, post: Post }[];
+
+// Get unique user IDs to avoid duplicate user fetches
+const uniqueUserIds = [...new Set(validPosts.map(p => p.post.userId))];
+
+// Parallelize user queries
+const userPromises = uniqueUserIds.map(async (userId) => {
+  try {
+    const userData = await userStore.get(userId, { type: 'json' });
+    return userData ? { userId, user: userData as User } : null;
+  } catch (error) {
+    console.error(`Failed to load user ${userId}:`, error);
+    return null;
+  }
+});
+
+const userResults = await Promise.all(userPromises);
+const userMap = new Map<string, User>();
+userResults.filter(Boolean).forEach(result => {
+  if (result) userMap.set(result.userId, result.user);
+});
+
+// Combine posts with user data
+const posts: (Post & { user: User })[] = validPosts
+  .map(({ post }) => {
+    const user = userMap.get(post.userId);
+    return user ? { ...post, user } : null;
+  })
+  .filter(Boolean) as (Post & { user: User })[];
 ---
 
 <BaseLayout title="Feed">

@@ -18,10 +18,8 @@ export default function FileUpload({ name, accept, maxSizeMB, required = false }
     if (file) {
       if (file.size > maxSizeBytes) {
         setError(`File is too large. Please select a file under ${maxSizeMB} MB.`)
-        setIsValid(false)
       } else {
         setError('')
-        setIsValid(true)
       }
     }
   }
