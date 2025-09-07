@@ -1,6 +1,6 @@
 # Blink - Social Media Platform
 
-A Twitter/X-like social media platform built on Netlify's serverless architecture with custom templating, JWT authentication, and blob storage.
+A Twitter/X-like social media platform built with Astro and deployed on Netlify's serverless architecture with JWT authentication and blob storage.
 
 ## Features
 
@@ -13,8 +13,8 @@ A Twitter/X-like social media platform built on Netlify's serverless architectur
 
 ## Tech Stack
 
-- **Frontend:** Static HTML with custom `<partial>` components
-- **Backend:** Netlify Functions & Edge Functions (TypeScript)
+- **Frontend:** Astro with server-side rendering
+- **Backend:** Astro API routes (deployed as Netlify Functions)
 - **Database:** Netlify Blobs for data persistence
 - **Auth:** JWT with bcrypt password hashing
 - **Images:** Netlify image transformation API
@@ -66,59 +66,66 @@ After deploying, update the environment variables in your Netlify dashboard:
 
 ### Development Commands
 
-- `npm run dev` - Start Netlify Dev server with live reload
-- `npm run build` - Build static assets and prepare for deployment
+- `npm run dev` - Start Astro development server
+- `npm run build` - Build Astro project for production
+- `npm run preview` - Preview built site locally
+- `npm run netlify:dev` - Start Netlify Dev server (for testing Netlify-specific features)
 - `npm run generate-secret` - Generate a new JWT secret
 
 ## Project Structure
 
 ```
 platform/
-├── netlify/
-│   ├── functions/          # API endpoints (auth, posts, admin)
-│   └── edge-functions/     # Middleware (auth, partials, feedback)
 ├── src/
-│   ├── partials/          # Reusable HTML components
-│   ├── scripts/           # Build and utility scripts
+│   ├── components/        # Reusable Astro components
+│   ├── layouts/           # Page layouts
+│   ├── middleware.ts      # Authentication and routing middleware
+│   ├── pages/             # Astro pages and API routes
+│   │   ├── api/           # API endpoints (auth, posts, admin)
+│   │   └── *.astro        # Page components
 │   └── utils/             # Shared TypeScript utilities
-├── www/                   # Static frontend files
-│   ├── css/
-│   ├── images/
-│   └── *.html            # Page templates
-├── netlify.toml          # Netlify configuration
+├── www/                   # Static assets (CSS, images, etc.)
+├── astro.config.mjs       # Astro configuration
+├── netlify.toml           # Netlify configuration
 └── package.json
 ```
 
 ## Key Concepts
 
-### Custom Templating
+### Astro Components
 
-Uses a custom partial system with server-side rendering. These elements are replaced by edge functions at runtime.
+Uses Astro's component system with server-side rendering and optional client-side JavaScript.
 
-```html
-<partial name="header" title="Page Title"></partial>
-<feedback></feedback>
-<latest-posts></latest-posts>
+```astro
+---
+import Header from '../components/Header.astro';
+import Feedback from '../components/Feedback.astro';
+---
+
+<Header />
+<Feedback />
 ```
 
-### Auth-Gate System
+### Authentication System
 
-Provides conditional content rendering based on authentication state using semantic HTML:
+Provides conditional content rendering based on authentication state using Astro's templating:
 
-```html
-<auth-gate>
-  <is-authenticated>
-    <!-- Content for logged-in users -->
-  </is-authenticated>
-  <is-unauthenticated>
-    <!-- Content for guest users -->
-  </is-unauthenticated>
-</auth-gate>
+```astro
+---
+import { getCurrentUser } from '../utils/get-current-user.mts';
+const user = await getCurrentUser({ cookies });
+---
+
+{user ? (
+  <!-- Content for logged-in users -->
+  <div>Welcome, {user.username}!</div>
+) : (
+  <!-- Content for guest users -->
+  <a href="/login">Sign in</a>
+)}
 ```
 
-The authenticated sections receive user data attributes for template population.
-
-The `build` script collects all the HTML partials from `src/partials/` and compiles them into the final output.
+Astro components can fetch user data directly and conditionally render content.
 
 ### Data Storage
 
@@ -142,8 +149,9 @@ Utilizes Netlify Blobs for persistence. Schema is defined in `src/utils/types.mt
 - `POST /api/auth/login` - User login
 - `POST /api/auth/logout` - User logout
 - `POST /api/posts/create` - Create new post
-- `GET /api/view-post/:id` - View post details
-- `GET /api/view-profile/:username` - View user profile
+- `GET /api/posts` - Load posts for feed
+- `GET /post/:id` - View post details (Astro page)
+- `GET /@:username` - View user profile (Astro page)
 - `POST /api/user/upload-avatar` - Upload avatar image
 - `POST /api/admin/seed` - Seed test data (admin only)
 
@@ -159,7 +167,7 @@ Set these in your Netlify dashboard:
 ### Manual Deployment
 
 1. Build the project: `npm run build`
-2. Deploy the `www` directory to Netlify
+2. Deploy the `dist` directory to Netlify
 3. Set environment variables in Netlify dashboard
 
 ### Automatic Deployment

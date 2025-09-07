@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Feedback from '../components/Feedback.astro';
+import { getCurrentUser } from '../utils/get-current-user.mts';
+import { getFeedback } from '../utils/astro.mts';
+
+const cookies = {
+  get: (name: string) => {
+    const cookie = Astro.cookies.get(name);
+    return cookie?.value;
+  }
+};
+
+const user = await getCurrentUser({ cookies });
+const feedbackMessage = getFeedback(Astro.cookies);
+---
+
+<BaseLayout title="Feed">
+  <Header />
+  <Feedback />
+  
+  {user ? (
+    <div class="container-xs new-post-form">
+      <form action="/api/posts/create" method="post">
+        <div class="form-field">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" required maxlength="64" />
+        </div>
+        <div class="form-field">
+          <label for="content">Content</label>
+          <textarea name="content" id="content" required maxlength="400" rows="4"></textarea>
+        </div>
+        <button type="submit" class="button">Create Post</button>
+      </form>
+    </div>
+  ) : (
+    <div class="container-xs new-post-form guest">
+      <div class="auth-prompt">
+        <h2>Share your thoughts</h2>
+        <p>Sign in to create posts and join the conversation.</p>
+        <div class="form-actions">
+          <a class="button" href="/login">Sign in</a>
+          <a class="button secondary" href="/register">Create account</a>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <div class="container">
+    <h1>Latest posts</h1>
+    <div class="post-card-grid">
+      <!-- Posts will be loaded dynamically via API or SSR -->
+      <div id="posts-container">
+        <p>Loading posts...</p>
+      </div>
+    </div>
+    <div id="pagination-container">
+      <!-- Pagination will be loaded here -->
+    </div>
+  </div>
+
+  <script>
+    // Load posts dynamically
+    async function loadPosts() {
+      try {
+        const response = await fetch('/api/posts?page=1');
+        if (response.ok) {
+          const html = await response.text();
+          document.getElementById('posts-container').innerHTML = html;
+        }
+      } catch (error) {
+        console.error('Failed to load posts:', error);
+        document.getElementById('posts-container').innerHTML = '<p>Failed to load posts.</p>';
+      }
+    }
+
+    // Load posts when page loads
+    document.addEventListener('DOMContentLoaded', loadPosts);
+  </script>
+</BaseLayout>

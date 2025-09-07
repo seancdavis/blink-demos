@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Feedback from '../../components/Feedback.astro';
+import { getStore } from '@netlify/blobs';
+import { Post, User } from '../../utils/types.mts';
+import { newlineToLineBreak } from '../../utils/astro.mts';
+
+const { id } = Astro.params;
+
+if (!id) {
+  return new Response(null, { status: 404 });
+}
+
+const postStore = getStore({ name: 'Post', consistency: 'strong' });
+const post: Post | null = await postStore.get(id, { type: 'json' });
+
+if (!post) {
+  return new Response(null, { status: 404 });
+}
+
+// Get the post author
+const userStore = getStore({ name: 'User', consistency: 'strong' });
+const user: User = await userStore.get(post.userId, { type: 'json' });
+
+if (!user) {
+  return new Response(null, { status: 404 });
+}
+
+const formattedContent = newlineToLineBreak(post.content);
+const postDate = new Date(post.createdAt);
+---
+
+<BaseLayout title={post.title}>
+  <Header />
+  <Feedback />
+
+  <main>
+    <div class="container-xs">
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1>{post.title}</h1>
+          <div class="post-meta">
+            <div class="post-author">
+              <img class="avatar" src={user.avatarSrc} alt={`${user.username}'s avatar`} />
+              <div class="author-info">
+                <a href={`/@${user.username}`} class="author-name">@{user.username}</a>
+                <time class="post-date" datetime={post.createdAt}>
+                  {postDate.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </time>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <div class="post-content" set:html={formattedContent}></div>
+      </article>
+
+      <div class="post-actions">
+        <a href="/" class="button secondary">← Back to feed</a>
+        <a href={`/@${user.username}`} class="button secondary">View @{user.username}'s profile</a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

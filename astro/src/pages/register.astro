@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Feedback from '../components/Feedback.astro';
+---
+
+<BaseLayout title="Register">
+  <Header />
+  <Feedback />
+
+  <main>
+    <div class="container-xs">
+      <h1>Register new account</h1>
+
+      <form action="/api/auth/register" method="post" id="register-form">
+        <div>
+          <label for="username">Username</label>
+          <input type="username" name="username" id="username" required autofocus />
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" minlength="8" required />
+        </div>
+
+        <div>
+          <label for="password_confirmation">Confirm password</label>
+          <input
+            type="password"
+            name="password_confirmation"
+            id="password_confirmation"
+            required
+          />
+        </div>
+
+        <div class="form-actions">
+          <button class="button" type="submit" id="register-btn">Register</button>
+          <span class="form-actions-link">
+            Already have an account? <a href="/login">Sign in</a>
+          </span>
+        </div>
+      </form>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const form = document.getElementById('register-form')
+          const submitBtn = document.getElementById('register-btn')
+          let isSubmitting = false
+
+          form.addEventListener('submit', (e) => {
+            if (isSubmitting) {
+              e.preventDefault()
+              return false
+            }
+
+            isSubmitting = true
+            submitBtn.disabled = true
+            submitBtn.textContent = 'Creating account...'
+
+            // Re-enable after 5 seconds as fallback (in case of network issues)
+            setTimeout(() => {
+              isSubmitting = false
+              submitBtn.disabled = false
+              submitBtn.textContent = 'Register'
+            }, 5000)
+          })
+        })
+      </script>
+    </div>
+  </main>
+</BaseLayout>

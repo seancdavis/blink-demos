@@ -1,22 +1,30 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "ntl dev . --no-open",
-    "build": "npx tsx ./src/scripts/build.ts",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "netlify:dev": "ntl dev . --no-open", 
     "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/netlify": "^6.5.9",
+    "@astrojs/node": "^9.4.3",
     "@faker-js/faker": "^9.0.1",
     "@netlify/blobs": "^8.0.1",
     "@netlify/edge-functions": "^2.10.0",
     "@netlify/functions": "^2.8.1",
     "@types/node": "^22.5.4",
     "@types/uuid": "^10.0.0",
+    "astro": "^5.13.5",
     "bcrypt": "^5.1.1",
     "crypto": "^1.0.1",
     "fast-glob": "^3.3.2",
     "jose": "^5.9.2",
     "prettier": "^3.3.3",
+    "typescript": "^5.9.2",
     "uuid": "^10.0.0"
   }
 }

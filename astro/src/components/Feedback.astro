@@ -1,0 +1,11 @@
+---
+import { getFeedback } from '../utils/astro.mts';
+
+const feedbackMessage = getFeedback(Astro.cookies);
+---
+
+{feedbackMessage && (
+  <div class="feedback-message">
+    {feedbackMessage}
+  </div>
+)}

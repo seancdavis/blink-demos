@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Feedback from '../components/Feedback.astro';
+import { getStore } from '@netlify/blobs';
+import { getUserByUsername } from '../utils/get-user-by-username.mts';
+import { Post, User } from '../utils/types.mts';
+
+const { username } = Astro.params;
+
+if (!username || !username.startsWith('@')) {
+  return new Response(null, { status: 404 });
+}
+
+const actualUsername = username.substring(1); // Remove @ prefix
+const user = await getUserByUsername(actualUsername);
+
+if (!user) {
+  return new Response(null, { status: 404 });
+}
+
+// Get user's posts
+const postStore = getStore({ name: 'Post', consistency: 'strong' });
+const allPosts = await postStore.list();
+const userPosts: Post[] = [];
+
+for (const blob of allPosts.blobs) {
+  const post: Post = await postStore.get(blob.key, { type: 'json' });
+  if (post.userId === user.id) {
+    userPosts.push(post);
+  }
+}
+
+// Sort posts by date (newest first)
+userPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+---
+
+<BaseLayout title={`${user.username}'s Profile`}>
+  <Header />
+  <Feedback />
+
+  <main>
+    <div class="container">
+      <div class="profile-header">
+        <img class="profile-avatar" src={user.avatarSrc} alt={`${user.username}'s avatar`} />
+        <h1>@{user.username}</h1>
+        <p>{userPosts.length} posts</p>
+      </div>
+
+      <div class="post-card-grid">
+        {userPosts.length > 0 ? (
+          userPosts.map(post => (
+            <article class="post-card">
+              <h3><a href={`/post/${post.id}`}>{post.title}</a></h3>
+              <p>{post.content.substring(0, 150)}{post.content.length > 150 ? '...' : ''}</p>
+              <div class="post-meta">
+                <time>{new Date(post.createdAt).toLocaleDateString()}</time>
+              </div>
+            </article>
+          ))
+        ) : (
+          <div class="no-posts">
+            <h3>No posts yet</h3>
+            <p>@{user.username} hasn't shared any posts yet.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
