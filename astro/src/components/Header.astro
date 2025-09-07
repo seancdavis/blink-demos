@@ -1,7 +1,7 @@
 ---
 import { getCurrentUserFromAstro } from '../utils/auth.ts'
 import BlinkLogo from './BlinkLogo.svg'
-import UserProfileDropdown from './react/UserProfileDropdown.tsx'
+import UserProfileDropdown from '@components/UserProfileDropdown.tsx'
 
 const user = await getCurrentUserFromAstro(Astro.cookies)
 ---

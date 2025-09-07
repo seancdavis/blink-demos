@@ -7,4 +7,11 @@ export default defineConfig({
   output: 'server',
   adapter: netlify(),
   integrations: [react()],
+  vite: {
+    resolve: {
+      alias: {
+        '@components': '/src/components'
+      }
+    }
+  }
 })
