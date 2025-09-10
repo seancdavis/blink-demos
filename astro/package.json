@@ -7,7 +7,8 @@
     "dev:ntl": "netlify dev . --no-open",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-secret": "npx tsx ./scripts/generate-secret.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.5",
@@ -15,7 +16,6 @@
     "@astrojs/react": "^4.3.1",
     "@faker-js/faker": "^10.0.0",
     "@netlify/blobs": "^10.0.10",
-    "@tailwindcss/vite": "^4.1.12",
     "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
@@ -24,7 +24,6 @@
     "canvas-confetti": "^1.9.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "tailwindcss": "^4.1.12",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
