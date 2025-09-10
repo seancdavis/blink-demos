@@ -10,4 +10,8 @@ export default defineConfig({
   integrations: [react()],
   output: 'server',
   adapter: netlify(),
+  // To be able to seed data from localhost
+  security: {
+    checkOrigin: false,
+  },
 })
