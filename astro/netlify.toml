@@ -1,0 +1,25 @@
+[build]
+publish = "dist"
+command = "npm run build"
+
+[images]
+remote_images = ["https://api.dicebear.com/*"]
+
+[template.environment]
+ADMIN_API_KEY = "replace me with your generated secret"
+COOKIE_JWT_SECRET = "replace me with your generated secret"
+
+[[redirects]]
+from = "/images/avatar/small/:username"
+to = "/.netlify/images?url=/uploads/avatar/:username&width=256&height=256&fit=cover"
+status = 200
+
+[[redirects]]
+from = "/images/avatar/identicon/:username"
+to = "/.netlify/images?url=https://api.dicebear.com/7.x/identicon/png?seed=:username&size=256&width=256&height=256&format=webp"
+status = 200
+
+[[redirects]]
+from = "/images/*"
+to = "/.netlify/images?url=/images/:splat"
+status = 200
