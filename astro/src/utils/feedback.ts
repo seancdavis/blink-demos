@@ -1,5 +1,5 @@
 import type { AstroCookies } from 'astro'
-import { feedbackData, type FeedbackName, type FeedbackType } from './feedback-data'
+import { feedbackData, type FeedbackName, type FeedbackType } from '@utils/feedback-data'
 
 type SetFeedbackOptions = {
   cookies: AstroCookies

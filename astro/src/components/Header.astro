@@ -1,5 +1,6 @@
 ---
 import type { User } from '@utils/types'
+import HeaderUserDisplay from '@components/HeaderUserDisplay'
 
 export type Props = {
   user?: User
@@ -15,72 +16,14 @@ const { user } = Astro.props
     </a>
     <nav>
       {
-        !user && (
+        user ? (
+          <HeaderUserDisplay user={user} client:load />
+        ) : (
           <a class="button" href="/login">
             Sign in
           </a>
         )
       }
-      <!-- <auth-gate>
-        <is-authenticated>
-          <details class="header-auth-links signed-in">
-            <summary>
-              <img class="avatar" src="" alt="avatar" />
-            </summary>
-            <div class="header-auth-links-dropdown">
-              <a href="/@" class="profile-link">Profile</a>
-              <a href="/settings">Edit profile</a>
-              <form action="/api/auth/logout" method="post">
-                <button class="sign-out" type="submit">Sign out</button>
-              </form>
-            </div>
-          </details>
-          <script>
-            document.addEventListener('DOMContentLoaded', () => {
-              const authDiv = document.querySelector('[data-username]')
-              const dropdown = document.querySelector('.header-auth-links')
-
-              // Update avatar and profile link with user data
-              if (authDiv) {
-                const username = authDiv.getAttribute('data-username')
-                const avatarSrc = authDiv.getAttribute('data-avatar-src')
-
-                const avatar = authDiv.querySelector('.avatar')
-                const profileLink = authDiv.querySelector('.profile-link')
-
-                if (avatar && avatarSrc) {
-                  avatar.src = avatarSrc
-                  avatar.alt = username + ' avatar'
-                }
-                if (profileLink && username) {
-                  profileLink.href = '/@' + username
-                  profileLink.textContent = username
-                }
-              }
-
-              // Close dropdown on outside click or Escape key
-              if (dropdown) {
-                // Close on outside click
-                document.addEventListener('click', (e) => {
-                  if (!dropdown.contains(e.target)) {
-                    dropdown.open = false
-                  }
-                })
-
-                // Close on Escape key
-                document.addEventListener('keydown', (e) => {
-                  if (e.key === 'Escape' && dropdown.open) {
-                    dropdown.open = false
-                  }
-                })
-              }
-            })
-          </script>
-        </is-authenticated>
-        <is-unauthenticated>
-          <a class="button" href="/login">Sign in</a>
-        </is-unauthenticated>
-      </auth-gate> -->
     </nav>
   </div>
 </header>

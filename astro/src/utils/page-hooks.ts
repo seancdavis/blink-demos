@@ -1,5 +1,7 @@
 import type { AstroCookies } from 'astro'
-import { getAndClearFeedback, type FeedbackMessage } from './feedback'
+import { getAndClearFeedback, type FeedbackMessage } from '@utils/feedback'
+import type { User } from '@utils/types'
+import { getCurrentUser } from '@utils/auth'
 
 type BeforePageLoadOptions = {
   cookies: AstroCookies
@@ -7,14 +9,16 @@ type BeforePageLoadOptions = {
 
 type BeforePageLoadResponse = {
   feedback?: FeedbackMessage
+  user?: User
 }
 
 export async function beforePageLoad(
   options: BeforePageLoadOptions,
 ): Promise<BeforePageLoadResponse> {
   const { cookies } = options
+
   const feedback = getAndClearFeedback(cookies)
-  return {
-    feedback,
-  }
+  const user = await getCurrentUser({ cookies })
+
+  return { feedback, user }
 }
