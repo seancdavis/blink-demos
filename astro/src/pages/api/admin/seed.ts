@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
         id: uuid,
         username,
         password: passwordHash,
-        avatarSrc: `/images/avatar/identicon/${username}`,
+        avatarSrc: `/img/avatar/identicon/${username}`,
       }
       await userStore.setJSON(user.id, user)
     }
