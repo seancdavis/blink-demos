@@ -2,8 +2,17 @@
 import '../styles/global.css'
 import Layout from '@components/Layout.astro'
 import RegistrationForm from '@components/RegistrationForm'
+import { setFeedback } from '@utils/feedback'
+import { beforePageLoad } from '@utils/page-hooks'
+
+const { feedback, user } = await beforePageLoad({ cookies: Astro.cookies })
+
+if (user) {
+  setFeedback({ cookies: Astro.cookies, value: 'already_logged_in' })
+  return Astro.redirect('/')
+}
 ---
 
-<Layout title="Register">
+<Layout title="Register" feedback={feedback} user={user}>
   <RegistrationForm client:load />
 </Layout>
