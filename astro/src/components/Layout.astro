@@ -1,12 +1,15 @@
 ---
+import type { FeedbackMessage } from '@utils/feedback'
 import '../styles/global.css'
 import Header from '@components/Header.astro'
+import Feedback from './Feedback.astro'
 
 export type Props = {
   title: string
+  feedback?: FeedbackMessage
 }
 
-const { title } = Astro.props
+const { title, feedback } = Astro.props
 ---
 
 <html lang="en">
@@ -30,6 +33,7 @@ const { title } = Astro.props
 
   <body>
     <Header />
+    {feedback && <Feedback {...feedback} />}
     <main>
       <slot />
     </main>

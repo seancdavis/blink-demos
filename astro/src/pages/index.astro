@@ -1,8 +1,11 @@
 ---
+import { beforePageLoad } from '@utils/page-hooks'
 import '../styles/global.css'
 import Layout from '@components/Layout.astro'
+
+const { feedback } = await beforePageLoad({ cookies: Astro.cookies })
 ---
 
-<Layout title="Home Feed">
+<Layout title="Home Feed" feedback={feedback}>
   <p>Hello world</p>
 </Layout>
