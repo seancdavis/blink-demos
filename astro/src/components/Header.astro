@@ -1,5 +1,11 @@
 ---
+import type { User } from '@utils/types'
 
+export type Props = {
+  user?: User
+}
+
+const { user } = Astro.props
 ---
 
 <header>
@@ -8,6 +14,13 @@
       <img src="/img/blink-logo.svg" alt="BLINK Logo" />
     </a>
     <nav>
+      {
+        !user && (
+          <a class="button" href="/login">
+            Sign in
+          </a>
+        )
+      }
       <!-- <auth-gate>
         <is-authenticated>
           <details class="header-auth-links signed-in">
