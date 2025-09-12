@@ -22,3 +22,19 @@ export async function beforePageLoad(
 
   return { feedback, user }
 }
+
+type BeforeApiLoadOptions = {
+  cookies: AstroCookies
+}
+
+type BeforeApiLoadResponse = {
+  user?: User
+}
+
+export async function beforeApiLoad(options: BeforeApiLoadOptions): Promise<BeforeApiLoadResponse> {
+  const { cookies } = options
+
+  const user = await getCurrentUser({ cookies })
+
+  return { user }
+}
