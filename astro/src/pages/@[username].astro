@@ -29,6 +29,8 @@ const userPosts = await getUserPosts(profileUser.id)
 
 // Set cache headers for better performance
 Astro.response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate')
+Astro.response.headers.set('Netlify-CDN-Cache-Control', 'public, durable, s-maxage=31536000')
+Astro.response.headers.set('Netlify-Cache-Tag', profileUser.id)
 ---
 
 <Layout title={`@${profileUser.username}'s Profile`} feedback={feedback} user={currentUser}>
