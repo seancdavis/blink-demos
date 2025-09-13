@@ -1,0 +1,40 @@
+---
+import { beforePageLoad } from '@utils/page-hooks'
+import '../../../styles/global.css'
+import Layout from '@components/Layout.astro'
+import { getPaginatedPostsWithUsers } from '@utils/posts'
+import PostCard from '@components/PostCard.astro'
+import Pagination from '@components/Pagination.astro'
+
+const { feedback, user } = await beforePageLoad({ cookies: Astro.cookies })
+
+const { page } = Astro.params
+const pageNumber = parseInt(page || '1', 10)
+
+// Redirect page 1 to home
+if (pageNumber === 1) {
+  return Astro.redirect('/')
+}
+
+// Validate page number
+if (isNaN(pageNumber) || pageNumber < 1) {
+  return Astro.redirect('/')
+}
+
+const { posts, pagination } = await getPaginatedPostsWithUsers({ page: pageNumber })
+
+// If page is beyond available pages, redirect to home
+if (pageNumber > pagination.totalPages && pagination.totalPages > 0) {
+  return Astro.redirect('/')
+}
+---
+
+<Layout title={`Posts - Page ${pageNumber}`} feedback={feedback} user={user}>
+  <div class="container">
+    <h1>Latest posts - Page {pageNumber}</h1>
+    <div class="post-card-grid">
+      {posts.map((post) => <PostCard {...post} />)}
+    </div>
+    <Pagination pagination={pagination} />
+  </div>
+</Layout>

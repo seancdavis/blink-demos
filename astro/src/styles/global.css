@@ -500,21 +500,18 @@ header {
 /* Pagination */
 
 .pagination {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
   margin: 3rem auto 2rem;
-  text-align: center;
 }
 
 .pagination-info {
   color: var(--color-neutral-400);
   font-size: 0.875rem;
-  margin-bottom: 1.5rem;
-}
-
-.pagination-controls {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
+  font-weight: var(--font-weight-medium);
+  margin: 0 1rem;
 }
 
 .pagination-prev,
@@ -525,25 +522,17 @@ header {
   padding: 0.75rem 1.25rem;
   font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
-}
-
-.pagination-prev {
-  border-radius: 0.375rem 0.25rem 0.25rem 0.375rem;
-}
-
-.pagination-next {
-  border-radius: 0.25rem 0.375rem 0.375rem 0.25rem;
+  transition: all 0.2s ease;
 }
 
 .pagination-prev:hover,
 .pagination-next:hover {
   background: var(--color-purple-400);
   transform: translateY(-1px);
-  transition: all 0.2s ease;
 }
 
-/* Empty state when no pagination needed */
-.pagination:empty {
+/* Hide pagination when no buttons are present */
+.pagination:has(.pagination-info):not(:has(.pagination-prev)):not(:has(.pagination-next)) {
   display: none;
 }
 

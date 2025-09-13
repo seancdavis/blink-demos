@@ -5,10 +5,11 @@ import Layout from '@components/Layout.astro'
 import { getPaginatedPostsWithUsers } from '@utils/posts'
 import PostCard from '@components/PostCard.astro'
 import NewPostFormGate from '@components/NewPostFormGate.astro'
+import Pagination from '@components/Pagination.astro'
 
 const { feedback, user } = await beforePageLoad({ cookies: Astro.cookies })
 
-const { posts } = await getPaginatedPostsWithUsers({ page: 1 })
+const { posts, pagination } = await getPaginatedPostsWithUsers({ page: 1 })
 ---
 
 <Layout title="Home Feed" feedback={feedback} user={user}>
@@ -20,6 +21,6 @@ const { posts } = await getPaginatedPostsWithUsers({ page: 1 })
     <div class="post-card-grid">
       {posts.map((post) => <PostCard {...post} />)}
     </div>
-    <!-- <pagination></pagination> -->
+    <Pagination pagination={pagination} />
   </div>
 </Layout>
