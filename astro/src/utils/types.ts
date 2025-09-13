@@ -13,4 +13,8 @@ export type Post = {
   createdAt: string
 }
 
-export type PostWithUser = Post & { user: User }
+export type PostWithUser = Post & { user: User } & {
+  date: string
+  postId: string
+  content: string
+}

@@ -1,0 +1,21 @@
+---
+import type { PostWithUser } from '@utils/types'
+
+type Props = PostWithUser
+
+const { title, content, user, date, postId } = Astro.props
+---
+
+<div class="post-card">
+  <div class="post-card-meta">
+    <img class="avatar" src={user.avatarSrc} alt={`${user.username} avatar`} />
+    <div>
+      <a class="post-card-username" href={`/@${user.username}`}>{user.username}</a>
+      <span class="post-card-date">{date}</span>
+    </div>
+  </div>
+  <div class="post-card-content">
+    <h3 class="post-card-title"><a href={`/post/${postId}`}>{title}</a></h3>
+    <div>{content}</div>
+  </div>
+</div>
