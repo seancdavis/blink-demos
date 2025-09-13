@@ -4,6 +4,7 @@ import '../styles/global.css'
 import Layout from '@components/Layout.astro'
 import { getPaginatedPostsWithUsers } from '@utils/posts'
 import PostCard from '@components/PostCard.astro'
+import NewPostFormGate from '@components/NewPostFormGate.astro'
 
 const { feedback, user } = await beforePageLoad({ cookies: Astro.cookies })
 
@@ -11,6 +12,9 @@ const { posts } = await getPaginatedPostsWithUsers({ page: 1 })
 ---
 
 <Layout title="Home Feed" feedback={feedback} user={user}>
+  <div class="container-xs">
+    <NewPostFormGate user={user} />
+  </div>
   <div class="container">
     <h1>Latest posts</h1>
     <div class="post-card-grid">
