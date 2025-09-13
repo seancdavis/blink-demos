@@ -1,4 +1,0 @@
-- [ ] List posts on the index
-- [ ] Add pagination
-- [ ] New post form and API endpoint
-- [ ] Add auth checks to API endpoints
