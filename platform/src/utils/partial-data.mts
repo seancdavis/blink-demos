@@ -313,7 +313,9 @@ export const partials = {
   </body>
 </html>
 `,
-  "profile-no-posts": `<div>No posts from this user yet.</div>
+  "profile-no-posts": `<div class="profile-no-posts">
+  <p>{{ username }} hasn't posted anything yet.</p>
+</div>
 `,
   profile: `<!doctype html>
 <html lang="en">
@@ -324,8 +326,18 @@ export const partials = {
 
     <main>
       <div class="container">
-        <h1>Posts by {{ username }}</h1>
-        <div class="post-card-grid">{{ posts }}</div>
+        <div class="profile-header">
+          <img class="avatar profile-avatar" src="{{ avatarSrc }}" alt="{{ username }}'s avatar" />
+          <div class="profile-info">
+            <h2>@{{ username }}</h2>
+            <p class="profile-stats">{{ postStats }}</p>
+          </div>
+        </div>
+
+        <div class="profile-content">
+          <h1>Latest posts from {{ username }}</h1>
+          <div class="post-card-grid">{{ posts }}</div>
+        </div>
       </div>
     </main>
   </body>

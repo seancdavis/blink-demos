@@ -12,7 +12,7 @@ export default async (request: Request, context: Context) => {
     const html = renderPartial({ name: 'not-found' })
     return new Response(html, {
       status: 200,
-      headers: { 
+      headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=0, must-revalidate',
         'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
@@ -30,7 +30,7 @@ export default async (request: Request, context: Context) => {
     const html = renderPartial({ name: 'not-found' })
     return new Response(html, {
       status: 200,
-      headers: { 
+      headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=0, must-revalidate',
         'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=31536000',
@@ -88,7 +88,11 @@ export default async (request: Request, context: Context) => {
     posts = renderPartial({ name: 'profile-no-posts', data: { ...user } })
   }
 
-  const data = { ...user, posts }
+  const data = {
+    ...user,
+    posts,
+    postStats: `${userPosts.length} post${userPosts.length === 1 ? '' : 's'}`,
+  }
   const html = renderPartial({ name: 'profile', data })
 
   return new Response(html, {
