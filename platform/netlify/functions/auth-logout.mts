@@ -10,7 +10,7 @@ export default async (request: Request, context: Context) => {
   const { redirect, cookies } = await functionUtils({
     request,
     context,
-    defaultRedirectPath: '/login',
+    defaultRedirectPath: '/',
   })
 
   cookies.delete({ name: 'blink_session', path: '/' })
