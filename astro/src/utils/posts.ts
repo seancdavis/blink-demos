@@ -148,3 +148,45 @@ export async function getPaginatedPostsWithUsers(
     pagination,
   }
 }
+
+/**
+ * Get all posts by a specific user
+ */
+export async function getUserPosts(userId: string): Promise<PostWithUser[]> {
+  const postStore = getStore({ name: 'Post', consistency: 'strong' })
+  const userStore = getStore({ name: 'User', consistency: 'strong' })
+  
+  // Get all posts
+  const allPostIds = (await postStore.list()).blobs.map(({ key }) => key)
+  const allPosts = await Promise.all(
+    allPostIds.map(async (id) => await postStore.get(id, { type: 'json' }))
+  )
+
+  // Filter posts by user and sort by date (newest first)
+  const userPosts = allPosts
+    .filter((post) => post.userId === userId)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+  // Get the user data
+  const user = await userStore.get(userId, { type: 'json' })
+  
+  if (!user) {
+    return []
+  }
+
+  // Format posts with user data and additional fields
+  const postsWithUser: PostWithUser[] = userPosts.map((post) => {
+    const date = timeAgoInWords(new Date(post.createdAt))
+    const truncatedContent = truncateText(post.content, 150)
+
+    return {
+      ...post,
+      user,
+      date,
+      postId: post.id,
+      content: newlineToLineBreak(truncatedContent),
+    }
+  })
+
+  return postsWithUser
+}

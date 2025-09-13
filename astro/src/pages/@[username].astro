@@ -1,0 +1,89 @@
+---
+import { beforePageLoad } from '@utils/page-hooks'
+import '../styles/global.css'
+import Layout from '@components/Layout.astro'
+import { getUserByUsername } from '@utils/auth'
+import { getUserPosts } from '@utils/posts'
+import PostCard from '@components/PostCard.astro'
+import ProfileNoPosts from '@components/ProfileNoPosts.astro'
+
+const { feedback, user: currentUser } = await beforePageLoad({ cookies: Astro.cookies })
+
+const { username } = Astro.params
+
+// Validate username parameter
+if (!username || username.length === 0) {
+  return Astro.redirect('/404')
+}
+
+// Get user by username
+const profileUser = await getUserByUsername(username)
+
+// User not found
+if (!profileUser) {
+  return Astro.redirect('/404')
+}
+
+// Get user's posts
+const userPosts = await getUserPosts(profileUser.id)
+
+// Set cache headers for better performance
+Astro.response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate')
+---
+
+<Layout title={`@${profileUser.username}'s Profile`} feedback={feedback} user={currentUser}>
+  <div class="container">
+    <div class="profile-header">
+      <img
+        class="avatar profile-avatar"
+        src={profileUser.avatarSrc}
+        alt={`${profileUser.username}'s avatar`}
+      />
+      <div class="profile-info">
+        <h2>@{profileUser.username}</h2>
+        <p class="profile-stats">{userPosts.length} post{userPosts.length !== 1 ? 's' : ''}</p>
+      </div>
+    </div>
+
+    <div class="profile-content">
+      <h1>Latest posts from @{profileUser.username}</h1>
+      {
+        userPosts.length > 0 ? (
+          <div class="post-card-grid">
+            {userPosts.map((post) => (
+              <PostCard {...post} />
+            ))}
+          </div>
+        ) : (
+          <ProfileNoPosts user={profileUser} />
+        )
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .profile-header {
+    align-items: center;
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+  }
+
+  .profile-avatar {
+    height: 5rem;
+    width: 5rem;
+  }
+
+  .profile-info h2 {
+    color: var(--color-purple-300);
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-stats {
+    color: var(--color-neutral-400);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+</style>
