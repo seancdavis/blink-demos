@@ -28,151 +28,346 @@ seoMeta:
   # ogImage: https://cover.sli.dev
 ---
 
-# Welcome to Slidev
+# Seeing Beyond the Framework Illusion
 
-Hello world >> do the bolt thing
-
----
-
-# Setup
-
-Something about the takeaway
-
-- This is not a “how to choose a framework” talk—those are boring and overdone.
-- This is less “how to choose a framework” and more “should you choose a framework?”
-- Do you need a framework? Do you need a framework at all?
-- What is the framework doing for you?
+Sean C Davis
 
 ---
 
-# Intro
+# Why Vue is better than React!
 
-About me ...
+# You should migrate from Next to TanStack immediately!
+
+# 11ty is a full-stack framework!
+
+# Astro is the best choice for enterprises!
+
+TODO: Do the cross out animations
+
+<!--
+- This is not “how to choose a framework”
+- You've already done that. You have your opinions
+- These are factual statements btw
+- This is about your long-term relationship with your framework
+- If you've fallen out of love with your framework, I will help you find that spark again
+- If you love your framework, I'll help you understand why
+- But then I'll tear that all down, because things are changing, and the way we think about frameworks needs to change, too.
+- Okay, so maybe it is a little bit about how to choose a framework
+- Also, kind of a little about 11ty
+ -->
 
 ---
 
-We choose our frameworks based on DX and feelings first; we rationalize later (and that’s okay).
+# Sean C Davis
 
-"For the wrong reasons"
+- Developer Advocate @ Netlify
+- @seancdavis29 twitter
+- @seancdavis.com bluesky
+- @seancdavis github
+- https://www.seancdavis.com
 
 ---
 
-- DX affects the cost of maintaining the application over time.
-- The value in the framework choice is partly how fast you can get to MVP.
+# How do we choose our framework?
+
+---
+
+# FEELINGS!
+
+![Moira Rose - "Can we feel that?"](./images/schitts-feelings.gif)
+
+<!--
+- We choose based on feelings
+- This can be influenced by brand and community
+- But also plays into developer experience
+ -->
+
+---
+
+# Developer Experience (DX)
+
+TtMVP (Time to Minimum Viable Product)
+
+Balance of shipping new features quickly and maintaining the application over time.
+
+<!--
+1. How fast can you ship an MVP?
+2. DX affects the cost of maintaining the application over time.
 - After that, how fast you can deliver features is a product of your engineering practices.
-- How maintainable the framework is matters.
+ -->
 
 ---
 
-Users don't care about your framework choice; they care about time-to-task and reliability.
+The value of the framework is the combination of the developer experience it provides and the engineering practices you apply to make best use of it.
 
 ---
 
+# User Experience (UX)
+
+Users don't care about your framework choice; they care about TTD (time to done) and reliability.
+
+<!--
+And if you optimize that ...
+ -->
+
+---
+
+# Most frameworks are really good
+
+---
+
+# Tradeoffs are unavoidable
+
+<!--
 - If you’re building a single‑page application or a single‑page application framework, your optimization patterns will look a lot different.
 
 - We adapt our behavior and our justification after the choice.
 - I’m not discrediting the thinking.
 - The reality is it works because you pick a [Next/Nuxt/whatever]; they’re all really well designed.
+ -->
 
 ---
 
-Where the framework disappears... ?
-
-This one is more about how when you serve HTML that's what the user gets.
+# What does your framework do for your users?
 
 ---
 
-# Rails
+# What role does your framework play in production?
 
-Rails in dev vs prod
+<!--
+- Where the framework disappears... ?
+- This one is more about how when you serve HTML that's what the user gets.
+- This is the question I asked myself, because ...
 
----
-
-# JS
-
-JS in dev vs prod
-
----
-
-# So I built the same app
-
-3 ways
+- Pick on Astro because I have only one problem with Astro and this is not it.
+ -->
 
 ---
 
-# Demo part #1
+# Astro
 
-Blink app comparison, showing the UI and package.json
+## Code in development
+
+```astro
+---
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <Welcome />
+</Layout>
+```
+
+## Code in production
+
+```html
+<!DOCTYPE html>
+<html lang="en" data-astro-cid-sckkx6r4>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content="Astro v5.13.7" />
+    <title>Astro Basics</title>
+    <style>
+      /* ... */
+    </style>
+  </head>
+  <body data-astro-cid-sckkx6r4>
+    <div id="container" data-astro-cid-mmc7otgs>
+      <img
+        id="background"
+        src="/_astro/background.BPKAcmfN.svg"
+        alt=""
+        fetchpriority="high"
+        data-astro-cid-mmc7otgs
+      />
+      <main data-astro-cid-mmc7otgs>
+        <section id="hero" data-astro-cid-mmc7otgs>
+          <a href="https://astro.build" data-astro-cid-mmc7otgs>
+            <img
+              src="/_astro/astro.Dm8K3lV8.svg"
+              width="115"
+              height="48"
+              alt="Astro Homepage"
+              data-astro-cid-mmc7otgs
+            />
+          </a>
+          <h1 data-astro-cid-mmc7otgs>
+            To get started, open the
+            <code data-astro-cid-mmc7otgs>
+              <pre data-astro-cid-mmc7otgs>src/pages</pre>
+            </code>
+            directory in your project.
+          </h1>
+          <section id="links" data-astro-cid-mmc7otgs>
+            <a
+              class="button"
+              href="https://docs.astro.build"
+              data-astro-cid-mmc7otgs
+            >
+              Read our docs
+            </a>
+            <a href="https://astro.build/chat" data-astro-cid-mmc7otgs>
+              Join our Discord
+              <!-- svg code ... -->
+            </a>
+          </section>
+        </section>
+      </main>
+      <a
+        href="https://astro.build/blog/astro-5/"
+        id="news"
+        class="box"
+        data-astro-cid-mmc7otgs
+      >
+        <!-- svg code ... -->
+        <h2 data-astro-cid-mmc7otgs>What's New in Astro 5.0?</h2>
+        <p data-astro-cid-mmc7otgs>
+          From content layers to server islands, click to learn more about the
+          new features and improvements in Astro 5.0
+        </p>
+      </a>
+    </div>
+  </body>
+</html>
+```
 
 ---
 
-# Where the framework “disappears”
+# The framework disappears!
 
-Build + adapter translate features into platform components
-
----
-
-# Isn't it an Astro site?
-
-Yes. No. Sort of. (IT's a spectrum)
+![](./images/arrested-dev-magic.gif)
 
 ---
 
-# SSR
+Simple diagram of an SSG build process
 
+---
+
+# Ruby on Rails Application
+
+## Code in development
+
+```ruby
+class UsersController < ApplicationController
+  authenticate! :user, except: %i[accept_invitation complete_invitation]
+  set! :user, only: %i[show edit update destroy]
+
+  def index
+    @users = User.all.includes(:company)
+    @companies = Company.by_name
+    params[:sort] ||= { by: :last_name, type: :alpha, in: :asc }
+    @users = sort_collection(@users)
+    @users = Kaminari.paginate_array(@users).page(params[:page] || 1)
+  end
+end
+```
+
+## Code in production
+
+```ruby
+class UsersController < ApplicationController
+  authenticate! :user, except: %i[accept_invitation complete_invitation]
+  set! :user, only: %i[show edit update destroy]
+
+  def index
+    @users = User.all.includes(:company)
+    @companies = Company.by_name
+    params[:sort] ||= { by: :last_name, type: :alpha, in: :asc }
+    @users = sort_collection(@users)
+    @users = Kaminari.paginate_array(@users).page(params[:page] || 1)
+  end
+end
+```
+
+---
+
+# SSR with Astro
+
+```ts
+import netlify from "@astrojs/netlify";
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  output: "server",
+  adapter: netlify(),
+});
+```
+
+---
+
+# SSR in JavaScript frameworks
+
+Diagram of SSR build process
+
+<!--
 - I’m going to deploy to Netlify because I’ve got my adapter and my Netlify plugin.
 - That’s all you need as a developer; you need this Netlify plugin.
 - “All the Netlify server‑side rendered stuff,” right? Yeah, no, not really.
 - What’s hysterical: the technology we use to render server‑side rendered pages in Astro is called servers [serverless/“Servers”].
+ -->
 
 ---
 
-Every framework is only as powerful as the platform it runs on
+# A platform adapter hooks into a framework's build process to translate framework features into platform primitives
+
+<!--
+# Isn't it an Astro site?
+Yes. No. Sort of. (IT's a spectrum)
+ -->
 
 ---
 
-All these frameworks have the same capabilities on Netlify. They just look a little different.
+# Every framework is only as powerful as the platform it runs on
 
 ---
 
-# Demo #2: Platform primitives 101
+# All these frameworks have the same set of capabilities on Netlify.
 
-HTML/CSS/JS, routes, assets, functions/edge, caching
+How they are implemented in development varies.
 
-Show how these features come through with and without a framework
+TODO: Framework logos
 
-Authentication??
+---
 
-Same user journey; different wiring
+# Demo Time: Platform primitives 101
+
+<!--
+1. Show the UIs
+2. package.json
+3. Example of authentication
+ -->
 
 ---
 
 # Framework Features + Platform Primitives
 
+<!--
 Do you need a framework? Probably. But you need one that plays well with the platform.
+ -->
 
 ---
 
 # Agent experience
 
+<!--
 What is really going to matter in the future.
 
 The DX <> AX parallel
+ -->
 
 ---
 
-# Why agent experience matters
+# Agent experience matters because DX and UX are directly impacted by the quality of solutions an agent can implement.
 
-Because the agent making good decisions directly affects DX and UX.
-
-(And Why I love Astro)
+<!-- (And Why I love Astro) -->
 
 ---
 
-Pick what works for you. Have a little fun along the way.
+# Pick what works for you. We're all different.
 
 ---
 
-# Thanks!
-
-links ...
+# Don't forget to have a little fun along the way!
