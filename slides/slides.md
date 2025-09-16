@@ -246,6 +246,8 @@ Simple diagram of an SSG build process
 
 ---
 
+<!-- It gets more complex when you add in SSR -->
+
 # Ruby on Rails Application
 
 ## Code in development
@@ -365,6 +367,8 @@ The DX <> AX parallel
 <!-- (And Why I love Astro) -->
 
 ---
+
+<!-- This is where to check for the bolt output if I did that -->
 
 # Pick what works for you. We're all different.
 
