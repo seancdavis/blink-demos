@@ -32,19 +32,45 @@ layout: Setup
 ---
 
 <h2>
-  <span :class="{ 'strike-through': $clicks >= 1 }">Why Vue is better than React!</span>
+  <span class="highlight pink">
+    <span :class="{ 'strike-through': $clicks >= 1 }">
+      Why Vue is better than React!
+    </span>
+  </span>
 </h2>
 
 <h2>
-  <span :class="{ 'strike-through': $clicks >= 1 }">You should migrate from Next to TanStack immediately!</span>
+  <span class="highlight blue">
+    <span :class="{ 'strike-through': $clicks >= 1 }">
+      You should migrate from Next
+    </span>
+  </span>
+  <span class="highlight blue">
+    <span :class="{ 'strike-through': $clicks >= 1 }">
+      to TanStack immediately!
+    </span>
+  </span>
 </h2>
 
 <h2>
-  <span :class="{ 'strike-through': $clicks >= 1 && $clicks < 2 }">11ty is a full-stack framework!</span>
+  <span class="highlight lime">
+    <span :class="{ 'strike-through': $clicks >= 1 && $clicks < 2 }">
+      11ty is a full-stack framework!
+    </span>
+  </span>
 </h2>
 
 <h2>
-  <span :class="{ 'strike-through': $clicks >= 1 }">Astro is the best choice for enterprises!</span>
+  <span class="highlight">
+    <span :class="{ 'strike-through': $clicks >= 1 }">
+      Astro is the best choice
+    </span>
+  </span>
+  <span class="highlight">
+    <span :class="{ 'strike-through': $clicks >= 1 }">
+      for enterprises!
+    </span>
+  </span>
 </h2>
 
 <div v-click="1" style="display: none;"></div>

@@ -113,6 +113,10 @@ html {
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  background: none !important;
+  background-image: url(/images/bg/scd-bg.svg) !important;
+  background-size: cover !important;
+  color: var(--color-gray-900) !important;
 
   h2 {
     font-size: 3rem;
@@ -120,6 +124,14 @@ html {
     text-align: center;
     line-height: 1.2;
     font-weight: bold;
+
+    .highlight {
+      padding: 0 1rem;
+    }
+
+    .highlight:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
   }
 }
 
@@ -130,6 +142,10 @@ html {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  background: none !important;
+  background-image: url(/images/bg/scd-bg.svg) !important;
+  background-size: cover !important;
+  color: var(--color-gray-900) !important;
 
   .content {
     display: flex;
@@ -244,7 +260,7 @@ html {
 
 .strike-through {
   text-decoration: line-through;
-  text-decoration-color: var(--color-gray-900);
+  text-decoration-color: inherit;
   text-decoration-thickness: 4px;
 }
 
@@ -253,4 +269,24 @@ html {
   background-color: var(--color-yellow);
   padding: 0 0.25rem;
   border-radius: 0.25rem;
+
+  &.pink {
+    background-color: var(--color-pink);
+    color: var(--color-gray-900);
+  }
+
+  &.lime {
+    background-color: var(--color-lime);
+    color: var(--color-gray-900);
+  }
+
+  &.orange {
+    background-color: var(--color-orange);
+    color: var(--color-gray-900);
+  }
+
+  &.blue {
+    background-color: var(--color-blue-default);
+    color: var(--color-gray-100);
+  }
 }
