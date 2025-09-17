@@ -2,8 +2,8 @@ node_modules
 .DS_Store
 .envrc
 
-# Build output
-www
-
 # Local Netlify folder
 .netlify
+
+# Build output
+dist

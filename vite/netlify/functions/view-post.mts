@@ -1,9 +1,9 @@
 import { getStore } from '@netlify/blobs'
 import type { Context } from '@netlify/edge-functions'
 import { Config } from '@netlify/functions'
-import { functionUtils, newlineToLineBreak } from '../../src/utils/index.mts'
-import { renderPartial } from '../../src/utils/render-partial.mts'
-import { timeAgoInWords } from '../../src/utils/time-ago-in-words.mts'
+import { functionUtils, newlineToLineBreak } from '../../utils/index.mts'
+import { renderPartial } from '../../utils/render-partial.mts'
+import { timeAgoInWords } from '../../utils/time-ago-in-words.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'GET') {

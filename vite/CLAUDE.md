@@ -8,7 +8,7 @@ This project is a social media platform built specifically for Netlify's platfor
 
 - Handle API endpoints and server-side logic
 - Use TypeScript modules (.mts extension)
-- Import utilities from `../../src/utils/index.mts`
+- Import utilities from `../../utils/index.mts`
 - Always export a `config` object defining the path
 - Return proper HTTP responses with status codes
 
@@ -138,7 +138,8 @@ The platform uses a two-tiered approach for 404 handling that avoids edge functi
 3. **Shared content partial** (`src/partials/not-found-content.html`) - Contains the actual 404 content
 
 Both the static page and dynamic partial reference the same `not-found-content` partial, ensuring consistent 404 messaging while allowing:
-- Static files to be served normally by Netlify without edge function interference  
+
+- Static files to be served normally by Netlify without edge function interference
 - Dynamic routes to show 404 content when needed
 - Single source of truth for 404 content that's easy to maintain
 

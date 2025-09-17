@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs'
-import type { HandlerEvent, HandlerContext } from '@netlify/functions'
-import { getPaginatedPostIds } from '../../src/utils/posts-index.mts'
-import { PostWithUser } from '../../src/utils/types.mts'
+import type { HandlerContext, HandlerEvent } from '@netlify/functions'
+import { getPaginatedPostIds } from '../../utils/posts-index.mts'
+import { PostWithUser } from '../../utils/types.mts'
 
 export const config = {
   path: '/api/posts/list',

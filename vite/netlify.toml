@@ -1,6 +1,6 @@
 [build]
-publish = "www"
-command = "npm run netlify:build"
+publish = "dist"
+command = "npm run build"
 
 [images]
 remote_images = ["https://api.dicebear.com/*"]
@@ -8,13 +8,6 @@ remote_images = ["https://api.dicebear.com/*"]
 [template.environment]
 ADMIN_API_KEY = "replace me with your generated secret"
 COOKIE_JWT_SECRET = "replace me with your generated secret"
-
-# SPA fallback - send all non-API, non-asset routes to index.html
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
-conditions = {Role = ["not-api"]}
 
 [[redirects]]
 from = "/images/avatar/small/:username"
@@ -31,8 +24,8 @@ from = "/images/*"
 to = "/.netlify/images?url=/images/:splat"
 status = 200
 
-# API routes should not fallback to SPA
-[[headers]]
-for = "/api/*"
-[headers.values]
-Role = "api"
+# SPA fallback
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

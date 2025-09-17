@@ -1,6 +1,6 @@
 import type { Context } from '@netlify/edge-functions'
 import type { Config } from '@netlify/functions'
-import { functionUtils } from '../../src/utils/index.mts'
+import { functionUtils } from '../../utils/index.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {

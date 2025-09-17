@@ -10,6 +10,6 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["netlify/**/*", "src/utils/**/*"],
-  "exclude": ["node_modules", "www", "src/components", "src/pages", "src/contexts"]
+  "include": ["netlify/**/*", "utils/**/*"],
+  "exclude": ["node_modules", "components", "pages", "contexts"]
 }

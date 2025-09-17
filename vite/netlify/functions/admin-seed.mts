@@ -4,8 +4,8 @@ import type { Context } from '@netlify/edge-functions'
 import type { Config } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
-import { Post, User } from '../../src/utils/types.mts'
-import { addToPostsIndex } from '../../src/utils/posts-index.mts'
+import { addToPostsIndex } from '../../utils/posts-index.mts'
+import { Post, User } from '../../utils/types.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {

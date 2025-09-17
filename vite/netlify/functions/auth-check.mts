@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs'
-import type { HandlerEvent, HandlerContext } from '@netlify/functions'
+import type { HandlerContext, HandlerEvent } from '@netlify/functions'
 import { decodeJwt } from 'jose'
-import type { User } from '../../src/utils/types.mts'
+import type { User } from '../../utils/types.mts'
 
 export const config = {
   path: '/api/auth/check',
@@ -14,11 +14,14 @@ async function getCurrentUserFromEvent(event: HandlerEvent): Promise<User | null
   const cookieHeader = event.headers.cookie || ''
   const cookies = cookieHeader
     .split(';')
-    .map(cookie => cookie.trim().split('='))
-    .reduce((acc, [key, value]) => {
-      acc[key] = decodeURIComponent(value || '')
-      return acc
-    }, {} as Record<string, string>)
+    .map((cookie) => cookie.trim().split('='))
+    .reduce(
+      (acc, [key, value]) => {
+        acc[key] = decodeURIComponent(value || '')
+        return acc
+      },
+      {} as Record<string, string>,
+    )
 
   const sessionCookie = cookies['blink_session']
 

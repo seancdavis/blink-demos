@@ -4,8 +4,8 @@ import { type Config, purgeCache } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'
 import { v4 as uuidv4 } from 'uuid'
-import { functionUtils } from '../../src/utils/index.mts'
-import { User } from '../../src/utils/types.mts'
+import { functionUtils } from '../../utils/index.mts'
+import { User } from '../../utils/types.mts'
 
 export default async (request: Request, context: Context) => {
   if (request.method !== 'POST') {

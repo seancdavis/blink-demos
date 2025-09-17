@@ -3,15 +3,14 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "netlify:dev": "ntl dev . --no-open",
-    "netlify:build": "vite build",
-    "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
+    "generate-secret": "npx tsx ./scripts/generate-secret.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.1",
     "@netlify/blobs": "^8.0.1",
     "@netlify/edge-functions": "^2.10.0",
     "@netlify/functions": "^2.8.1",
+    "@netlify/vite-plugin": "^2.5.9",
     "@types/node": "^22.5.4",
     "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
