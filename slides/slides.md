@@ -105,17 +105,20 @@ Developer Advocate, Netlify
 </div>
 
 ---
+layout: statement
+---
 
 # How do we choose our framework?
 
 ---
+layout: image
+image: ./images/schitts-feelings.gif
+backgroundSize: contain
+---
 
-# FEELINGS!
-
-![Moira Rose - "Can we feel that?"](./images/schitts-feelings.gif)
 
 <!--
-- We choose based on feelings
+- We choose based on FEELINGS!
 - This can be influenced by brand and community
 - But also plays into developer experience
  -->
