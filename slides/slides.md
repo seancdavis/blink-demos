@@ -1,10 +1,10 @@
 ---
-# You can also start simply with 'default'
-theme: seriph
+theme: default
+author: Sean C Davis
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
+# TODO: Change me
 title: Welcome to Slidev
 info: |
   ## Slidev Starter Template
@@ -12,7 +12,7 @@ info: |
 
   Learn more at [Sli.dev](https://sli.dev)
 # apply unocss classes to the current slide
-class: text-center
+class: text-center bg-gray-100 text-gray-900
 # https://sli.dev/features/drawing
 drawings:
   persist: false
@@ -20,7 +20,11 @@ drawings:
 transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
-# open graph
+colorScheme: light
+fonts:
+  sans: Source Serif Pro
+  serif: Source Serif Pro
+  mono: Operator Mono
 seoMeta:
   # By default, Slidev will use ./og-image.png if it exists,
   # or generate one from the first slide if not found.
@@ -33,16 +37,27 @@ seoMeta:
 Sean C Davis
 
 ---
+layout: Setup
+---
 
-# Why Vue is better than React!
+<h2>
+  <span :class="{ 'strike-through': $clicks >= 1 }">Why Vue is better than React!</span>
+</h2>
 
-# You should migrate from Next to TanStack immediately!
+<h2>
+  <span :class="{ 'strike-through': $clicks >= 1 }">You should migrate from Next to TanStack immediately!</span>
+</h2>
 
-# 11ty is a full-stack framework!
+<h2>
+  <span :class="{ 'strike-through': $clicks >= 1 && $clicks < 2 }">11ty is a full-stack framework!</span>
+</h2>
 
-# Astro is the best choice for enterprises!
+<h2>
+  <span :class="{ 'strike-through': $clicks >= 1 }">Astro is the best choice for enterprises!</span>
+</h2>
 
-TODO: Do the cross out animations
+<div v-click="1" style="display: none;"></div>
+<div v-click="2" style="display: none;"></div>
 
 <!--
 - This is not “how to choose a framework”
