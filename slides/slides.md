@@ -322,10 +322,10 @@ backgroundSize: contain
 Simple diagram of an SSG build process
 
 ---
-layout: two-cols-header
+layout: CodeComparison
 ---
 
-# Ruby on Rails App
+# Example: Rails Dev vs Prod
 
 
 ::left::

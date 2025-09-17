@@ -272,6 +272,11 @@ html {
       margin-bottom: 1rem;
       font-size: 1.75rem;
     }
+
+    pre {
+      padding: 1rem !important;
+      background-color: var(--color-gray-900) !important;
+    }
   }
 }
 
