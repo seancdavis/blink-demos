@@ -1,0 +1,29 @@
+---
+import type { User } from '@utils/types'
+import HeaderUserDisplay from '@components/HeaderUserDisplay'
+
+export type Props = {
+  user?: User
+}
+
+const { user } = Astro.props
+---
+
+<header>
+  <div class="header-content container">
+    <a class="header-logo" href="/">
+      <img src="/img/blink-logo.svg" alt="BLINK Logo" />
+    </a>
+    <nav>
+      {
+        user ? (
+          <HeaderUserDisplay user={user} client:load />
+        ) : (
+          <a class="button" href="/login">
+            Sign in
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,43 @@
+---
+import type { FeedbackMessage } from '@utils/feedback'
+import '../styles/global.css'
+import Header from '@components/Header.astro'
+import Feedback from '@components/Feedback.astro'
+import type { User } from '@utils/types'
+
+export type Props = {
+  title: string
+  feedback?: FeedbackMessage
+  user?: User
+}
+
+const { title, feedback, user } = Astro.props
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Blink</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/img/favicon.svg" sizes="any" />
+    <link rel="apple-touch-icon" href="/img/favicon.svg" />
+  </head>
+
+  <body>
+    <Header user={user} />
+    {feedback && <Feedback {...feedback} />}
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
