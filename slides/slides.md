@@ -143,15 +143,22 @@ backgroundSize: contain
 
 ---
 layout: statement
+color: blue
 ---
 
 # Developer Experience (DX)
 
 ---
 layout: statement
+color: blue
 ---
 
-# Good DX means shipping features faster and maintaining easier over time.
+<h1>
+  Good DX means
+  <span v-mark.circle.white="1">shipping faster</span>
+  from Day 1 to
+  <span v-mark.white="2">Day 1,000</span>.
+</h1>
 
 <!--
 1. How fast can you ship an MVP?
@@ -161,9 +168,14 @@ layout: statement
 
 ---
 layout: statement
+color: green
 ---
 
-# A framework's value comes from the engineering practices applied to its DX.
+<h1>
+  A framework's value comes from the
+  <span v-mark.circle.white="1">engineering practices</span>
+  applied to its DX.
+</h1>
 
 ---
 layout: ContainedGif
@@ -174,19 +186,29 @@ backgroundSize: contain
 
 ---
 layout: statement
+color: lime
 ---
 
 # User Experience (UX)
 
 ---
 layout: statement
+color: lime
 ---
 
 # Users don't care about your framework choice.
 
+<v-click>
+
 # They want to get things done.
 
-# Fast.
+</v-click>
+
+<v-click>
+
+<h1 style="font-size: 6rem;">FAST!</h1>
+
+</v-click>
 
 <!--
 And if you optimize that ...
@@ -194,11 +216,18 @@ And if you optimize that ...
 
 ---
 layout: statement
+color: shapes
 ---
 
-# Most frameworks are really good.
+<h1 style="font-size: 3rem;">Most frameworks are really good.</h1>
 
-# All frameworks have tradoffs.
+<v-click>
+
+<h1>
+  <span class="highlight">All frameworks have tradeoffs.</span>
+</h1>
+
+</v-click>
 
 <!--
 - If you’re building a single‑page application or a single‑page application framework, your optimization patterns will look a lot different.
@@ -210,6 +239,7 @@ layout: statement
 
 ---
 layout: statement
+color: shapes
 ---
 
 # What does your framework do for your users in production?
@@ -223,10 +253,10 @@ layout: statement
  -->
 
 ---
-layout: two-cols-header
+layout: CodeComparison
 ---
 
-# Astro
+# Example: Astro Dev vs Prod
 
 ::left::
 
