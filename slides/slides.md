@@ -72,14 +72,37 @@ layout: Setup
  -->
 
 ---
+layout: SCDIntro
+---
 
 # Sean C Davis
 
-- Developer Advocate @ Netlify
-- @seancdavis29 twitter
-- @seancdavis.com bluesky
-- @seancdavis github
-- https://www.seancdavis.com
+::title::
+
+Developer Advocate, Netlify
+
+::image::
+
+![Sean C Davis avatar](./images/seancdavis-avatar.png)
+
+::links::
+
+<div class="intro-link">
+  <img src="./images/icons/github.svg" alt="GitHub" />
+  <span>@seancdavis</span>
+</div>
+
+<div class="intro-link">
+  <img src="./images/icons/bluesky.svg" alt="Bluesky" />
+  <img src="./images/icons/website.svg" alt="Website" />
+  <span>@seancdavis.com</span>
+</div>
+
+<div class="intro-link">
+  <img src="./images/icons/linkedin.svg" alt="LinkedIn" />
+  <img src="./images/icons/x.svg" alt="Twitter" />
+  <span>@seancdavis29</span>
+</div>
 
 ---
 
