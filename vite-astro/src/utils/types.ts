@@ -18,3 +18,12 @@ export type PostWithUser = Post & { user: User } & {
   postId: string
   content: string
 }
+
+export type PaginationResult = {
+  postIds: string[]
+  currentPage: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  totalPosts: number
+}

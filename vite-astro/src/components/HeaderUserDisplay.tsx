@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import type { User } from '@utils/types'
 
 interface HeaderUserDisplayProps {
@@ -8,6 +10,7 @@ interface HeaderUserDisplayProps {
 export default function HeaderUserDisplay({ user }: HeaderUserDisplayProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDetailsElement>(null)
+  const { logout } = useAuth()
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -31,26 +34,31 @@ export default function HeaderUserDisplay({ user }: HeaderUserDisplayProps) {
     }
   }, [isOpen])
 
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await logout()
+  }
+
   return (
-    <details 
+    <details
       ref={dropdownRef}
-      className="header-auth-links signed-in" 
+      className="header-auth-links signed-in"
       open={isOpen}
       onToggle={(e) => setIsOpen((e.target as HTMLDetailsElement).open)}
     >
       <summary>
-        <img 
-          className="avatar" 
-          src={user.avatarSrc} 
-          alt={`${user.username} avatar`} 
+        <img
+          className="avatar"
+          src={user.avatarSrc}
+          alt={`${user.username} avatar`}
         />
       </summary>
       <div className="header-auth-links-dropdown">
-        <a href={`/@${user.username}`} className="profile-link">
+        <Link to={`/@${user.username}`} className="profile-link">
           {user.username}
-        </a>
-        <a href="/settings">Edit profile</a>
-        <form action="/api/auth/logout" method="post">
+        </Link>
+        <Link to="/settings">Edit profile</Link>
+        <form onSubmit={handleLogout}>
           <button className="sign-out" type="submit">
             Sign out
           </button>

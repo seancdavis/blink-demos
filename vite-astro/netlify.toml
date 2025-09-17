@@ -1,6 +1,7 @@
 [build]
 publish = "dist"
 command = "npm run build"
+functions = "netlify/functions"
 
 [images]
 remote_images = ["https://api.dicebear.com/*"]

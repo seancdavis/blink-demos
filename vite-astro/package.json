@@ -1,34 +1,35 @@
 {
-  "name": "astro",
+  "name": "blink-vite-react",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "dev:ntl": "netlify dev . --no-open",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
+    "dev": "vite",
+    "dev:ntl": "netlify dev",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "generate-secret": "npx tsx ./scripts/generate-secret.ts"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.5",
-    "@astrojs/netlify": "^6.5.10",
-    "@astrojs/react": "^4.3.1",
-    "@faker-js/faker": "^10.0.0",
     "@netlify/blobs": "^10.0.10",
     "@netlify/functions": "^4.2.5",
+    "@faker-js/faker": "^10.0.0",
     "@types/canvas-confetti": "^1.9.0",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
-    "astro": "^5.13.7",
     "bcrypt": "^6.0.0",
     "canvas-confetti": "^1.9.3",
     "jose": "^6.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-helmet-async": "^2.0.4",
+    "react-router-dom": "^6.28.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0"
+    "@types/bcrypt": "^6.0.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.6.2",
+    "vite": "^6.0.1"
   }
 }

@@ -18,20 +18,38 @@ export default function NewPostForm({ user }: NewPostFormProps) {
     setRemainingChars(remaining)
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
     if (isSubmitting) {
-      e.preventDefault()
       return false
     }
 
     setIsSubmitting(true)
     setButtonText('Creating...')
 
-    // Re-enable after 5 seconds as fallback (in case of network issues)
-    setTimeout(() => {
+    try {
+      const formData = new FormData(e.currentTarget)
+      const response = await fetch('/.netlify/functions/posts-create', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        // Reset form
+        e.currentTarget.reset()
+        setRemainingChars(400)
+        // Reload page to see new post
+        window.location.reload()
+      } else {
+        console.error('Failed to create post')
+      }
+    } catch (error) {
+      console.error('Error creating post:', error)
+    } finally {
       setIsSubmitting(false)
       setButtonText('Create post')
-    }, 5000)
+    }
   }
 
   const getCharCountClass = () => {
@@ -51,7 +69,7 @@ export default function NewPostForm({ user }: NewPostFormProps) {
         <h2>Write a New post</h2>
       </div>
 
-      <form action="/api/posts/create" method="post" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Title</label>
           <input 
