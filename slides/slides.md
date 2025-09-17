@@ -2,7 +2,6 @@
 theme: default
 author: Sean C Davis
 background: ./images/bg/scd-bg.svg
-# TODO: Change me
 title: Seeing Beyond the Framework Illusion
 info: |
   A presentation by Sean C Davis for CascadiaJS 2025
@@ -98,6 +97,7 @@ Developer Education, Netlify
 
 ---
 layout: statement
+color: shapes
 ---
 
 # How do we choose our framework?
