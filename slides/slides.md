@@ -1,24 +1,14 @@
 ---
 theme: default
 author: Sean C Davis
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
+background: ./images/bg/scd-bg.svg
 # TODO: Change me
-title: Welcome to Slidev
+title: Seeing Beyond the Framework Illusion
 info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
-
-  Learn more at [Sli.dev](https://sli.dev)
-# apply unocss classes to the current slide
-class: text-center bg-gray-100 text-gray-900
-# https://sli.dev/features/drawing
-drawings:
-  persist: false
+  A presentation by Sean C Davis for CascadiaJS 2025
+class: text-center bg-transparent text-gray-900
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
-# enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 colorScheme: light
 fonts:
@@ -26,13 +16,13 @@ fonts:
   serif: Source Serif Pro
   mono: Operator Mono
 seoMeta:
-  # By default, Slidev will use ./og-image.png if it exists,
-  # or generate one from the first slide if not found.
   ogImage: auto
-  # ogImage: https://cover.sli.dev
 ---
 
-<h1>Seeing Beyond<br>the Framework Illusion</h1>
+<h1>
+  <span class="highlight">Seeing Beyond</span>
+  <span class="highlight">the Framework Illusion</span>
+</h1>
 
 <div class="title-author">
   Sean C Davis

@@ -33,12 +33,35 @@ html {
   color: theme("colors.gray.900");
 }
 
-/* Layout Override: Setup */
+/* Layout Override: Cover */
 
 .slidev-layout.cover {
+  background: none !important;
+  background-image: url(/images/bg/scd-bg.svg) !important;
+  background-size: cover !important;
+  color: var(--color-gray-900) !important;
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .highlight {
+    padding: 0 2rem;
+    line-height: 1.25;
+    background-color: var(--color-lime);
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
   .title-author {
     font-size: 2rem;
     font-style: italic;
+    color: var(--color-gray-900);
+    background-color: var(--color-gray-300);
+    display: inline-block;
+    padding: 0.25rem 2rem;
   }
 }
 
@@ -183,4 +206,11 @@ html {
   text-decoration: line-through;
   text-decoration-color: var(--color-gray-900);
   text-decoration-thickness: 4px;
+}
+
+.highlight {
+  display: inline-block;
+  background-color: var(--color-yellow);
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
 }
