@@ -377,8 +377,10 @@ end
 <!-- It gets more complex when you add in SSR -->
 
 ---
+layout: CodeExample
+---
 
-# Server-side rendering (SSR) with Astro
+# Example: SSR with Astro on Netlify
 
 <v-click>
 
