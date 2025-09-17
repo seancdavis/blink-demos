@@ -32,9 +32,11 @@ seoMeta:
   # ogImage: https://cover.sli.dev
 ---
 
-# Seeing Beyond the Framework Illusion
+<h1>Seeing Beyond<br>the Framework Illusion</h1>
 
-Sean C Davis
+<div class="title-author">
+  Sean C Davis
+</div>
 
 ---
 layout: Setup
@@ -79,7 +81,7 @@ layout: SCDIntro
 
 ::title::
 
-Developer Advocate, Netlify
+Developer Education, Netlify
 
 ::image::
 
@@ -111,11 +113,11 @@ layout: statement
 # How do we choose our framework?
 
 ---
-layout: image
-image: ./images/schitts-feelings.gif
+layout: ContainedGif
 backgroundSize: contain
 ---
 
+<img src="./images/schitts-feelings.gif" />
 
 <!--
 - We choose based on FEELINGS!
@@ -124,12 +126,16 @@ backgroundSize: contain
  -->
 
 ---
+layout: statement
+---
 
 # Developer Experience (DX)
 
-TtMVP (Time to Minimum Viable Product)
+---
+layout: statement
+---
 
-Balance of shipping new features quickly and maintaining the application over time.
+# Good DX means shipping features faster and maintaining easier over time.
 
 <!--
 1. How fast can you ship an MVP?
@@ -138,26 +144,45 @@ Balance of shipping new features quickly and maintaining the application over ti
  -->
 
 ---
+layout: statement
+---
 
-The value of the framework is the combination of the developer experience it provides and the engineering practices you apply to make best use of it.
+# A framework's value comes from the engineering practices applied to its DX.
 
+---
+layout: ContainedGif
+backgroundSize: contain
+---
+
+<img src="./images/parks-rec-drumroll.gif" />
+
+---
+layout: statement
 ---
 
 # User Experience (UX)
 
-Users don't care about your framework choice; they care about TTD (time to done) and reliability.
+---
+layout: statement
+---
+
+# Users don't care about your framework choice.
+
+# They want to get things done.
+
+# Fast.
 
 <!--
 And if you optimize that ...
  -->
 
 ---
-
-# Most frameworks are really good
-
+layout: statement
 ---
 
-# Tradeoffs are unavoidable
+# Most frameworks are really good.
+
+# All frameworks have tradoffs.
 
 <!--
 - If you’re building a single‑page application or a single‑page application framework, your optimization patterns will look a lot different.
@@ -168,12 +193,10 @@ And if you optimize that ...
  -->
 
 ---
-
-# What does your framework do for your users?
-
+layout: statement
 ---
 
-# What role does your framework play in production?
+# What does your framework do for your users in production?
 
 <!--
 - Where the framework disappears... ?
@@ -184,10 +207,16 @@ And if you optimize that ...
  -->
 
 ---
+layout: two-cols-header
+---
 
 # Astro
 
-## Code in development
+::left::
+
+<v-click>
+
+## Development
 
 ```astro
 ---
@@ -200,7 +229,13 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 ```
 
-## Code in production
+</v-click>
+
+::right::
+
+<v-click>
+
+## Production
 
 ```html
 <!DOCTYPE html>
@@ -217,117 +252,89 @@ import Layout from "../layouts/Layout.astro";
   </head>
   <body data-astro-cid-sckkx6r4>
     <div id="container" data-astro-cid-mmc7otgs>
-      <img
-        id="background"
-        src="/_astro/background.BPKAcmfN.svg"
-        alt=""
-        fetchpriority="high"
-        data-astro-cid-mmc7otgs
-      />
-      <main data-astro-cid-mmc7otgs>
-        <section id="hero" data-astro-cid-mmc7otgs>
-          <a href="https://astro.build" data-astro-cid-mmc7otgs>
-            <img
-              src="/_astro/astro.Dm8K3lV8.svg"
-              width="115"
-              height="48"
-              alt="Astro Homepage"
-              data-astro-cid-mmc7otgs
-            />
-          </a>
-          <h1 data-astro-cid-mmc7otgs>
-            To get started, open the
-            <code data-astro-cid-mmc7otgs>
-              <pre data-astro-cid-mmc7otgs>src/pages</pre>
-            </code>
-            directory in your project.
-          </h1>
-          <section id="links" data-astro-cid-mmc7otgs>
-            <a
-              class="button"
-              href="https://docs.astro.build"
-              data-astro-cid-mmc7otgs
-            >
-              Read our docs
-            </a>
-            <a href="https://astro.build/chat" data-astro-cid-mmc7otgs>
-              Join our Discord
-              <!-- svg code ... -->
-            </a>
-          </section>
-        </section>
-      </main>
-      <a
-        href="https://astro.build/blog/astro-5/"
-        id="news"
-        class="box"
-        data-astro-cid-mmc7otgs
-      >
-        <!-- svg code ... -->
-        <h2 data-astro-cid-mmc7otgs>What's New in Astro 5.0?</h2>
-        <p data-astro-cid-mmc7otgs>
-          From content layers to server islands, click to learn more about the
-          new features and improvements in Astro 5.0
-        </p>
-      </a>
+      <!-- ... -->
     </div>
   </body>
 </html>
 ```
 
----
-
-# The framework disappears!
-
-![](./images/arrested-dev-magic.gif)
+</v-click>
 
 ---
+layout: ContainedGif
+backgroundSize: contain
+---
+
+<img src="./images/arrested-dev-magic.gif" />
+
+<!-- # The framework disappears! -->
+
+---
+
+# TODO
 
 Simple diagram of an SSG build process
 
 ---
+layout: two-cols-header
+---
+
+# Ruby on Rails App
+
+
+::left::
+
+<v-click>
+
+## Development
+
+```ruby
+class UsersController < ApplicationController
+  authenticate! :user, except: %i[accept_invitation complete_invitation]
+  set! :user, only: %i[show edit update destroy]
+
+  def index
+    @users = User.all.includes(:company)
+    @companies = Company.by_name
+    params[:sort] ||= { by: :last_name, type: :alpha, in: :asc }
+    @users = sort_collection(@users)
+    @users = Kaminari.paginate_array(@users).page(params[:page] || 1)
+  end
+end
+```
+
+</v-click>
+
+::right::
+
+<v-click>
+
+## Production
+
+```ruby
+class UsersController < ApplicationController
+  authenticate! :user, except: %i[accept_invitation complete_invitation]
+  set! :user, only: %i[show edit update destroy]
+
+  def index
+    @users = User.all.includes(:company)
+    @companies = Company.by_name
+    params[:sort] ||= { by: :last_name, type: :alpha, in: :asc }
+    @users = sort_collection(@users)
+    @users = Kaminari.paginate_array(@users).page(params[:page] || 1)
+  end
+end
+```
+
+</v-click>
 
 <!-- It gets more complex when you add in SSR -->
 
-# Ruby on Rails Application
-
-## Code in development
-
-```ruby
-class UsersController < ApplicationController
-  authenticate! :user, except: %i[accept_invitation complete_invitation]
-  set! :user, only: %i[show edit update destroy]
-
-  def index
-    @users = User.all.includes(:company)
-    @companies = Company.by_name
-    params[:sort] ||= { by: :last_name, type: :alpha, in: :asc }
-    @users = sort_collection(@users)
-    @users = Kaminari.paginate_array(@users).page(params[:page] || 1)
-  end
-end
-```
-
-## Code in production
-
-```ruby
-class UsersController < ApplicationController
-  authenticate! :user, except: %i[accept_invitation complete_invitation]
-  set! :user, only: %i[show edit update destroy]
-
-  def index
-    @users = User.all.includes(:company)
-    @companies = Company.by_name
-    params[:sort] ||= { by: :last_name, type: :alpha, in: :asc }
-    @users = sort_collection(@users)
-    @users = Kaminari.paginate_array(@users).page(params[:page] || 1)
-  end
-end
-```
-
 ---
 
-# SSR with Astro
+# Server-side rendering (SSR) with Astro
+
+<v-click>
 
 ```ts
 import netlify from "@astrojs/netlify";
@@ -339,7 +346,11 @@ export default defineConfig({
 });
 ```
 
+</v-click>
+
 ---
+
+# TODO
 
 # SSR in JavaScript frameworks
 
@@ -353,14 +364,18 @@ Diagram of SSR build process
  -->
 
 ---
+layout: statement
+---
 
-# A platform adapter hooks into a framework's build process to translate framework features into platform primitives
+# A platform adapter hooks into a framework's build process to transform framework features into platform primitives
 
 <!--
 # Isn't it an Astro site?
 Yes. No. Sort of. (IT's a spectrum)
  -->
 
+---
+layout: statement
 ---
 
 # Every framework is only as powerful as the platform it runs on
@@ -369,13 +384,32 @@ Yes. No. Sort of. (IT's a spectrum)
 
 # All these frameworks have the same set of capabilities on Netlify.
 
+<div class="frameworks-grid">
+  <img src="./images/icons/frameworks/angular.svg" alt="Angular" />
+  <img src="./images/icons/frameworks/astro.svg" alt="Astro" />
+  <img src="./images/icons/frameworks/docusaurus.svg" alt="Docusaurus" />
+  <img src="./images/icons/frameworks/eleventy.svg" alt="Eleventy" />
+  <img src="./images/icons/frameworks/gatsby.svg" alt="Gatsby" />
+  <img src="./images/icons/frameworks/hugo.svg" alt="Hugo" />
+  <img src="./images/icons/frameworks/nextjs.svg" alt="Next.js" />
+  <img src="./images/icons/frameworks/nuxt.svg" alt="Nuxt" />
+  <img src="./images/icons/frameworks/react.svg" alt="React" />
+  <img src="./images/icons/frameworks/remix.svg" alt="Remix" />
+  <img src="./images/icons/frameworks/svelte.svg" alt="Svelte" />
+  <img src="./images/icons/frameworks/vue.svg" alt="Vue" />
+</div>
+
+<!--
 How they are implemented in development varies.
 
 TODO: Framework logos
+-->
 
 ---
+layout: statement
+---
 
-# Demo Time: Platform primitives 101
+# Demo time!
 
 <!--
 1. Show the UIs
@@ -384,8 +418,10 @@ TODO: Framework logos
  -->
 
 ---
+layout: statement
+---
 
-# Framework Features + Platform Primitives
+# Platform integration is what matters for a framework.
 
 <!--
 Do you need a framework? Probably. But you need one that plays well with the platform.
@@ -394,6 +430,8 @@ Do you need a framework? Probably. But you need one that plays well with the pla
 ---
 
 # Agent experience
+
+<img src="./images/ax-blog-post.png" />
 
 <!--
 What is really going to matter in the future.
