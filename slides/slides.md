@@ -413,9 +413,15 @@ Diagram of SSR build process
 
 ---
 layout: statement
+color: pink
 ---
 
-# A platform adapter hooks into a framework's build process to transform framework features into platform primitives
+<h1>
+  A platform adapter hooks into a framework's build process to transform
+  <span v-mark.circle.black="1">framework features</span>
+  into
+  <span v-mark.circle.black="2">platform primitives</span>
+</h1>
 
 <!--
 # Isn't it an Astro site?
@@ -424,28 +430,44 @@ Yes. No. Sort of. (IT's a spectrum)
 
 ---
 layout: statement
+color: shapes
 ---
 
-# Every framework is only as powerful as the platform it runs on
+<h1>
+  <span class="highlight pink">
+    Every framework is only
+  </span>
+  <span class="highlight pink">
+    as powerful as
+  </span>
+  <span class="highlight pink">
+    the platform it runs on.
+  </span>
+</h1>
 
 ---
+layout: LogoGrid
+---
 
-# All these frameworks have the same set of capabilities on Netlify.
+# All these frameworks have the
 
-<div class="frameworks-grid">
-  <img src="./images/icons/frameworks/angular.svg" alt="Angular" />
-  <img src="./images/icons/frameworks/astro.svg" alt="Astro" />
-  <img src="./images/icons/frameworks/docusaurus.svg" alt="Docusaurus" />
-  <img src="./images/icons/frameworks/eleventy.svg" alt="Eleventy" />
-  <img src="./images/icons/frameworks/gatsby.svg" alt="Gatsby" />
-  <img src="./images/icons/frameworks/hugo.svg" alt="Hugo" />
-  <img src="./images/icons/frameworks/nextjs.svg" alt="Next.js" />
-  <img src="./images/icons/frameworks/nuxt.svg" alt="Nuxt" />
-  <img src="./images/icons/frameworks/react.svg" alt="React" />
-  <img src="./images/icons/frameworks/remix.svg" alt="Remix" />
-  <img src="./images/icons/frameworks/svelte.svg" alt="Svelte" />
-  <img src="./images/icons/frameworks/vue.svg" alt="Vue" />
-</div>
+# same set of capabilities on Netlify:
+
+::logos::
+
+<img src="./images/icons/frameworks/angular.svg" alt="Angular" />
+<img src="./images/icons/frameworks/astro.svg" alt="Astro" />
+<img src="./images/icons/frameworks/docusaurus.svg" alt="Docusaurus" />
+<img src="./images/icons/frameworks/eleventy.svg" alt="Eleventy" />
+<img src="./images/icons/frameworks/gatsby.svg" alt="Gatsby" />
+<img src="./images/icons/frameworks/hugo.svg" alt="Hugo" />
+<img src="./images/icons/frameworks/nextjs.svg" alt="Next.js" />
+<img src="./images/icons/frameworks/nuxt.svg" alt="Nuxt" />
+<img src="./images/icons/frameworks/react.svg" alt="React" />
+<img src="./images/icons/frameworks/remix.svg" alt="Remix" />
+<img src="./images/icons/frameworks/svelte.svg" alt="Svelte" />
+<img src="./images/icons/frameworks/vue.svg" alt="Vue" />
+
 
 <!--
 How they are implemented in development varies.
@@ -455,6 +477,7 @@ TODO: Framework logos
 
 ---
 layout: statement
+color: shapes
 ---
 
 # Demo time!
@@ -467,19 +490,22 @@ layout: statement
 
 ---
 layout: statement
+color: blue
 ---
 
-# Platform integration is what matters for a framework.
+# Platform integration is what matters most for a framework.
 
 <!--
 Do you need a framework? Probably. But you need one that plays well with the platform.
  -->
 
 ---
+layout: image
+image: ./images/ax-blog-post.png
+---
 
-# Agent experience
+<!-- # Agent experience -->
 
-<img src="./images/ax-blog-post.png" />
 
 <!--
 What is really going to matter in the future.
@@ -488,17 +514,58 @@ The DX <> AX parallel
  -->
 
 ---
+layout: statement
+color: blue
+---
 
-# Agent experience matters because DX and UX are directly impacted by the quality of solutions an agent can implement.
+<h1 style="font-size: 3.5rem;">
+  Agent experience matters because DX and UX are directly impacted by the quality of solutions an agent can implement.
+</h1>
 
 <!-- (And Why I love Astro) -->
 
 ---
+layout: statement
+color: shapes
+---
 
 <!-- This is where to check for the bolt output if I did that -->
 
-# Pick what works for you. We're all different.
+<v-click>
+
+<h1>
+  <span class="highlight lime">Pick what works for you.</span>
+</h1>
+
+</v-click>
+
+<v-click>
+
+<h1>
+  <span class="highlight lime">We're all different.</span>
+</h1>
+
+</v-click>
 
 ---
+layout: statement
+color: shapes
+---
 
-# Don't forget to have a little fun along the way!
+<h1 style="font-size: 2rem; font-style: italic;">
+  And ...
+</h1>
+
+<v-click>
+
+<h1>
+  <span class="highlight lime">
+    Don't forget to have
+  </span>
+  <span class="highlight lime">
+    a little fun along the way!
+  </span>
+</h1>
+
+</v-click>
+
