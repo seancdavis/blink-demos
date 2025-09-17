@@ -1,8 +1,10 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "ntl dev . --no-open",
-    "build": "npx tsx ./src/scripts/build.ts",
+    "dev": "vite dev",
+    "build": "vite build",
+    "netlify:dev": "ntl dev . --no-open",
+    "netlify:build": "vite build",
     "generate-secret": "npx tsx ./src/scripts/generate-secret.ts"
   },
   "dependencies": {
@@ -18,5 +20,14 @@
     "jose": "^5.9.2",
     "prettier": "^3.3.3",
     "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.1",
+    "vite": "^7.1.5"
   }
 }
