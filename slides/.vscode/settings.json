@@ -1,0 +1,12 @@
+{
+  "files.autoSave": "off",
+  "files.exclude": {
+    "slides.md": false
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "files.associations": {
+    "slides.md": "markdown"
+  }
+}
