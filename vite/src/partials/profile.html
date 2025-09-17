@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <partial name="head" title="{{ username }} Profile"></partial>
+  <body>
+    <partial name="header"></partial>
+    <feedback></feedback>
+
+    <main>
+      <div class="container">
+        <div class="profile-header">
+          <img class="avatar profile-avatar" src="{{ avatarSrc }}" alt="{{ username }}'s avatar" />
+          <div class="profile-info">
+            <h2>@{{ username }}</h2>
+            <p class="profile-stats">{{ postStats }}</p>
+          </div>
+        </div>
+
+        <div class="profile-content">
+          <h1>Latest posts from {{ username }}</h1>
+          <div class="post-card-grid">{{ posts }}</div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

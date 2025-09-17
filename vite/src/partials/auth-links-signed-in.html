@@ -1,0 +1,12 @@
+<details class="header-auth-links signed-in">
+  <summary>
+    <img class="avatar" src="{{ avatarSrc }}" alt="{{ username }} avatar" />
+  </summary>
+  <div class="header-auth-links-dropdown">
+    <a href="/@{{ username }}">{{ username }}</a>
+    <a href="/settings">Edit profile</a>
+    <form action="/api/auth/logout" method="post">
+      <button class="sign-out" type="submit">Sign out</button>
+    </form>
+  </div>
+</details>
