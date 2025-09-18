@@ -51,8 +51,8 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div>
-        <h1>Latest Posts</h1>
+      <div className="container">
+        <h1>Latest posts</h1>
         <p>Loading posts...</p>
       </div>
     );
@@ -60,8 +60,8 @@ export default function Home() {
 
   if (error) {
     return (
-      <div>
-        <h1>Latest Posts</h1>
+      <div className="container">
+        <h1>Latest posts</h1>
         <p>Error: {error}</p>
       </div>
     );
@@ -69,8 +69,8 @@ export default function Home() {
 
   if (!postsData || postsData.posts.length === 0) {
     return (
-      <div>
-        <h1>Latest Posts</h1>
+      <div className="container">
+        <h1>Latest posts</h1>
         <p>No posts found.</p>
       </div>
     );
