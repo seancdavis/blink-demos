@@ -326,7 +326,7 @@ layout: Drawing
 
 ::drawing::
 
-<Excalidraw drawFilePath="./drawings/astro-build-process.excalidraw.json" />
+<Excalidraw drawFilePath="./public/drawings/astro-build-process.excalidraw.json" />
 
 ---
 layout: CodeComparison
@@ -411,7 +411,7 @@ layout: Drawing
 
 ::drawing::
 
-<Excalidraw drawFilePath="./drawings/framework-to-primitives.excalidraw.json" />
+<Excalidraw drawFilePath="./public/drawings/framework-to-primitives.excalidraw.json" />
 
 <!--
 - I’m going to deploy to Netlify because I’ve got my adapter and my Netlify plugin.
