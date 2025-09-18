@@ -12,7 +12,8 @@
   "dependencies": {
     "@netlify/vite-plugin": "^2.5.10",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router": "^7.9.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
