@@ -13,9 +13,7 @@ const { posts, pagination } = await getPaginatedPostsWithUsers({ page: 1 })
 ---
 
 <Layout title="Feed" feedback={feedback} user={user}>
-  <div class="container-xs">
-    <NewPostFormGate user={user} />
-  </div>
+  <NewPostFormGate user={user} />
   <div class="container">
     <h1>Latest posts</h1>
     <div class="post-card-grid">
