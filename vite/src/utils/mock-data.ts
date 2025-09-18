@@ -1,4 +1,4 @@
-import { Post, User, PostWithUser } from './types';
+import type { Post, User, PostWithUser } from './types';
 
 // Mock users
 export const mockUsers: User[] = [
@@ -141,7 +141,7 @@ export const mockPosts: Post[] = [
 export function getPostsWithUsers(): PostWithUser[] {
   return mockPosts.map(post => {
     const user = mockUsers.find(u => u.id === post.userId)!;
-    return { ...post, user };
+    return { ...post, user, date: post.createdAt };
   });
 }
 
