@@ -37,6 +37,7 @@ Blink (Vite) is a React SPA social media app built with:
 - `GET /api/user?username=X&page=N` - User profile with posts
 - `GET /api/post?id=X` - Individual post
 - `POST /api/user/upload-avatar` - Avatar upload (requires Bearer token)
+- `POST /api/posts/create` - Create new post (requires Bearer token)
 - `GET /uploads/avatar/:username` - Serve uploaded avatars
 
 ### Data Storage (Netlify Blobs)
@@ -67,6 +68,13 @@ Blink (Vite) is a React SPA social media app built with:
 - Unified error/success message system
 - Uses predefined feedback keys from feedback-data.ts
 - Falls back to custom messages
+
+#### NewPostForm
+- Form component for creating new posts
+- Shows guest prompt when not authenticated
+- Character counter with visual feedback (warning/danger)
+- Real-time validation and error handling
+- Integrates with user avatar and auth context
 
 ### Security Considerations
 - **No passwords in API responses**: Always strip password field
@@ -135,6 +143,13 @@ export default function PageName() {
 - `src/App.tsx` - Main layout with Outlet
 - `src/contexts/AuthContext.tsx` - Global auth state
 
+### Components
+- `src/components/NewPostForm.tsx` - New post creation form
+- `src/components/PostCard.tsx` - Individual post display
+- `src/components/Pagination.tsx` - Reusable pagination
+- `src/components/Feedback.tsx` - Error/success messages
+- `src/components/Header.tsx` - Navigation with auth dropdown
+
 ### Utilities
 - `src/utils/types.ts` - TypeScript definitions
 - `src/utils/user.ts` - User-related utilities
@@ -186,6 +201,11 @@ const user = decodeJwt(token);
 ### File Uploads
 - **Issue**: FormData + Authorization headers require manual token handling
 - **Solution**: Get token from localStorage, add to headers manually
+
+### Avatar Upload JSON Error
+- **Issue**: Avatar upload returning "Unexpected end of JSON input"
+- **Status**: Currently debugging - simplified function to isolate issue
+- **Debugging**: Added console logs, simplified response, need to check function execution
 
 ## Testing Notes
 - Avatar uploads require valid JWT token in Authorization header
