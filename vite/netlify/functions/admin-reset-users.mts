@@ -7,8 +7,8 @@ export default async (request: Request, context: Context) => {
     return new Response("Method Not Allowed", { status: 405 });
   }
 
-  const formData = await request.formData();
-  const apiKey = formData.get("api_key") as string;
+  const data = await request.json();
+  const apiKey = data.api_key as string;
 
   if (apiKey !== process.env.ADMIN_API_KEY) {
     return new Response("Unauthorized", { status: 401 });

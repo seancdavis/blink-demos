@@ -42,7 +42,7 @@ export default async (request: Request, context: Context) => {
         id: uuid,
         username,
         password: passwordHash,
-        avatarSrc: `/images/avatar/identicon/${username}`,
+        avatarSrc: `/img/avatar/identicon/${username}`,
       };
       await userStore.setJSON(user.id, user);
     }
