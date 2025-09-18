@@ -1,7 +1,9 @@
 import { useParams } from 'react-router';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Posts() {
   const { page } = useParams();
+  useDocumentTitle(`Posts Page ${page} | Blink (Vite)`);
 
   return (
     <div>
