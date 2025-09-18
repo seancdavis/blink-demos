@@ -527,7 +527,7 @@ color: blue
 ---
 
 <h1 style="font-size: 3.5rem;">
-  Agent experience matters because DX and UX are directly impacted by the quality of solutions an agent can implement.
+  Agent experience matters because DX and UX are directly impacted by the quality of solutions an <br>AI agent can implement.
 </h1>
 
 <!-- (And Why I love Astro) -->
