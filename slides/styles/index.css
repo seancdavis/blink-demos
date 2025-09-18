@@ -23,11 +23,6 @@
 
 /* Global Overrides */
 
-html {
-  background-color: theme("colors.gray.100");
-  color: theme("colors.gray.900");
-}
-
 .slidev-layout {
   background-color: theme("colors.gray.100");
   color: theme("colors.gray.900");

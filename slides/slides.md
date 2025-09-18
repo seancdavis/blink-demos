@@ -126,7 +126,7 @@ layout: statement
 color: shapes
 ---
 
-# How do we choose our framework?
+# How do we choose a framework?
 
 ---
 layout: ContainedGif
