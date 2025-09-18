@@ -16,6 +16,7 @@ fonts:
   mono: Operator Mono
 seoMeta:
   ogImage: auto
+favicon: ./images/seancdavis-favicon.png
 addons:
   - slidev-addon-excalidraw
 ---
