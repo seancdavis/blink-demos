@@ -1,7 +1,13 @@
-import type { Config } from '@netlify/functions'
+import type { Config, Context } from '@netlify/functions'
 import { getStore } from '@netlify/blobs'
 
-export default async () => {
+export default async (request: Request, context: Context) => {
+  const url = new URL(request.url)
+  const apiKey = url.searchParams.get('api_key')
+
+  if (apiKey !== process.env.ADMIN_API_KEY) {
+    return new Response('Unauthorized', { status: 401 })
+  }
   try {
     const cacheStore = getStore({ name: 'Cache', consistency: 'strong' })
     const cacheList = await cacheStore.list()

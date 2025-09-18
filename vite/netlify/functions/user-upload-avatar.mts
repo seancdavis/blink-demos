@@ -7,11 +7,12 @@ export default async (request: Request, context: Context) => {
     return new Response('Method Not Allowed', { status: 405 })
   }
 
-  const { redirect, setFeedback, user: userBlob } = await functionUtils({ request, context })
+  const { redirect, setFeedback, user } = await functionUtils({ request, context })
 
-  // The auth function handles the redirect if the user is not found, so we
-  // can assume that the user is found here
-  const user = userBlob!
+  if (!user) {
+    setFeedback('login_required')
+    return redirect('/login')
+  }
 
   const formData = await request.formData()
   const image = formData.get('avatar') as File
