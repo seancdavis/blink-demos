@@ -77,10 +77,9 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <h1>Latest Posts</h1>
-
-      <div className="posts-list">
+    <div className="container">
+      <h1>Latest posts</h1>
+      <div className="post-card-grid">
         {postsData.posts.map((post) => (
           <PostCard
             key={post.id}
