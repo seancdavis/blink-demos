@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { Feedback } from '../components/Feedback';
@@ -14,7 +14,14 @@ export default function Register() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { user, login, isLoading } = useAuth();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!isLoading && user) {
+      navigate('/');
+    }
+  }, [user, isLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +85,19 @@ export default function Register() {
       }, 5000);
     }
   };
+
+  // Don't render if loading or already authenticated
+  if (isLoading) {
+    return (
+      <div className="container-xs">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (user) {
+    return null; // Will redirect via useEffect
+  }
 
   return (
     <div className="container-xs">

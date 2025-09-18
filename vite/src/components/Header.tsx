@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { useAuth } from '../contexts/AuthContext';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 export const Header = () => {
   const { user, logout, isLoading } = useAuth();
@@ -18,6 +18,20 @@ export const Header = () => {
       detailsRef.current.open = false;
     }
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (detailsRef.current && !detailsRef.current.contains(event.target as Node)) {
+        detailsRef.current.open = false;
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <header>

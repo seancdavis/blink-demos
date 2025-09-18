@@ -53,10 +53,19 @@ export default function Settings() {
       const formData = new FormData();
       formData.append('avatar', selectedFile);
 
+      // Get stored token for authorization
+      const token = localStorage.getItem('blink_token');
+      if (!token) {
+        setError('Authentication required');
+        return;
+      }
+
       const response = await fetch('/api/user/upload-avatar', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
         body: formData,
-        credentials: 'include',
       });
 
       const data = await response.json();

@@ -76,6 +76,19 @@ export default function Login() {
     }
   };
 
+  // Don't render if loading or already authenticated
+  if (isLoading) {
+    return (
+      <div className="container-xs">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (user) {
+    return null; // Will redirect via useEffect
+  }
+
   return (
     <div className="container-xs">
       <h1>Sign in</h1>

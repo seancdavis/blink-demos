@@ -1,9 +1,9 @@
 import { getStore } from "@netlify/blobs";
-import type { Config, Context } from "@netlify/functions";
-import { getCurrentUser } from "../../src/utils/user";
+import type { Config } from "@netlify/functions";
+import { decodeJwt } from "jose";
 import type { User } from "../../src/utils/types";
 
-export default async (request: Request, context: Context) => {
+export default async (request: Request) => {
   try {
     if (request.method !== "POST") {
       return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -12,9 +12,9 @@ export default async (request: Request, context: Context) => {
       });
     }
 
-    // Get current user from JWT
-    const user = await getCurrentUser({ cookies: context.cookies });
-    if (!user) {
+    // Get JWT token from Authorization header
+    const authHeader = request.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return new Response(
         JSON.stringify({ error: "Authentication required" }),
         {
@@ -22,6 +22,36 @@ export default async (request: Request, context: Context) => {
           headers: { "Content-Type": "application/json" },
         }
       );
+    }
+
+    const token = authHeader.substring(7); // Remove "Bearer " prefix
+    let decodedUser: User;
+
+    try {
+      decodedUser = decodeJwt(token);
+    } catch (error) {
+      return new Response(JSON.stringify({ error: "Invalid token" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (!decodedUser || !decodedUser.id) {
+      return new Response(JSON.stringify({ error: "Invalid token" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    // Get user from database to ensure they still exist
+    const userStore = getStore({ name: "User", consistency: "strong" });
+    const user: User = await userStore.get(decodedUser.id, { type: "json" });
+
+    if (!user) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const formData = await request.formData();
@@ -32,7 +62,7 @@ export default async (request: Request, context: Context) => {
       return new Response(
         JSON.stringify({
           error: "Avatar file is required",
-          feedbackKey: "avatar_required"
+          feedbackKey: "avatar_required",
         }),
         {
           status: 400,
@@ -47,7 +77,7 @@ export default async (request: Request, context: Context) => {
       return new Response(
         JSON.stringify({
           error: "File too large",
-          feedbackKey: "avatar_too_large"
+          feedbackKey: "avatar_too_large",
         }),
         {
           status: 400,
@@ -68,7 +98,7 @@ export default async (request: Request, context: Context) => {
       return new Response(
         JSON.stringify({
           error: "Invalid file type",
-          feedbackKey: "avatar_invalid_type"
+          feedbackKey: "avatar_invalid_type",
         }),
         {
           status: 400,
@@ -78,11 +108,13 @@ export default async (request: Request, context: Context) => {
     }
 
     // Store the avatar image in the UserAvatar store
-    const userAvatarStore = getStore({ name: "UserAvatar", consistency: "strong" });
+    const userAvatarStore = getStore({
+      name: "UserAvatar",
+      consistency: "strong",
+    });
     await userAvatarStore.set(user.username.toString(), image);
 
     // Update the user blob with the new avatar URL
-    const userStore = getStore({ name: "User", consistency: "strong" });
     const updatedUser: User = {
       ...user,
       avatarSrc: `/uploads/avatar/${user.username}`,
