@@ -1,12 +1,12 @@
-import type { Config } from '@netlify/functions'
 import { getStore } from '@netlify/blobs'
+import type { Config } from '@netlify/functions'
 
 export default async () => {
   try {
     const cacheStore = getStore({ name: 'Cache', consistency: 'strong' })
     const cacheList = await cacheStore.list()
 
-    const cacheEntries = []
+    const cacheEntries: Array<{ key: string; data: any }> = []
     for (const { key } of cacheList.blobs) {
       const cacheData = await cacheStore.get(key, { type: 'json' })
       cacheEntries.push({ key, data: cacheData })
