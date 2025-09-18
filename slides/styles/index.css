@@ -349,6 +349,7 @@
   flex-direction: column;
   background-image: url(/images/bg/scd-bg-no-shapes.svg);
   background-size: cover;
+  gap: 2rem;
 
   .drawing {
     flex-grow: 1;
@@ -358,8 +359,15 @@
     justify-content: center;
   }
 
+  .drawing svg {
+    /* max-height: calc(100vh - 20rem);
+    max-width: 100%; */
+    height: 24rem !important;
+    width: auto !important;
+  }
+
   h1 {
-    /* margin-bottom: 3rem; */
+    margin-bottom: 0;
     text-align: center;
   }
 

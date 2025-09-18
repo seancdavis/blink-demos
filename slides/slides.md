@@ -403,12 +403,14 @@ export default defineConfig({
 </v-click>
 
 ---
-
-# TODO
+layout: Drawing
+---
 
 # SSR in JavaScript frameworks
 
-Diagram of SSR build process
+::drawing::
+
+<Excalidraw drawFilePath="./drawings/framework-to-primitives.excalidraw.json" />
 
 <!--
 - I’m going to deploy to Netlify because I’ve got my adapter and my Netlify plugin.
