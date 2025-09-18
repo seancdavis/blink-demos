@@ -7,7 +7,7 @@ info: |
   A presentation by Sean C Davis for CascadiaJS 2025
 class: text-center bg-transparent text-gray-900
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
+transition: slide-up
 mdc: true
 colorScheme: light
 fonts:
@@ -93,6 +93,7 @@ layout: Setup
 
 ---
 layout: SCDIntro
+transition: slide-left
 ---
 
 # Sean C Davis
@@ -127,6 +128,7 @@ Developer Education, Netlify
 ---
 layout: statement
 color: shapes
+transition: fade
 ---
 
 # How do we choose a framework?
@@ -134,6 +136,7 @@ color: shapes
 ---
 layout: ContainedGif
 backgroundSize: contain
+transition: fade
 ---
 
 <img src="./images/schitts-feelings.gif" />
@@ -147,6 +150,7 @@ backgroundSize: contain
 ---
 layout: statement
 color: blue
+transition: slide-up
 ---
 
 # Developer Experience (DX)
@@ -154,6 +158,7 @@ color: blue
 ---
 layout: statement
 color: blue
+transition: slide-left
 ---
 
 <h1>
@@ -172,6 +177,7 @@ color: blue
 ---
 layout: statement
 color: green
+transition: fade
 ---
 
 <h1>
@@ -183,6 +189,7 @@ color: green
 ---
 layout: ContainedGif
 backgroundSize: contain
+transition: fade
 ---
 
 <img src="./images/parks-rec-drumroll.gif" />
@@ -190,6 +197,7 @@ backgroundSize: contain
 ---
 layout: statement
 color: lime
+transition: slide-up
 ---
 
 # User Experience (UX)
@@ -197,6 +205,7 @@ color: lime
 ---
 layout: statement
 color: lime
+transition: slide-left
 ---
 
 # Users don't care about your framework choice.
@@ -257,6 +266,7 @@ color: shapes
 
 ---
 layout: CodeComparison
+transition: fade
 ---
 
 # Example: Astro Dev vs Prod
@@ -312,6 +322,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 layout: ContainedGif
 backgroundSize: contain
+transition: fade
 ---
 
 <img src="./images/arrested-dev-magic.gif" />
@@ -320,6 +331,7 @@ backgroundSize: contain
 
 ---
 layout: Drawing
+transition: fade
 ---
 
 # Example: Astro Build Process (simplified)
@@ -327,6 +339,14 @@ layout: Drawing
 ::drawing::
 
 <Excalidraw drawFilePath="./drawings/astro-build-process.excalidraw.json" />
+
+---
+layout: ContainedGif
+backgroundSize: contain
+transition: fade
+---
+
+<img src="./images/sunny-complex.gif" />
 
 ---
 layout: CodeComparison
@@ -405,6 +425,7 @@ export default defineConfig({
 
 ---
 layout: Drawing
+transition: slide-left
 ---
 
 # SSR in JavaScript frameworks
@@ -456,6 +477,7 @@ color: shapes
 
 ---
 layout: LogoGrid
+transition: fade
 ---
 
 # All these frameworks have the
@@ -487,9 +509,17 @@ TODO: Framework logos
 ---
 layout: statement
 color: shapes
+transition: fade
 ---
 
 # Demo time!
+
+<div class="demo-link">
+  <a href="https://github.com/seancdavis/blink-demos" target="_blank" rel="noopener">
+    <img src="./images/icons/github.svg" alt="GitHub" />
+    <span>seancdavis/blink-demos</span>
+  </a>
+</div>
 
 <!--
 1. Show the UIs
@@ -500,6 +530,7 @@ color: shapes
 ---
 layout: statement
 color: blue
+transition: slide-left
 ---
 
 # Platform integration is what matters most for a framework.
@@ -511,6 +542,7 @@ Do you need a framework? Probably. But you need one that plays well with the pla
 ---
 layout: image
 image: ./images/ax-blog-post.png
+transition: slide-up
 ---
 
 <!-- # Agent experience -->
@@ -525,6 +557,7 @@ The DX <> AX parallel
 ---
 layout: statement
 color: blue
+transition: fade
 ---
 
 <h1 style="font-size: 3.5rem;">
@@ -532,6 +565,14 @@ color: blue
 </h1>
 
 <!-- (And Why I love Astro) -->
+
+---
+layout: statement
+color: shapes
+transition: fade
+---
+
+# Let's check on Bolt ...
 
 ---
 layout: statement
@@ -578,3 +619,35 @@ color: shapes
 
 </v-click>
 
+---
+layout: SCDIntro
+---
+
+# Thank you!
+
+::title::
+
+See you next time 👋
+
+::image::
+
+![Sean C Davis avatar](./images/seancdavis-avatar.png)
+
+::links::
+
+<div class="intro-link">
+  <img src="./images/icons/github.svg" alt="GitHub" />
+  <span>@seancdavis</span>
+</div>
+
+<div class="intro-link">
+  <img src="./images/icons/bluesky.svg" alt="Bluesky" />
+  <img src="./images/icons/website.svg" alt="Website" />
+  <span>@seancdavis.com</span>
+</div>
+
+<div class="intro-link">
+  <img src="./images/icons/linkedin.svg" alt="LinkedIn" />
+  <img src="./images/icons/x.svg" alt="Twitter" />
+  <span>@seancdavis29</span>
+</div>
