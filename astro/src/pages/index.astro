@@ -12,7 +12,7 @@ const { feedback, user } = await beforePageLoad({ cookies: Astro.cookies })
 const { posts, pagination } = await getPaginatedPostsWithUsers({ page: 1 })
 ---
 
-<Layout title="Home Feed" feedback={feedback} user={user}>
+<Layout title="Feed" feedback={feedback} user={user}>
   <div class="container-xs">
     <NewPostFormGate user={user} />
   </div>
