@@ -1,23 +1,18 @@
 import { getStore } from '@netlify/blobs'
-import type { HandlerContext, HandlerEvent } from '@netlify/functions'
+import type { Context } from '@netlify/edge-functions'
+import type { Config } from '@netlify/functions'
 import { getPaginatedPostIds } from '../../utils/posts-index.mts'
 import { PostWithUser } from '../../utils/types.mts'
 
-export const config = {
-  path: '/api/posts/list',
-}
+export default async (request: Request, context: Context) => {
+  if (request.method !== 'GET') {
+    return new Response('Method Not Allowed', { status: 405 })
+  }
 
-export default async function handler(event: HandlerEvent, context: HandlerContext) {
   try {
-    if (event.httpMethod !== 'GET') {
-      return {
-        statusCode: 405,
-        body: 'Method Not Allowed',
-      }
-    }
-
     // Get page number from query params (default to 1)
-    const page = parseInt(event.queryStringParameters?.page || '1', 10)
+    const url = new URL(request.url)
+    const page = parseInt(url.searchParams.get('page') || '1', 10)
 
     // Get paginated post IDs and metadata
     const pagination = await getPaginatedPostIds(page, 12)
@@ -42,21 +37,24 @@ export default async function handler(event: HandlerEvent, context: HandlerConte
       return { ...post, user }
     })
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    return new Response(
+      JSON.stringify({
         posts: postsWithUsers,
         pagination,
       }),
-    }
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
   } catch (error) {
     console.error('Error fetching posts:', error)
-    return {
-      statusCode: 500,
-      body: 'Internal Server Error',
-    }
+    return new Response('Internal Server Error', { status: 500 })
   }
+}
+
+export const config: Config = {
+  path: '/api/posts/list',
 }
