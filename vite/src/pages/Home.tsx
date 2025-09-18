@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { PostCard } from "../components/PostCard";
 import { Pagination } from "../components/Pagination";
+import { NewPostForm } from "../components/NewPostForm";
 import type { PostWithUser } from "../utils/types";
 
 interface PostsResponse {
@@ -26,28 +27,33 @@ export default function Home() {
 
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        setLoading(true);
-        setError(null);
+  const fetchPosts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const response = await fetch(`/api/posts?page=${currentPage}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch posts");
-        }
-
-        const data: PostsResponse = await response.json();
-        setPostsData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-      } finally {
-        setLoading(false);
+      const response = await fetch(`/api/posts?page=${currentPage}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
       }
-    }
 
+      const data: PostsResponse = await response.json();
+      setPostsData(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchPosts();
   }, [currentPage]);
+
+  const handlePostCreated = () => {
+    // Refetch posts when a new post is created
+    fetchPosts();
+  };
 
   if (loading) {
     return (
@@ -78,6 +84,8 @@ export default function Home() {
 
   return (
     <div className="container">
+      <NewPostForm onPostCreated={handlePostCreated} />
+
       <h1>Latest posts</h1>
       <div className="post-card-grid">
         {postsData.posts.map((post) => (

@@ -14,7 +14,7 @@ export default function Settings() {
   const [fileSizeError, setFileSizeError] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { user, updateUser } = useAuth();
+  const { updateUser } = useAuth();
 
   const maxSizeBytes = 2 * 1024 * 1024; // 2 MB
 
@@ -68,7 +68,20 @@ export default function Settings() {
         body: formData,
       });
 
-      const data = await response.json();
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
+      let data;
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
+
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        setError('Server response was not valid JSON');
+        return;
+      }
 
       if (!response.ok) {
         if (response.status === 400) {
