@@ -1,7 +1,7 @@
 ---
 theme: default
 author: Sean C Davis
-background: ./images/bg/scd-bg-shapes.svg
+background: /images/bg/scd-bg-shapes.svg
 title: Seeing Beyond the Framework Illusion
 info: |
   A presentation by Sean C Davis for CascadiaJS 2025
@@ -16,7 +16,7 @@ fonts:
   mono: Operator Mono
 seoMeta:
   ogImage: auto
-favicon: ./images/seancdavis-favicon.png
+favicon: /images/seancdavis-favicon.png
 addons:
   - slidev-addon-excalidraw
 ---
@@ -104,24 +104,24 @@ Developer Education, Netlify
 
 ::image::
 
-![Sean C Davis avatar](./images/seancdavis-avatar.png)
+![Sean C Davis avatar](/images/seancdavis-avatar.png)
 
 ::links::
 
 <div class="intro-link">
-  <img src="./images/icons/github.svg" alt="GitHub" />
+  <img src="/images/icons/github.svg" alt="GitHub" />
   <span>@seancdavis</span>
 </div>
 
 <div class="intro-link">
-  <img src="./images/icons/bluesky.svg" alt="Bluesky" />
-  <img src="./images/icons/website.svg" alt="Website" />
+  <img src="/images/icons/bluesky.svg" alt="Bluesky" />
+  <img src="/images/icons/website.svg" alt="Website" />
   <span>@seancdavis.com</span>
 </div>
 
 <div class="intro-link">
-  <img src="./images/icons/linkedin.svg" alt="LinkedIn" />
-  <img src="./images/icons/x.svg" alt="Twitter" />
+  <img src="/images/icons/linkedin.svg" alt="LinkedIn" />
+  <img src="/images/icons/x.svg" alt="Twitter" />
   <span>@seancdavis29</span>
 </div>
 
@@ -139,7 +139,7 @@ backgroundSize: contain
 transition: fade
 ---
 
-<img src="./images/schitts-feelings.gif" />
+<img src="/images/schitts-feelings.gif" />
 
 <!--
 - We choose based on FEELINGS!
@@ -192,7 +192,7 @@ backgroundSize: contain
 transition: fade
 ---
 
-<img src="./images/parks-rec-drumroll.gif" />
+<img src="/images/parks-rec-drumroll.gif" />
 
 ---
 layout: statement
@@ -325,7 +325,7 @@ backgroundSize: contain
 transition: fade
 ---
 
-<img src="./images/arrested-dev-magic.gif" />
+<img src="/images/arrested-dev-magic.gif" />
 
 <!-- # The framework disappears! -->
 
@@ -346,7 +346,7 @@ backgroundSize: contain
 transition: fade
 ---
 
-<img src="./images/sunny-complex.gif" />
+<img src="/images/sunny-complex.gif" />
 
 ---
 layout: CodeComparison
@@ -486,18 +486,18 @@ transition: fade
 
 ::logos::
 
-<img src="./images/icons/frameworks/angular.svg" alt="Angular" />
-<img src="./images/icons/frameworks/astro.svg" alt="Astro" />
-<img src="./images/icons/frameworks/docusaurus.svg" alt="Docusaurus" />
-<img src="./images/icons/frameworks/eleventy.svg" alt="Eleventy" />
-<img src="./images/icons/frameworks/gatsby.svg" alt="Gatsby" />
-<img src="./images/icons/frameworks/hugo.svg" alt="Hugo" />
-<img src="./images/icons/frameworks/nextjs.svg" alt="Next.js" />
-<img src="./images/icons/frameworks/nuxt.svg" alt="Nuxt" />
-<img src="./images/icons/frameworks/react.svg" alt="React" />
-<img src="./images/icons/frameworks/remix.svg" alt="Remix" />
-<img src="./images/icons/frameworks/svelte.svg" alt="Svelte" />
-<img src="./images/icons/frameworks/vue.svg" alt="Vue" />
+<img src="/images/icons/frameworks/angular.svg" alt="Angular" />
+<img src="/images/icons/frameworks/astro.svg" alt="Astro" />
+<img src="/images/icons/frameworks/docusaurus.svg" alt="Docusaurus" />
+<img src="/images/icons/frameworks/eleventy.svg" alt="Eleventy" />
+<img src="/images/icons/frameworks/gatsby.svg" alt="Gatsby" />
+<img src="/images/icons/frameworks/hugo.svg" alt="Hugo" />
+<img src="/images/icons/frameworks/nextjs.svg" alt="Next.js" />
+<img src="/images/icons/frameworks/nuxt.svg" alt="Nuxt" />
+<img src="/images/icons/frameworks/react.svg" alt="React" />
+<img src="/images/icons/frameworks/remix.svg" alt="Remix" />
+<img src="/images/icons/frameworks/svelte.svg" alt="Svelte" />
+<img src="/images/icons/frameworks/vue.svg" alt="Vue" />
 
 
 <!--
@@ -516,7 +516,7 @@ transition: fade
 
 <div class="demo-link">
   <a href="https://github.com/seancdavis/blink-demos" target="_blank" rel="noopener">
-    <img src="./images/icons/github.svg" alt="GitHub" />
+    <img src="/images/icons/github.svg" alt="GitHub" />
     <span>seancdavis/blink-demos</span>
   </a>
 </div>
@@ -541,7 +541,7 @@ Do you need a framework? Probably. But you need one that plays well with the pla
 
 ---
 layout: image
-image: ./images/ax-blog-post.png
+image: /images/ax-blog-post.png
 transition: slide-up
 ---
 
@@ -631,23 +631,23 @@ See you next time 👋
 
 ::image::
 
-![Sean C Davis avatar](./images/seancdavis-avatar.png)
+![Sean C Davis avatar](/images/seancdavis-avatar.png)
 
 ::links::
 
 <div class="intro-link">
-  <img src="./images/icons/github.svg" alt="GitHub" />
+  <img src="/images/icons/github.svg" alt="GitHub" />
   <span>@seancdavis</span>
 </div>
 
 <div class="intro-link">
-  <img src="./images/icons/bluesky.svg" alt="Bluesky" />
-  <img src="./images/icons/website.svg" alt="Website" />
+  <img src="/images/icons/bluesky.svg" alt="Bluesky" />
+  <img src="/images/icons/website.svg" alt="Website" />
   <span>@seancdavis.com</span>
 </div>
 
 <div class="intro-link">
-  <img src="./images/icons/linkedin.svg" alt="LinkedIn" />
-  <img src="./images/icons/x.svg" alt="Twitter" />
+  <img src="/images/icons/linkedin.svg" alt="LinkedIn" />
+  <img src="/images/icons/x.svg" alt="Twitter" />
   <span>@seancdavis29</span>
 </div>
