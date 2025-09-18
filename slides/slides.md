@@ -1,7 +1,7 @@
 ---
 theme: default
 author: Sean C Davis
-background: ./images/bg/scd-bg.svg
+background: ./images/bg/scd-bg-shapes.svg
 title: Seeing Beyond the Framework Illusion
 info: |
   A presentation by Sean C Davis for CascadiaJS 2025
@@ -16,6 +16,8 @@ fonts:
   mono: Operator Mono
 seoMeta:
   ogImage: auto
+addons:
+  - slidev-addon-excalidraw
 ---
 
 <h1>
@@ -316,10 +318,14 @@ backgroundSize: contain
 <!-- # The framework disappears! -->
 
 ---
+layout: Drawing
+---
 
-# TODO
+# Example: Astro Build Process (simplified)
 
-Simple diagram of an SSG build process
+::drawing::
+
+<Excalidraw drawFilePath="./drawings/astro-build-process.excalidraw.json" />
 
 ---
 layout: CodeComparison
