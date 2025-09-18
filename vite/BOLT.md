@@ -27,7 +27,8 @@ src/
 │   ├── Header.tsx
 │   ├── PostCard.tsx
 │   ├── Pagination.tsx
-│   └── Feedback.tsx
+│   ├── Feedback.tsx
+│   └── NewPostForm.tsx
 ├── contexts/
 │   └── AuthContext.tsx
 ├── hooks/
@@ -131,14 +132,25 @@ The context should restore user state from localStorage on app load.
 - Show current page info
 - Handle pagination state with URL params
 
+### NewPostForm (src/components/NewPostForm.tsx)
+
+- Guest prompt with sign-in/register buttons when not authenticated
+- Post creation form with user avatar when signed in
+- Real-time character counter (400 char limit) with visual feedback
+- Form validation (title 10-64 chars, content 10-400 chars)
+- Integration with auth context and feedback system
+- Auto-refresh parent component after successful post creation
+
 ## Key Pages
 
 ### Home (src/pages/Home.tsx)
 
+- NewPostForm component at the top for creating posts
 - Fetch and display paginated posts
 - Grid layout of PostCard components
 - Loading and error states
 - Pagination controls
+- Auto-refresh posts after new post creation
 
 ### Login/Register (src/pages/Login.tsx, Register.tsx)
 
@@ -221,10 +233,12 @@ Create utility functions for:
 Since Bolt doesn't support real backends, create mock API functions that:
 
 - Simulate authentication with localStorage
+- Handle post creation with form validation
 - Return paginated post data
 - Handle user profiles and settings
 - Use setTimeout to simulate network delays
 - Return proper error states
+- Mock post storage and retrieval
 
 ## Functional Requirements
 
@@ -238,10 +252,13 @@ Since Bolt doesn't support real backends, create mock API functions that:
 
 ### Posts System
 
+- Create new posts with title and content validation
 - Display posts in reverse chronological order
 - Pagination (12 posts per page)
 - Post detail pages with full content
 - User profile pages showing their posts
+- Real-time character counting during post creation
+- Auto-refresh after new post creation
 - Responsive grid layout
 
 ### Navigation
