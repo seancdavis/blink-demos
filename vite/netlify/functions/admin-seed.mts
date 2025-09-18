@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { getStore } from '@netlify/blobs'
-import type { Context } from '@netlify/edge-functions'
-import type { Config } from '@netlify/functions'
+import type { Config, Context } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { v4 as uuidv4 } from 'uuid'
 import { addToPostsIndex } from '../../utils/posts-index.mts'

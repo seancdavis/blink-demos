@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs'
-import type { Context } from '@netlify/edge-functions'
+import type { Context } from '@netlify/functions'
 import { type Config, purgeCache } from '@netlify/functions'
 import bycrypt from 'bcrypt'
 import { SignJWT } from 'jose'

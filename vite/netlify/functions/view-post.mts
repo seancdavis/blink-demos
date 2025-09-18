@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs'
-import type { Context } from '@netlify/edge-functions'
+import type { Context } from '@netlify/functions'
 import { Config } from '@netlify/functions'
 import { functionUtils, newlineToLineBreak } from '../../utils/index.mts'
 import { renderPartial } from '../../utils/render-partial.mts'

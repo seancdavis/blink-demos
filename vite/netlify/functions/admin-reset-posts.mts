@@ -1,6 +1,5 @@
 import { getStore } from '@netlify/blobs'
-import type { Context } from '@netlify/edge-functions'
-import type { Config } from '@netlify/functions'
+import type { Config, Context } from '@netlify/functions'
 import { clearPostsIndex } from '../../utils/posts-index.mts'
 
 export default async (request: Request, context: Context) => {

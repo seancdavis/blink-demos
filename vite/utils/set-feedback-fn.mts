@@ -1,4 +1,4 @@
-import { Context } from '@netlify/edge-functions'
+import { Context } from '@netlify/functions'
 import { FeedbackName } from './feedback-data.mts'
 
 type SetFeedbackFnOptions = {

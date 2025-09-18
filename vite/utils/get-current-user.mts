@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs'
-import { Context } from '@netlify/edge-functions'
+import { Context } from '@netlify/functions'
 import { decodeJwt } from 'jose'
 import type { User } from './types.mts'
 
