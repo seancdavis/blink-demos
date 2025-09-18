@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from "react-router";
 
 export interface PostCardProps {
   postId: string;
@@ -9,13 +9,20 @@ export interface PostCardProps {
   date: string;
 }
 
-export function PostCard({ postId, title, content, username, avatarSrc, date }: PostCardProps) {
+export function PostCard({
+  postId,
+  title,
+  content,
+  username,
+  avatarSrc,
+  date,
+}: PostCardProps) {
   return (
     <div className="post-card">
       <div className="post-card-meta">
         <img className="avatar" src={avatarSrc} alt={`${username} avatar`} />
         <div>
-          <Link className="post-card-username" to={`/@${username}`}>
+          <Link className="post-card-username" to={`/@/${username}`}>
             {username}
           </Link>
           <span className="post-card-date">{date}</span>

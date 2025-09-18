@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
-import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import type { PostWithUser } from '../utils/types';
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import type { PostWithUser } from "../utils/types";
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -9,7 +9,9 @@ export default function PostDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useDocumentTitle(post ? `${post.title} | Blink (Vite)` : `Post ${id} | Blink (Vite)`);
+  useDocumentTitle(
+    post ? `${post.title} | Blink (Vite)` : `Post ${id} | Blink (Vite)`
+  );
 
   useEffect(() => {
     async function fetchPost() {
@@ -22,15 +24,15 @@ export default function PostDetail() {
         const response = await fetch(`/api/post?id=${id}`);
         if (!response.ok) {
           if (response.status === 404) {
-            throw new Error('Post not found');
+            throw new Error("Post not found");
           }
-          throw new Error('Failed to fetch post');
+          throw new Error("Failed to fetch post");
         }
 
         const data: PostWithUser = await response.json();
         setPost(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
         setLoading(false);
       }
@@ -70,9 +72,15 @@ export default function PostDetail() {
   return (
     <div className="post-detail container-sm">
       <div className="post-detail-meta">
-        <img className="avatar" src={post.user.avatarSrc} alt={`${post.user.username} avatar`} />
+        <img
+          className="avatar"
+          src={post.user.avatarSrc}
+          alt={`${post.user.username} avatar`}
+        />
         <div>
-          <Link className="post-detail-username" to={`/@${post.user.username}`}>
+          <Link
+            className="post-detail-username"
+            to={`/@/${post.user.username}`}>
             {post.user.username}
           </Link>
           <span className="post-detail-date">{post.date}</span>

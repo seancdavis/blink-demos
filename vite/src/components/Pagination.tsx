@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { useEffect } from 'react';
 
 export interface PaginationProps {
@@ -9,8 +9,14 @@ export interface PaginationProps {
 }
 
 export function Pagination({ currentPage, totalPages, hasNextPage, hasPrevPage }: PaginationProps) {
+  const location = useLocation();
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 1;
+
+  // Generate the base URL for pagination links
+  const basePath = location.pathname;
+  const prevUrl = `${basePath}?page=${prevPage}`;
+  const nextUrl = `${basePath}?page=${nextPage}`;
 
   useEffect(() => {
     // Hide pagination buttons when not needed (equivalent to the script in your template)
@@ -38,7 +44,7 @@ export function Pagination({ currentPage, totalPages, hasNextPage, hasPrevPage }
 
       <div className="pagination-controls">
         <Link
-          to={`/?page=${prevPage}`}
+          to={prevUrl}
           className="button pagination-prev"
           rel="prev"
         >
@@ -46,7 +52,7 @@ export function Pagination({ currentPage, totalPages, hasNextPage, hasPrevPage }
         </Link>
 
         <Link
-          to={`/?page=${nextPage}`}
+          to={nextUrl}
           className="button pagination-next"
           rel="next"
         >
