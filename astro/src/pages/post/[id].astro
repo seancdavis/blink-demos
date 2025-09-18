@@ -1,0 +1,52 @@
+---
+import { getStore } from '@netlify/blobs'
+import { beforePageLoad } from '@utils/page-hooks'
+import { timeAgoInWords } from '@utils/date'
+import { newlineToLineBreak } from '@utils/text'
+import Layout from '@components/Layout.astro'
+import type { Post, User } from '@utils/types'
+
+const { feedback, user: currentUser } = await beforePageLoad({ cookies: Astro.cookies })
+
+const { id } = Astro.params
+
+if (!id) {
+  return Astro.redirect('/404')
+}
+
+const postStore = getStore({ name: 'Post', consistency: 'strong' })
+const userStore = getStore({ name: 'User', consistency: 'strong' })
+
+const post: Post | null = await postStore.get(id, { type: 'json' })
+
+if (!post) {
+  return Astro.redirect('/404')
+}
+
+const postUser: User | null = await userStore.get(post.userId, { type: 'json' })
+
+if (!postUser) {
+  return Astro.redirect('/404')
+}
+
+const date = timeAgoInWords(new Date(post.createdAt))
+const content = newlineToLineBreak(post.content)
+---
+
+<Layout title={post.title} feedback={feedback} user={currentUser}>
+  <main>
+    <div class="post-detail container-sm">
+      <div class="post-detail-meta">
+        <img class="avatar" src={postUser.avatarSrc} alt={`${postUser.username} avatar`} />
+        <div>
+          <a class="post-detail-username" href={`/@${postUser.username}`}>{postUser.username}</a>
+          <span class="post-detail-date">{date}</span>
+        </div>
+      </div>
+      <div class="post-detail-content">
+        <h2 class="post-detail-title">{post.title}</h2>
+        <div set:html={content}></div>
+      </div>
+    </div>
+  </main>
+</Layout>
