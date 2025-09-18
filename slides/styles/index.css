@@ -410,3 +410,17 @@
     color: var(--color-gray-100);
   }
 }
+
+.demo-link {
+  display: inline-block;
+  font-family: var(--slidev-code-font-family);
+
+  > a {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  img {
+    width: 1.25rem;
+  }
+}
