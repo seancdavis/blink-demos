@@ -31,8 +31,8 @@ addons:
 </div>
 
 ---
-
-## layout: Setup
+layout: Setup
+---
 
 <h2>
   <span class="highlight pink">
@@ -92,10 +92,8 @@ addons:
  -->
 
 ---
-
 layout: SCDIntro
 transition: slide-left
-
 ---
 
 # Sean C Davis
@@ -128,21 +126,17 @@ Developer Education, Netlify
 </div>
 
 ---
-
 layout: statement
 color: shapes
 transition: fade
-
 ---
 
 # How do we choose a framework?
 
 ---
-
 layout: ContainedGif
 backgroundSize: contain
 transition: fade
-
 ---
 
 <img src="/images/schitts-feelings.gif" />
@@ -154,21 +148,17 @@ transition: fade
  -->
 
 ---
-
 layout: statement
 color: blue
 transition: slide-up
-
 ---
 
 # Developer Experience (DX)
 
 ---
-
 layout: statement
 color: blue
 transition: slide-left
-
 ---
 
 <h1>
@@ -183,11 +173,9 @@ transition: slide-left
  -->
 
 ---
-
 layout: statement
 color: green
 transition: fade
-
 ---
 
 <h1>
@@ -197,31 +185,25 @@ transition: fade
 </h1>
 
 ---
-
 layout: ContainedGif
 backgroundSize: contain
 transition: fade
-
 ---
 
 <img src="/images/parks-rec-drumroll.gif" />
 
 ---
-
 layout: statement
 color: lime
 transition: slide-up
-
 ---
 
 # User Experience (UX)
 
 ---
-
 layout: statement
 color: lime
 transition: slide-left
-
 ---
 
 # Users don't care about your framework choice.
@@ -243,10 +225,8 @@ And if you optimize that ...
  -->
 
 ---
-
 layout: statement
 color: shapes
-
 ---
 
 <h1 style="font-size: 3rem;">Most frameworks are really good.</h1>
@@ -268,10 +248,8 @@ color: shapes
  -->
 
 ---
-
 layout: statement
 color: shapes
-
 ---
 
 # What does your framework do for your users in production?
@@ -285,10 +263,8 @@ color: shapes
  -->
 
 ---
-
 layout: CodeComparison
 transition: fade
-
 ---
 
 # Example: Astro Dev vs Prod
@@ -342,11 +318,9 @@ import Layout from "../layouts/Layout.astro";
 </v-click>
 
 ---
-
 layout: ContainedGif
 backgroundSize: contain
 transition: fade
-
 ---
 
 <img src="/images/arrested-dev-magic.gif" />
@@ -354,10 +328,8 @@ transition: fade
 <!-- # The framework disappears! -->
 
 ---
-
 layout: Drawing
 transition: fade
-
 ---
 
 # Example: Astro Build Process (simplified)
@@ -367,20 +339,19 @@ transition: fade
 <Excalidraw drawFilePath="./drawings/astro-build-process.excalidraw.json" />
 
 ---
-
 layout: ContainedGif
 backgroundSize: contain
 transition: fade
-
 ---
 
 <img src="/images/sunny-complex.gif" />
 
 ---
-
-## layout: CodeComparison
+layout: CodeComparison
+---
 
 # Example: Rails Dev vs Prod
+
 
 ::left::
 
@@ -431,8 +402,8 @@ end
 <!-- It gets more complex when you add in SSR -->
 
 ---
-
-## layout: CodeExample
+layout: CodeExample
+---
 
 # Example: SSR with Astro on Netlify
 
@@ -451,10 +422,8 @@ export default defineConfig({
 </v-click>
 
 ---
-
 layout: statement
 color: pink
-
 ---
 
 <h1>
@@ -468,9 +437,9 @@ color: pink
 Yes. No. Sort of. (IT's a spectrum)
  -->
 
+ ---
+layout: Drawing
 ---
-
-## layout: Drawing
 
 # SSR in JavaScript frameworks
 
@@ -486,10 +455,8 @@ Yes. No. Sort of. (IT's a spectrum)
  -->
 
 ---
-
 layout: statement
 color: shapes
-
 ---
 
 <h1>
@@ -505,10 +472,8 @@ color: shapes
 </h1>
 
 ---
-
 layout: LogoGrid
 transition: fade
-
 ---
 
 # All these frameworks have the
@@ -530,6 +495,7 @@ transition: fade
 <img src="/images/icons/frameworks/svelte.svg" alt="Svelte" />
 <img src="/images/icons/frameworks/vue.svg" alt="Vue" />
 
+
 <!--
 How they are implemented in development varies.
 
@@ -537,11 +503,9 @@ TODO: Framework logos
 -->
 
 ---
-
 layout: statement
 color: shapes
 transition: fade
-
 ---
 
 # Demo time!
@@ -560,11 +524,9 @@ transition: fade
  -->
 
 ---
-
 layout: statement
 color: blue
 transition: slide-left
-
 ---
 
 # Platform integration is what matters most for a framework.
@@ -574,11 +536,9 @@ Do you need a framework? Probably. But you need one that plays well with the pla
  -->
 
 ---
-
 layout: statement
 color: blue
 transition: fade
-
 ---
 
 <h1 style="font-size: 3.5rem;">
@@ -588,20 +548,16 @@ transition: fade
 <!-- (And Why I love Astro) -->
 
 ---
-
 layout: statement
 color: shapes
 transition: fade
-
 ---
 
 # "I" built an app this morning ...
 
 ---
-
 layout: statement
 color: shapes
-
 ---
 
 <v-click>
@@ -621,10 +577,8 @@ color: shapes
 </v-click>
 
 ---
-
 layout: statement
 color: shapes
-
 ---
 
 <h1 style="font-size: 2rem; font-style: italic;">
@@ -645,8 +599,8 @@ color: shapes
 </v-click>
 
 ---
-
-## layout: SCDIntro
+layout: SCDIntro
+---
 
 # Thank you!
 
