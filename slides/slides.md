@@ -162,10 +162,8 @@ transition: slide-left
 ---
 
 <h1>
-  Good DX means
-  <span v-mark.circle.white="1">shipping faster</span>
-  from Day 1 to
-  <span v-mark.white="2">Day 1,000</span>.
+  Good DX means shipping faster
+  from Day 1 to Day 1,000.
 </h1>
 
 <!--
@@ -182,7 +180,7 @@ transition: fade
 
 <h1>
   A framework's value comes from the
-  <span v-mark.circle.white="1">engineering practices</span>
+  engineering practices
   applied to its DX.
 </h1>
 
@@ -448,9 +446,8 @@ color: pink
 
 <h1>
   A platform adapter hooks into a framework's build process to transform
-  <span v-mark.circle.black="1">framework features</span>
-  into
-  <span v-mark.circle.black="2">platform primitives</span>
+  framework features
+  into platform primitives
 </h1>
 
 <!--
@@ -537,21 +534,6 @@ transition: slide-left
 
 <!--
 Do you need a framework? Probably. But you need one that plays well with the platform.
- -->
-
----
-layout: image
-image: /images/ax-blog-post.png
-transition: slide-up
----
-
-<!-- # Agent experience -->
-
-
-<!--
-What is really going to matter in the future.
-
-The DX <> AX parallel
  -->
 
 ---
