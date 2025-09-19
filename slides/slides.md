@@ -403,6 +403,7 @@ end
 
 ---
 layout: CodeExample
+transition: slide-left
 ---
 
 # Example: SSR with Astro on Netlify
@@ -437,7 +438,7 @@ color: pink
 Yes. No. Sort of. (IT's a spectrum)
  -->
 
- ---
+---
 layout: Drawing
 ---
 
