@@ -15,9 +15,11 @@ npm install
 Install these exact packages:
 
 ```bash
-npm install @faker-js/faker@^10.0.0 @netlify/vite-plugin@^2.5.10 bcrypt@^6.0.0 jose@^6.1.0 react-router@^7.9.1 uuid@^13.0.0
+npm install @faker-js/faker@^10.0.0 @netlify/blobs@^8.1.0 @netlify/vite-plugin@^2.5.10 bcrypt@^6.0.0 jose@^6.1.0 react-router@^7.9.1 uuid@^13.0.0
 npm install -D @types/bcrypt @types/uuid
 ```
+
+**CRITICAL:** `@netlify/blobs` is REQUIRED for persistent data storage. DO NOT use in-memory storage or mock data.
 
 ## Vite Configuration (vite.config.ts)
 
@@ -302,85 +304,55 @@ netlify/
 #### netlify/functions/posts.ts
 
 ```typescript
+import { getStore } from "@netlify/blobs";
 import type { Config } from "@netlify/functions";
 import { v4 as uuidv4 } from "uuid";
 import { faker } from "@faker-js/faker";
-
-// In-memory storage (in real apps, this would be a database)
-let posts: Array<{
-  id: string;
-  title: string;
-  content: string;
-  userId: string;
-  createdAt: string;
-}> = [];
-
-let users: Map<
-  string,
-  {
-    id: string;
-    username: string;
-    password: string;
-    avatarSrc: string;
-  }
-> = new Map();
-
-// Initialize with fake data
-if (posts.length === 0) {
-  // Create fake users
-  for (let i = 0; i < 5; i++) {
-    const userId = uuidv4();
-    users.set(userId, {
-      id: userId,
-      username: faker.internet.username(),
-      password: "hashedpassword", // In real app, use bcrypt
-      avatarSrc: faker.image.avatar(),
-    });
-  }
-
-  // Create fake posts
-  const userIds = Array.from(users.keys());
-  for (let i = 0; i < 50; i++) {
-    posts.push({
-      id: uuidv4(),
-      title: faker.lorem.sentence(3),
-      content: faker.lorem.paragraphs(2),
-      userId: userIds[Math.floor(Math.random() * userIds.length)],
-      createdAt: new Date(
-        Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
-      ).toISOString(),
-    });
-  }
-
-  // Sort by creation date (newest first)
-  posts.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-}
+import { jwtDecode } from "jose";
 
 export default async (request: Request) => {
   try {
     const url = new URL(request.url);
+    const postStore = getStore({ name: "Post", consistency: "strong" });
+    const userStore = getStore({ name: "User", consistency: "strong" });
+
+    // Initialize with fake data if empty
+    const allPosts = await postStore.list();
+    if (allPosts.blobs.length === 0) {
+      await initializeFakeData(postStore, userStore);
+    }
 
     if (request.method === "GET") {
       // Handle pagination
       const page = parseInt(url.searchParams.get("page") || "1", 10);
       const perPage = 12;
-      const startIndex = (page - 1) * perPage;
-      const endIndex = startIndex + perPage;
 
-      const paginatedPosts = posts.slice(startIndex, endIndex);
+      // Get all posts and sort by creation date
+      const allPostBlobs = await postStore.list();
+      const posts = await Promise.all(
+        allPostBlobs.blobs.map(async (blob) => {
+          const post = await postStore.get(blob.key, { type: "json" });
+          return { ...post, id: blob.key };
+        })
+      );
+
+      posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+      const startIndex = (page - 1) * perPage;
+      const paginatedPosts = posts.slice(startIndex, startIndex + perPage);
       const totalPages = Math.ceil(posts.length / perPage);
 
       // Add user data to posts
-      const postsWithUsers = paginatedPosts.map((post) => {
-        const user = users.get(post.userId);
-        return {
-          ...post,
-          user: user ? { ...user, password: undefined } : null,
-          date: timeAgoInWords(new Date(post.createdAt)),
-        };
-      });
+      const postsWithUsers = await Promise.all(
+        paginatedPosts.map(async (post) => {
+          const user = await userStore.get(post.userId, { type: "json" });
+          return {
+            ...post,
+            user: user ? { ...user, password: undefined } : null,
+            date: timeAgoInWords(new Date(post.createdAt)),
+          };
+        })
+      );
 
       return new Response(
         JSON.stringify({
@@ -400,9 +372,29 @@ export default async (request: Request) => {
     }
 
     if (request.method === "POST") {
-      // Handle new post creation
+      // Extract user from JWT token
+      const authHeader = request.headers.get("Authorization");
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return new Response(JSON.stringify({ error: "Authentication required" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
+      const token = authHeader.substring(7);
+      let userId;
+      try {
+        const decoded = jwtDecode(token);
+        userId = decoded.userId;
+      } catch (error) {
+        return new Response(JSON.stringify({ error: "Invalid token" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
       const body = await request.json();
-      const { title, content, userId } = body;
+      const { title, content } = body;
 
       // Validation
       if (!title || title.length < 10 || title.length > 64) {
@@ -429,17 +421,17 @@ export default async (request: Request) => {
         );
       }
 
+      const postId = uuidv4();
       const newPost = {
-        id: uuidv4(),
         title,
         content,
         userId,
         createdAt: new Date().toISOString(),
       };
 
-      posts.unshift(newPost); // Add to beginning (newest first)
+      await postStore.set(postId, newPost, { type: "json" });
 
-      return new Response(JSON.stringify(newPost), {
+      return new Response(JSON.stringify({ ...newPost, id: postId }), {
         status: 201,
         headers: { "Content-Type": "application/json" },
       });
@@ -457,6 +449,35 @@ export default async (request: Request) => {
     });
   }
 };
+
+async function initializeFakeData(postStore, userStore) {
+  // Create fake users
+  const userIds = [];
+  for (let i = 0; i < 5; i++) {
+    const userId = uuidv4();
+    const userData = {
+      username: faker.internet.username(),
+      password: await bcrypt.hash("password123", 10),
+      avatarSrc: `https://api.dicebear.com/7.x/identicon/png?seed=${userId}`,
+    };
+    await userStore.set(userId, userData, { type: "json" });
+    userIds.push(userId);
+  }
+
+  // Create fake posts
+  for (let i = 0; i < 50; i++) {
+    const postId = uuidv4();
+    const postData = {
+      title: faker.lorem.sentence(3),
+      content: faker.lorem.paragraphs(2),
+      userId: userIds[Math.floor(Math.random() * userIds.length)],
+      createdAt: new Date(
+        Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
+      ).toISOString(),
+    };
+    await postStore.set(postId, postData, { type: "json" });
+  }
+}
 
 function timeAgoInWords(date: Date): string {
   const now = new Date();
@@ -476,23 +497,10 @@ export const config: Config = {
 #### netlify/functions/login.ts
 
 ```typescript
+import { getStore } from "@netlify/blobs";
 import type { Config } from "@netlify/functions";
 import bcrypt from "bcrypt";
 import { SignJWT } from "jose";
-import { v4 as uuidv4 } from "uuid";
-
-// Mock user storage (same as posts.ts - in real app, use shared database)
-const users = new Map([
-  [
-    "user1",
-    {
-      id: "user1",
-      username: "testuser",
-      password: "$2b$10$8K1p/a0dClxdQ4VjQJQY7e4KUa4QVjgNQYgZlBbGFJY5QVjCZWJfG", // "password123"
-      avatarSrc: "https://api.dicebear.com/7.x/identicon/png?seed=testuser",
-    },
-  ],
-]);
 
 export default async (request: Request) => {
   try {
@@ -518,16 +526,23 @@ export default async (request: Request) => {
       );
     }
 
-    // Find user by username
-    let user = null;
-    for (const [id, userData] of users.entries()) {
-      if (userData.username === username) {
-        user = userData;
+    const userStore = getStore({ name: "User", consistency: "strong" });
+
+    // Find user by username - search through all users
+    const allUsers = await userStore.list();
+    let userId: string | null = null;
+    let userData = null;
+
+    for (const blob of allUsers.blobs) {
+      const user = await userStore.get(blob.key, { type: "json" });
+      if (user.username === username) {
+        userId = blob.key;
+        userData = user;
         break;
       }
     }
 
-    if (!user) {
+    if (!userId || !userData) {
       return new Response(
         JSON.stringify({
           error: "Invalid username or password",
@@ -539,10 +554,8 @@ export default async (request: Request) => {
       );
     }
 
-    // Check password (for demo, allow "password123" or check hash)
-    const passwordValid =
-      password === "password123" ||
-      (await bcrypt.compare(password, user.password));
+    // Verify password with bcrypt
+    const passwordValid = await bcrypt.compare(password, userData.password);
 
     if (!passwordValid) {
       return new Response(
@@ -557,23 +570,24 @@ export default async (request: Request) => {
     }
 
     // Generate JWT token
-    const secret = new TextEncoder().encode(
-      process.env.COOKIE_JWT_SECRET || "fallback-secret-key"
-    );
+    if (!process.env.COOKIE_JWT_SECRET) {
+      throw new Error("Missing COOKIE_JWT_SECRET environment variable");
+    }
+    const secret = new TextEncoder().encode(process.env.COOKIE_JWT_SECRET);
 
-    const jwt = await new SignJWT({ userId: user.id, username: user.username })
+    const jwt = await new SignJWT({ userId, username: userData.username })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setExpirationTime("1w")
       .sign(secret);
 
     // Remove password from response
-    const { password: _, ...userWithoutPassword } = user;
+    const { password: _, ...userWithoutPassword } = userData;
 
     return new Response(
       JSON.stringify({
         success: true,
-        user: userWithoutPassword,
+        user: { ...userWithoutPassword, id: userId },
         token: jwt,
       }),
       {
@@ -600,16 +614,42 @@ export const config: Config = {
 1. **Create `netlify/functions/` directory FIRST**
 2. **Implement ALL 8 API functions before building React components**
 3. **Each function MUST export both `default` handler and `config` object**
-4. **Use in-memory storage (Arrays/Maps) since Bolt has no persistent database**
-5. **Pre-populate with faker.js data for realistic content**
+4. **Use Netlify Blobs for persistent data storage (NOT in-memory storage)**
+5. **Pre-populate blob stores with faker.js data on first run**
 6. **Test API endpoints work by visiting `/api/posts` in browser**
 
-### Data Storage Strategy:
+### Data Storage Strategy - USE NETLIFY BLOBS:
 
-- Use module-level variables (arrays/Maps) for data storage
-- Data persists during development session but resets on restart
-- Pre-populate with realistic fake data using `@faker-js/faker`
-- Share data between functions by importing/exporting from shared modules
+**⚠️ CRITICAL: You MUST use Netlify Blobs for data storage, NOT in-memory arrays/Maps!**
+
+```typescript
+import { getStore } from "@netlify/blobs";
+
+// Get blob stores for different data types
+const userStore = getStore({ name: "User", consistency: "strong" });
+const postStore = getStore({ name: "Post", consistency: "strong" });
+
+// Store data with unique IDs as keys
+await userStore.set(userId, userData, { type: "json" });
+await postStore.set(postId, postData, { type: "json" });
+
+// Retrieve data by ID
+const user = await userStore.get(userId, { type: "json" });
+const post = await postStore.get(postId, { type: "json" });
+
+// List all items in a store
+const allUsers = await userStore.list();
+for (const blob of allUsers.blobs) {
+  const userData = await userStore.get(blob.key, { type: "json" });
+}
+```
+
+**Blob Store Pattern:**
+- Use separate stores: "User", "Post", "UserPost" (for user-post relationships)
+- Store each item with UUID as key: `await store.set(uuid, data, { type: "json" })`
+- Always use `{ consistency: "strong" }` for reliable reads
+- Use `{ type: "json" }` for automatic serialization
+- Data persists between deployments and restarts (unlike in-memory storage)
 
 ### Security Implementation:
 
@@ -639,6 +679,79 @@ Each function follows the same pattern:
 - Export both default handler and config object
 
 **The React app expects these exact API endpoints to exist. Without implementing ALL of them, the app will fail with 404 errors on API calls.**
+
+## Authentication Flow - Critical Implementation Details
+
+### Frontend JWT Token Handling:
+
+**1. Login Process:**
+```typescript
+// In Login component
+const handleLogin = async (username: string, password: string) => {
+  const response = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const data = await response.json();
+  if (data.success) {
+    // Store token in localStorage and AuthContext
+    login(data.user, data.token);
+  }
+};
+```
+
+**2. Making Authenticated Requests:**
+```typescript
+// Always include Authorization header for protected endpoints
+const token = localStorage.getItem('blink_token');
+const response = await fetch('/api/posts', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
+  },
+  body: JSON.stringify({ title, content }),
+});
+```
+
+**3. AuthContext Implementation:**
+```typescript
+// AuthContext should:
+// - Store JWT token in localStorage as 'blink_token'
+// - Store user data in localStorage as 'blink_user'
+// - Automatically restore on page refresh
+// - Clear both on logout
+// - Provide token to components that need it
+```
+
+### Backend JWT Validation Pattern:
+
+**For ALL protected endpoints, use this pattern:**
+```typescript
+// Extract and validate JWT token
+const authHeader = request.headers.get("Authorization");
+if (!authHeader?.startsWith("Bearer ")) {
+  return new Response(JSON.stringify({ error: "Authentication required" }), {
+    status: 401,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+const token = authHeader.substring(7);
+try {
+  const secret = new TextEncoder().encode(process.env.COOKIE_JWT_SECRET);
+  const { payload } = await jwtVerify(token, secret);
+  const userId = payload.userId;
+  // Use userId for the request
+} catch (error) {
+  return new Response(JSON.stringify({ error: "Invalid token" }), {
+    status: 401,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+```
 
 ## Functional Requirements
 
