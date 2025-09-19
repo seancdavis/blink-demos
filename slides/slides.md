@@ -554,14 +554,12 @@ color: shapes
 transition: fade
 ---
 
-# Let's check on Bolt ...
+# Let's check on our app ...
 
 ---
 layout: statement
 color: shapes
 ---
-
-<!-- This is where to check for the bolt output if I did that -->
 
 <v-click>
 
