@@ -554,7 +554,7 @@ color: shapes
 transition: fade
 ---
 
-# Let's check on our app ...
+# "I" built an app this morning ...
 
 ---
 layout: statement
