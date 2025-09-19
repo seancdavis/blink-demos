@@ -35,6 +35,7 @@ export default defineConfig({
 ```
 
 This configuration enables:
+
 - React plugin for JSX/TSX support
 - Netlify plugin for serverless function API routes
 - Automatic API proxy during development
@@ -160,9 +161,12 @@ The context should restore user state from localStorage on app load.
 
 ### Pagination (src/components/Pagination.tsx)
 
-- Previous/Next navigation
-- Show current page info
-- Handle pagination state with URL params
+- Previous/Next navigation with arrow icons (← →)
+- Show current page info ("Page X of Y")
+- Handle pagination via URL search params (`?page=2`)
+- Links should navigate to `/?page=X` for home page
+- Gray out disabled buttons (first/last page)
+- Only show if there are multiple pages
 
 ### NewPostForm (src/components/NewPostForm.tsx)
 
@@ -178,11 +182,12 @@ The context should restore user state from localStorage on app load.
 ### Home (src/pages/Home.tsx)
 
 - NewPostForm component at the top for creating posts
-- Fetch and display paginated posts
+- Fetch and display paginated posts using URL search params (`?page=X`)
 - Grid layout of PostCard components
 - Loading and error states
-- Pagination controls
+- Pagination controls that update URL (`/?page=2`, `/?page=3`, etc.)
 - Auto-refresh posts after new post creation
+- **IMPORTANT:** Pagination must use URL search params, not component state
 
 ### Login/Register (src/pages/Login.tsx, Register.tsx)
 
@@ -216,10 +221,12 @@ Use a comprehensive CSS file with:
 
 ### Color Scheme
 
-- Dark theme with purple-950 background
-- Purple-50 text color
-- Purple accent colors for links and buttons
-- Rotating rainbow border animation on hover
+- **Dark theme:** Deep purple-950 background (#080214)
+- **Text:** Light purple-50 (#e8e9ff) for readability
+- **Subtle UI elements:** Use neutral grays (neutral-400 to neutral-700)
+- **Accent colors:** Purple for buttons and links, but sparingly
+- **Borders:** Dark neutral-950 for cards and form elements
+- **NOT overwhelming purple** - should feel dark and minimal with purple accents
 
 ### Layout System
 
@@ -267,6 +274,7 @@ Create utility functions for:
 You MUST create serverless API functions in the `netlify/functions/` directory. The `@netlify/vite-plugin` automatically maps these to `/api/*` routes during development.
 
 ### How Netlify Functions Work:
+
 1. Create `.ts` files in `netlify/functions/` directory
 2. Each file exports a default handler function and config object
 3. The config object defines the API path (e.g., `/api/posts`)
@@ -274,6 +282,7 @@ You MUST create serverless API functions in the `netlify/functions/` directory. 
 5. Functions run as serverless endpoints both in development and production
 
 ### Required Directory Structure:
+
 ```
 netlify/
 └── functions/
@@ -291,6 +300,7 @@ netlify/
 ### Example Function Implementation:
 
 #### netlify/functions/posts.ts
+
 ```typescript
 import type { Config } from "@netlify/functions";
 import { v4 as uuidv4 } from "uuid";
@@ -305,12 +315,15 @@ let posts: Array<{
   createdAt: string;
 }> = [];
 
-let users: Map<string, {
-  id: string;
-  username: string;
-  password: string;
-  avatarSrc: string;
-}> = new Map();
+let users: Map<
+  string,
+  {
+    id: string;
+    username: string;
+    password: string;
+    avatarSrc: string;
+  }
+> = new Map();
 
 // Initialize with fake data
 if (posts.length === 0) {
@@ -333,12 +346,16 @@ if (posts.length === 0) {
       title: faker.lorem.sentence(3),
       content: faker.lorem.paragraphs(2),
       userId: userIds[Math.floor(Math.random() * userIds.length)],
-      createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(
+        Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
+      ).toISOString(),
     });
   }
 
   // Sort by creation date (newest first)
-  posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  posts.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 }
 
 export default async (request: Request) => {
@@ -356,7 +373,7 @@ export default async (request: Request) => {
       const totalPages = Math.ceil(posts.length / perPage);
 
       // Add user data to posts
-      const postsWithUsers = paginatedPosts.map(post => {
+      const postsWithUsers = paginatedPosts.map((post) => {
         const user = users.get(post.userId);
         return {
           ...post,
@@ -365,18 +382,21 @@ export default async (request: Request) => {
         };
       });
 
-      return new Response(JSON.stringify({
-        posts: postsWithUsers,
-        pagination: {
-          currentPage: page,
-          totalPages,
-          hasNextPage: page < totalPages,
-          hasPrevPage: page > 1,
-          totalPosts: posts.length,
-        },
-      }), {
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          posts: postsWithUsers,
+          pagination: {
+            currentPage: page,
+            totalPages,
+            hasNextPage: page < totalPages,
+            hasPrevPage: page > 1,
+            totalPosts: posts.length,
+          },
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     if (request.method === "POST") {
@@ -386,21 +406,27 @@ export default async (request: Request) => {
 
       // Validation
       if (!title || title.length < 10 || title.length > 64) {
-        return new Response(JSON.stringify({
-          error: "Title must be between 10 and 64 characters"
-        }), {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({
+            error: "Title must be between 10 and 64 characters",
+          }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
       }
 
       if (!content || content.length < 10 || content.length > 400) {
-        return new Response(JSON.stringify({
-          error: "Content must be between 10 and 400 characters"
-        }), {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({
+            error: "Content must be between 10 and 400 characters",
+          }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
       }
 
       const newPost = {
@@ -448,6 +474,7 @@ export const config: Config = {
 ```
 
 #### netlify/functions/login.ts
+
 ```typescript
 import type { Config } from "@netlify/functions";
 import bcrypt from "bcrypt";
@@ -456,12 +483,15 @@ import { v4 as uuidv4 } from "uuid";
 
 // Mock user storage (same as posts.ts - in real app, use shared database)
 const users = new Map([
-  ["user1", {
-    id: "user1",
-    username: "testuser",
-    password: "$2b$10$8K1p/a0dClxdQ4VjQJQY7e4KUa4QVjgNQYgZlBbGFJY5QVjCZWJfG", // "password123"
-    avatarSrc: "https://api.dicebear.com/7.x/avatars/svg?seed=testuser",
-  }]
+  [
+    "user1",
+    {
+      id: "user1",
+      username: "testuser",
+      password: "$2b$10$8K1p/a0dClxdQ4VjQJQY7e4KUa4QVjgNQYgZlBbGFJY5QVjCZWJfG", // "password123"
+      avatarSrc: "https://api.dicebear.com/7.x/identicon/png?seed=testuser",
+    },
+  ],
 ]);
 
 export default async (request: Request) => {
@@ -477,12 +507,15 @@ export default async (request: Request) => {
     const { username, password } = body;
 
     if (!username || !password) {
-      return new Response(JSON.stringify({
-        error: "Username and password are required"
-      }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Username and password are required",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Find user by username
@@ -495,25 +528,32 @@ export default async (request: Request) => {
     }
 
     if (!user) {
-      return new Response(JSON.stringify({
-        error: "Invalid username or password"
-      }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Invalid username or password",
+        }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Check password (for demo, allow "password123" or check hash)
-    const passwordValid = password === "password123" ||
-      await bcrypt.compare(password, user.password);
+    const passwordValid =
+      password === "password123" ||
+      (await bcrypt.compare(password, user.password));
 
     if (!passwordValid) {
-      return new Response(JSON.stringify({
-        error: "Invalid username or password"
-      }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          error: "Invalid username or password",
+        }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     // Generate JWT token
@@ -530,14 +570,17 @@ export default async (request: Request) => {
     // Remove password from response
     const { password: _, ...userWithoutPassword } = user;
 
-    return new Response(JSON.stringify({
-      success: true,
-      user: userWithoutPassword,
-      token: jwt,
-    }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        success: true,
+        user: userWithoutPassword,
+        token: jwt,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     console.error("Login error:", error);
     return new Response(JSON.stringify({ error: "Internal server error" }), {
@@ -562,12 +605,14 @@ export const config: Config = {
 6. **Test API endpoints work by visiting `/api/posts` in browser**
 
 ### Data Storage Strategy:
+
 - Use module-level variables (arrays/Maps) for data storage
 - Data persists during development session but resets on restart
 - Pre-populate with realistic fake data using `@faker-js/faker`
 - Share data between functions by importing/exporting from shared modules
 
 ### Security Implementation:
+
 - Hash passwords with `bcrypt.hash()` for registration
 - Verify passwords with `bcrypt.compare()` for login
 - Generate JWT tokens with `jose` library using `COOKIE_JWT_SECRET`
@@ -586,6 +631,7 @@ export const config: Config = {
 8. **netlify/functions/upload-avatar.ts** - Handle avatar uploads
 
 Each function follows the same pattern:
+
 - Import required dependencies (`@netlify/functions`, `uuid`, `bcrypt`, `jose`, etc.)
 - Use in-memory storage (Maps/Arrays)
 - Handle multiple HTTP methods (GET/POST/PUT/DELETE)
@@ -663,6 +709,18 @@ For images and icons, reference the GitHub repository:
 
 Link to repository for reference: https://github.com/seancdavis/blink-demos/tree/main/vite
 
+## Netlify Configuration (netlify.toml)
+
+Create a `netlify.toml` file in the root directory with these basic build settings:
+
+```toml
+[build]
+  command = "npm run build"
+  publish = "dist"
+```
+
+This is REQUIRED for proper deployment and function routing.
+
 ## Environment Variables
 
 Create a `.env` file in the root directory with:
@@ -680,17 +738,36 @@ This is required for JWT token signing in the authentication functions.
 1. Start with the basic Vite React-TS template
 2. **IMMEDIATELY** install all dependencies including `@netlify/vite-plugin`
 3. **IMMEDIATELY** update `vite.config.ts` with the Netlify plugin configuration
-4. Create the `.env` file with JWT secret
-5. Set up all Netlify functions first (they're essential for the app to work)
-6. Create the types and utility functions
-7. Set up the routing structure in main.tsx
-8. Create the AuthContext before building components
-9. Build core components (Header, PostCard, NewPostForm)
-10. Implement pages in order: Home → Auth → Profile
-11. Add styling incrementally, component by component
-12. Test authentication flow thoroughly
-13. Ensure all routes and API endpoints work correctly
+4. **IMMEDIATELY** create `netlify.toml` with build settings
+5. Create the `.env` file with JWT secret
+6. Set up all Netlify functions first (they're essential for the app to work)
+7. Create the types and utility functions
+8. Set up the routing structure in main.tsx
+9. Create the AuthContext before building components
+10. Build core components (Header, PostCard, NewPostForm, Pagination)
+11. Implement pages in order: Home → Auth → Profile
+12. Add styling incrementally, component by component
+13. Test authentication flow thoroughly
+14. Ensure all routes and API endpoints work correctly
 
 **Important for Bolt:** The Netlify plugin enables the `/api/*` routes to work in development. Without it, all API calls will fail. Make sure to install and configure it before creating any components that make API calls.
+
+## Design Guidelines
+
+**Visual Identity:**
+
+- **Dark, minimal theme** - NOT heavily purple everywhere
+- Purple-950 background with subtle neutral borders and text
+- Purple accents only for interactive elements (buttons, links)
+- Use neutral grays for most UI elements
+- Clean, modern aesthetic similar to Twitter/X dark mode
+
+**Pagination Requirements:**
+
+- Must use URL search parameters (`?page=2`) not component state
+- Pagination component should generate proper navigation links
+- Home page should read `page` param and fetch appropriate data
+- Previous/Next buttons should be disabled appropriately
+- Show page information ("Page 2 of 8" or similar)
 
 The app should feel like a real social media platform with smooth interactions, proper state management, and a polished user interface. Focus on attention to detail in animations, typography, and user experience.
