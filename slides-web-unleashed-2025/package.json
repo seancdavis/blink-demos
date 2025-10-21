@@ -1,0 +1,21 @@
+{
+  "name": "slides",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export",
+    "prebuild": "npx playwright install"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.1.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "slidev-addon-excalidraw": "^1.0.4",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.55.0"
+  }
+}
