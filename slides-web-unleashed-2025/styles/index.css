@@ -40,6 +40,12 @@
     margin-bottom: 2rem;
   }
 
+  .subheading {
+    font-style: italic;
+    margin-bottom: 2rem;
+    margin-top: -1.5rem;
+  }
+
   .highlight {
     padding: 0 2rem;
     line-height: 1.25;

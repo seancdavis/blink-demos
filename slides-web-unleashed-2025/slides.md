@@ -2,9 +2,9 @@
 theme: default
 author: Sean C Davis
 background: /images/bg/scd-bg-shapes.svg
-title: Seeing Beyond the Framework Illusion
+title: "Unbundled: Inspecting Frameworks In Production"
 info: |
-  A presentation by Sean C Davis for CascadiaJS 2025
+  A presentation by Sean C Davis for Web Unleashed 2025
 class: text-center bg-transparent text-gray-900
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-up
@@ -22,9 +22,12 @@ addons:
 ---
 
 <h1>
-  <span class="highlight">Seeing Beyond</span>
-  <span class="highlight">the Framework Illusion</span>
+  <span class="highlight">Unbundled</span>
 </h1>
+
+<h2 class="subheading">
+  <span class="highlight">Inspecting Frameworks In Production</span>
+</h2>
 
 <div class="title-author">
   Sean C Davis
