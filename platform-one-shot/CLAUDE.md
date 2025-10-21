@@ -17,8 +17,22 @@ This project is a social media platform built specifically for Netlify's platfor
 - Run at edge locations for performance
 - Handle middleware-like functionality (auth, partials, feedback)
 - Use `context.next()` to pass through to next handler
-- Transform responses using HTMLRewriter when needed
+- Transform responses using regex-based string replacements (HTMLRewriter not available)
 - Define path configuration in `netlify.toml` to control for call order
+
+**HTML Transformation Pattern:**
+```typescript
+const response = await context.next()
+let html = await response.text()
+
+// Perform string replacements with regex
+html = html.replace(/<element>/, 'replacement')
+
+return new Response(html, {
+  status: response.status,
+  headers: response.headers
+})
+```
 
 ### Data Storage with Netlify Blobs
 
@@ -138,11 +152,19 @@ The platform uses a two-tiered approach for 404 handling that avoids edge functi
 3. **Shared content partial** (`src/partials/not-found-content.html`) - Contains the actual 404 content
 
 Both the static page and dynamic partial reference the same `not-found-content` partial, ensuring consistent 404 messaging while allowing:
-- Static files to be served normally by Netlify without edge function interference  
+- Static files to be served normally by Netlify without edge function interference
 - Dynamic routes to show 404 content when needed
 - Single source of truth for 404 content that's easy to maintain
 
 This pattern prevents edge functions from interfering with static file serving while maintaining dynamic functionality where needed.
+
+### Known Issues & Solutions
+
+**HTMLRewriter Not Available:**
+- Netlify Edge Functions don't support HTMLRewriter
+- Use regex-based string replacement instead
+- See edge function files for working examples
+- Always test edge functions locally before deployment
 
 ### Code Quality Standards
 
@@ -150,6 +172,8 @@ This pattern prevents edge functions from interfering with static file serving w
 - ALWAYS create utility functions for shared logic in `src/utils/`
 - Follow existing patterns in the codebase
 - Avoid edge function processing for static assets to prevent MIME type issues
+- DO NOT use HTMLRewriter in edge functions - use regex-based string replacement instead
+- Always escape user input when injecting into HTML to prevent XSS attacks
 
 ### Security Patterns
 
