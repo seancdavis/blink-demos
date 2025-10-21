@@ -549,19 +549,10 @@ transition: fade
   Agent experience matters because DX and UX are directly impacted by the quality of solutions an <br>AI agent can implement.
 </h1>
 
-<!-- (And Why I love Astro) -->
-
 ---
 layout: statement
 color: shapes
 transition: fade
----
-
-# "I" built an app this morning ...
-
----
-layout: statement
-color: shapes
 ---
 
 <v-click>
