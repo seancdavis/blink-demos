@@ -490,13 +490,13 @@ transition: fade
 <img src="/images/icons/frameworks/astro.svg" alt="Astro" />
 <img src="/images/icons/frameworks/docusaurus.svg" alt="Docusaurus" />
 <img src="/images/icons/frameworks/eleventy.svg" alt="Eleventy" />
-<img src="/images/icons/frameworks/gatsby.svg" alt="Gatsby" />
 <img src="/images/icons/frameworks/hugo.svg" alt="Hugo" />
 <img src="/images/icons/frameworks/nextjs.svg" alt="Next.js" />
 <img src="/images/icons/frameworks/nuxt.svg" alt="Nuxt" />
 <img src="/images/icons/frameworks/react.svg" alt="React" />
 <img src="/images/icons/frameworks/remix.svg" alt="Remix" />
 <img src="/images/icons/frameworks/svelte.svg" alt="Svelte" />
+<img src="/images/icons/frameworks/tanstack.png" alt="TanStack" />
 <img src="/images/icons/frameworks/vue.svg" alt="Vue" />
 
 
@@ -557,7 +557,7 @@ color: shapes
 transition: fade
 ---
 
-# "I" built an app this morning ...
+# "I" built an app ...
 
 ---
 layout: statement
